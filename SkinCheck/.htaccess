@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/APSkincek/SkinCheck/storage/
+RewriteRule ^(.*)$ public/$1 [L]

@@ -1,0 +1,12 @@
+{
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "primary_api_key": "YOUR_PRIMARY_GROQ_API_KEY",
+    "backup_api_key_1": "",
+    "backup_api_key_2": "",
+    "backup_api_key_3": "",
+    "active_key": "primary",
+    "auto_failover": true,
+    "last_active_key_used": "primary",
+    "updated_at": "2026-10-31 00:00:00"
+}

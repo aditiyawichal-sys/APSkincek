@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^$ /APSkincek/SkinCheck/public/ [R=302,L]
+

@@ -1,0 +1,9 @@
+{
+    "api_token": "YOUR_FONNTE_API_TOKEN_HERE",
+    "endpoint": "https://api.fonnte.com/send",
+    "country_code": "62",
+    "enable_registration_notification": true,
+    "otp_message": "Halo! Kode OTP Anda untuk registrasi/login adalah: *{otp}*. Demi keamanan, jangan bagikan kode ini kepada siapa pun, termasuk pihak admin. Kode ini berlaku selama 5 menit.",
+    "welcome_message": "Halo *{name}*! 👋\n\nSelamat datang di *APSkincek* (Aplikasi Pemeriksaan & Edukasi Kulit Wajah).\n\nAkun Anda telah berhasil terdaftar dengan data:\n👤 *Nama*: {name}\n📧 *Email*: {email}\n📱 *No. WhatsApp*: {phone}\n🛡️ *Tipe Akun*: {role}\n\nSilakan masuk dan lakukan scan kesehatan kulit Anda sekarang di:\n🌐 {login_url}\n\nTerima kasih dan rawat selalu kesehatan kulit Anda bersama APSkincek! ✨",
+    "updated_at": "2026-10-31 00:00:00"
+}
