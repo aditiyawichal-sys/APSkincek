@@ -66,3 +66,4 @@ Cukup klik ganda file **`start_all.bat`** di direktori utama `APSkincek/`:
 
 ## Lisensi
 Proyek ini dikembangkan untuk keperluan edukasi dan pemeriksaan kesehatan kulit.
+

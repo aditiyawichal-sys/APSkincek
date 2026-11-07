@@ -7,3 +7,4 @@
     "welcome_message": "Halo *{name}*! 👋\n\nSelamat datang di *APSkincek* (Aplikasi Pemeriksaan & Edukasi Kulit Wajah).\n\nAkun Anda telah berhasil terdaftar dengan data:\n👤 *Nama*: {name}\n📧 *Email*: {email}\n📱 *No. WhatsApp*: {phone}\n🛡️ *Tipe Akun*: {role}\n\nSilakan masuk dan lakukan scan kesehatan kulit Anda sekarang di:\n🌐 {login_url}\n\nTerima kasih dan rawat selalu kesehatan kulit Anda bersama APSkincek! ✨",
     "updated_at": "2026-10-31 00:00:00"
 }
+

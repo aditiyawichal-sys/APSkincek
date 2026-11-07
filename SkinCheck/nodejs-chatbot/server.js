@@ -96,13 +96,13 @@ app.post('/api/chat', async (req, res) => {
         let userFaceScan = 'Belum pernah scan wajah.';
         if (dbCtx.faceScan) {
             const scanDate = dbCtx.faceScan.created_at ? new Date(dbCtx.faceScan.created_at).toLocaleDateString('id-ID') : '-';
-            userFaceScan = `${scanDate} (Skor Jerawat: ${dbCtx.faceScan.acne_score ?? 0}, Hidrasi: ${dbCtx.faceScan.hydration_level ?? 0}%, Skor Kulit: ${dbCtx.faceScan.overall_health ?? 0}%)`;
+            userFaceScan = `${scanDate}, Skor Jerawat: ${dbCtx.faceScan.acne_score ?? 0}, Hidrasi: ${dbCtx.faceScan.hydration_level ?? 0}%, Skor Kulit: ${dbCtx.faceScan.overall_health ?? 0}%`;
         }
 
         let userSunscreenScan = 'Belum pernah cek sunscreen.';
         if (dbCtx.sunscreenScan) {
             const scanDate = dbCtx.sunscreenScan.created_at ? new Date(dbCtx.sunscreenScan.created_at).toLocaleDateString('id-ID') : '-';
-            userSunscreenScan = `${scanDate} (Cakupan: ${dbCtx.sunscreenScan.coverage_score}%)`;
+            userSunscreenScan = `${scanDate}, Cakupan: ${dbCtx.sunscreenScan.coverage_score}%`;
         }
 
         // 3. Compact catalog
@@ -115,39 +115,39 @@ app.post('/api/chat', async (req, res) => {
         const stats = dbCtx.systemStats || { totalCustomers: 0, totalAdmins: 0, totalUsers: 0, totalScans: 0, faceScans: 0, sunscreenScans: 0 };
         
         const customerList = (stats.customers && stats.customers.length > 0)
-            ? stats.customers.map((c, i) => `${i + 1}. ${c.name} (${c.email}) - Total Scan: ${c.total_scans || 0}`).join('\n')
+            ? stats.customers.map((c, i) => `${i + 1}. ${c.name} - email: ${c.email} - Total Scan: ${c.total_scans || 0} kali`).join('\n')
             : 'Belum ada customer terdaftar.';
 
         const faceScanList = (stats.faceScanUsers && stats.faceScanUsers.length > 0)
-            ? stats.faceScanUsers.map((u, i) => `${i + 1}. ${u.name} (${u.total_scans} scan)`).join('\n')
+            ? stats.faceScanUsers.map((u, i) => `${i + 1}. ${u.name} - ${u.total_scans} kali scan`).join('\n')
             : 'Belum ada.';
 
         const sunscreenScanList = (stats.sunscreenScanUsers && stats.sunscreenScanUsers.length > 0)
-            ? stats.sunscreenScanUsers.map((u, i) => `${i + 1}. ${u.name} (${u.total_scans} scan)`).join('\n')
+            ? stats.sunscreenScanUsers.map((u, i) => `${i + 1}. ${u.name} - ${u.total_scans} kali scan`).join('\n')
             : 'Belum ada.';
 
         const adminList = (stats.admins && stats.admins.length > 0)
-            ? stats.admins.map((a, i) => `${i + 1}. ${a.name} (${a.email})`).join('\n')
+            ? stats.admins.map((a, i) => `${i + 1}. ${a.name} - email: ${a.email}`).join('\n')
             : 'Belum ada.';
 
         const recentScansList = (stats.recentScans && stats.recentScans.length > 0)
             ? stats.recentScans.slice(0, 5).map(s => {
                 const dt = new Date(s.created_at).toLocaleDateString('id-ID');
                 const info = s.scan_type === 'face' ? `Jerawat: ${s.acne_score ?? '-'}` : `Cakupan: ${s.coverage_score}%`;
-                return `#${s.id}: ${s.user_name || 'User'} (${s.scan_type === 'face' ? 'Wajah' : 'Sunscreen'}, ${info}, ${dt})`;
+                return `#${s.id}: ${s.user_name || 'User'} - ${s.scan_type === 'face' ? 'Wajah' : 'Sunscreen'} - ${info} - ${dt}`;
             }).join('\n')
             : 'Belum ada scan.';
 
         // 5. Lean, focused system prompt (~400 tokens)
-        const systemPrompt = `Anda SkinCheck AI Assistant resmi aplikasi APSkincek. Jawab langsung, akurat, to-the-point sesuai data database berikut. Dilarang bertele-tele dan dilarang menggunakan emoji.
+        const systemPrompt = `Anda SkinCheck AI Assistant resmi aplikasi APSkincek. Jawab langsung, akurat, to-the-point sesuai data database berikut. Dilarang bertele-tele, dilarang menggunakan emoji, dan DILARANG MENGGUNAKAN TANDA KURUNG () saat menyebutkan nama orang, email, atau peran seseorang. Sebutkan secara langsung dan mengalir.
 
 [DATA DATABASE RESMI APSKINCEK]
-- User Aktif Chat: ${effectiveName} (${effectiveEmail}, ${userRole})
+- User Aktif Chat: ${effectiveName}, email: ${effectiveEmail}, peran: ${userRole}
 - Scan Terakhir User: ${userFaceScan} | Sunscreen: ${userSunscreenScan}
-- Total Pengguna: ${stats.totalUsers} (Customer: ${stats.totalCustomers}, Admin: ${stats.totalAdmins})
-- Total Scan: ${stats.totalScans} kali (${stats.faceScans} scan wajah, ${stats.sunscreenScans} cek sunscreen)
+- Total Pengguna: ${stats.totalUsers} orang, terdiri dari ${stats.totalCustomers} Customer dan ${stats.totalAdmins} Admin
+- Total Scan: ${stats.totalScans} kali, rincian: ${stats.faceScans} scan wajah dan ${stats.sunscreenScans} cek sunscreen
 
-[DAFTAR SELURUH CUSTOMER (${stats.totalCustomers} Orang)]
+[DAFTAR SELURUH CUSTOMER: ${stats.totalCustomers} Orang]
 ${customerList}
 
 [CUSTOMER SCAN WAJAH]
@@ -156,7 +156,7 @@ ${faceScanList}
 [CUSTOMER CEK SUNSCREEN]
 ${sunscreenScanList}
 
-[DAFTAR ADMINISTRATOR (${stats.totalAdmins} Orang)]
+[DAFTAR ADMINISTRATOR: ${stats.totalAdmins} Orang]
 ${adminList}
 
 [5 SCAN TERAKHIR]
@@ -166,12 +166,13 @@ ${recentScansList}
 ${catalogSummary}
 
 ATURAN MENJAWAB:
-1. Ditanya berapa customer / daftar customer: Langsung jawab total customer (${stats.totalCustomers} orang) dan daftarkan namanya.
-2. Ditanya siapa yang scan wajah / sunscreen: Sebutkan nama dan jumlah scan dari data di atas.
-3. Ditanya total scan: Sebutkan ${stats.totalScans} kali (${stats.faceScans} wajah, ${stats.sunscreenScans} sunscreen).
-4. Ditanya siapa saya: Anda adalah ${effectiveName} (${effectiveEmail}, ${userRole} APSkincek).
-5. Ditanya siapa admin: Daftarkan admin dari data di atas.
-6. Ditanya perawatan / rekomendasi produk: Berikan solusi singkat dan rekomendasikan dari katalog.`;
+1. SANGAT PENTING: DILARANG MENGGUNAKAN TANDA KURUNG () saat menyebutkan identitas seseorang. Langsung saja sebutkan namanya, perannya, atau datanya secara mengalir tanpa tanda kurung.
+2. Ditanya siapa saya: Jawab langsung tanpa tanda kurung: "Anda adalah ${effectiveName}, ${userRole} APSkincek dengan email ${effectiveEmail}."
+3. Ditanya siapa yang scan wajah / sunscreen: Sebutkan nama dan jumlah scan langsung tanpa tanda kurung. Contoh: "1. michael - 10 kali scan".
+4. Ditanya siapa admin / daftar customer: Sebutkan nama dan email langsung tanpa tanda kurung.
+5. Ditanya berapa customer / total scan: Sebutkan langsung jumlah dan rinciannya.
+6. Ditanya siapa anda: "Saya adalah SkinCheck AI Assistant resmi aplikasi APSkincek."
+7. Ditanya perawatan / rekomendasi produk: Berikan solusi singkat dan rekomendasikan dari katalog.`;
 
         const messages = [
             { role: 'system', content: systemPrompt }
@@ -201,8 +202,10 @@ ATURAN MENJAWAB:
 
         let responseText = chatCompletion.choices[0]?.message?.content || "Halo! Maaf, saya sedang memproses sistem saat ini. Silakan coba lagi sebentar ya.";
         
-        // Clean formatting
+        // Clean formatting: remove emojis, code ticks, and convert any parentheses to smooth text
         responseText = responseText
+            .replace(/\(([^)]+)\)/g, ', $1')
+            .replace(/,\s*,/g, ',')
             .replace(/\p{Extended_Pictographic}/gu, '')
             .replace(/^#+\s+/gm, '')
             .replace(/[`~]/g, '')
