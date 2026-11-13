@@ -29,21 +29,24 @@
             width: 100%;
         }
 
-        /* Sidebar Styling */
+        /* Sidebar Styling (Fixed & Frozen on Left) */
         .admin-sidebar {
             width: 260px;
             min-width: 260px;
             height: 100vh;
-            position: sticky;
+            height: 100dvh;
+            position: fixed;
             top: 0;
+            bottom: 0;
+            left: 0;
             background-color: #1a1e24 !important;
             color: #fff;
-            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1045;
-            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            overflow-x: hidden;
             scrollbar-width: thin;
         }
 
@@ -72,20 +75,26 @@
             box-shadow: 0 4px 12px rgba(13, 110, 253, 0.35);
         }
 
-        /* Main Content */
+        /* Main Content Area */
         .admin-main-content {
             flex-grow: 1;
             min-width: 0;
             padding: 24px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 260px;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background-color: #f8f9fa;
+            min-height: 100vh;
         }
 
         /* Desktop Collapse Behavior */
         @media (min-width: 992px) {
             .admin-layout-wrapper.sidebar-collapsed .admin-sidebar,
             html.sidebar-init-collapsed .admin-layout-wrapper .admin-sidebar {
-                margin-left: -260px;
+                transform: translateX(-260px);
+            }
+            .admin-layout-wrapper.sidebar-collapsed .admin-main-content,
+            html.sidebar-init-collapsed .admin-layout-wrapper .admin-main-content {
+                margin-left: 0;
             }
         }
 
@@ -97,9 +106,14 @@
                 left: 0;
                 bottom: 0;
                 height: 100vh;
-                margin-left: 0 !important;
+                height: 100dvh;
                 transform: translateX(-100%);
                 box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            }
+
+            .admin-main-content {
+                margin-left: 0 !important;
+                padding: 16px;
             }
 
             .admin-layout-wrapper.sidebar-mobile-open .admin-sidebar {
