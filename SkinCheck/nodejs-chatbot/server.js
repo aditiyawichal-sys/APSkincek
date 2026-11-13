@@ -34,8 +34,10 @@ function detectProvider(apiKey, defaultProvider = 'groq') {
     if (!apiKey) return defaultProvider;
     const key = apiKey.trim();
     if (key.startsWith('gsk_')) return 'groq';
+    if (/^sk-[0-9a-f]{32}$/i.test(key)) return 'deepseek';
     if (key.startsWith('sk-')) return 'openai';
     if (key.startsWith('AIza') || key.startsWith('AQ.')) return 'gemini';
+    if (defaultProvider === 'deepseek') return 'deepseek';
     if (defaultProvider === 'gemini') return 'gemini';
     if (defaultProvider === 'openai') return 'openai';
     return key.length > 20 ? 'gemini' : defaultProvider;
@@ -54,6 +56,31 @@ async function callGroq(apiKey, messages, model = 'qwen/qwen3.8-27b') {
         max_tokens: 300,
         temperature: 0.1
     });
+}
+
+async function callDeepSeek(apiKey, messages, model = 'deepseek-chat') {
+    const targetModel = (model && model.includes('deepseek')) ? model : 'deepseek-chat';
+    const res = await fetch('https://api.deepseek.com/chat/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: targetModel,
+            messages: messages,
+            max_tokens: 300,
+            temperature: 0.1
+        }),
+        signal: AbortSignal.timeout(6000)
+    });
+    
+    if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`DeepSeek HTTP ${res.status}: ${errText}`);
+    }
+    
+    return await res.json();
 }
 
 async function callGemini(apiKey, messages, model = 'gemini-1.5-flash') {
@@ -159,10 +186,12 @@ async function callChatWithFailover(messages) {
         try {
             let completion;
             if (provider === 'groq') {
-                const groqModel = (config.model && !config.model.includes('gemini') && !config.model.includes('gpt')) 
+                const groqModel = (config.model && !config.model.includes('gemini') && !config.model.includes('gpt') && !config.model.includes('deepseek')) 
                     ? config.model 
                     : 'qwen/qwen3.8-27b';
                 completion = await callGroq(item.key, messages, groqModel);
+            } else if (provider === 'deepseek') {
+                completion = await callDeepSeek(item.key, messages, config.model);
             } else if (provider === 'openai') {
                 completion = await callOpenAI(item.key, messages, config.model);
             } else {

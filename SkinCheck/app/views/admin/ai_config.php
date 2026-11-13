@@ -141,6 +141,7 @@ if (!empty($backup3)) $filledBackups++;
                         <label class="form-label small fw-semibold">Default Provider AI Utama:</label>
                         <select name="provider" id="providerSelect" class="form-select rounded-3">
                             <option value="groq" <?= $currentProvider === 'groq' ? 'selected' : '' ?>>Groq Cloud (Respon Kilat 100-300ms - gsk_...)</option>
+                            <option value="deepseek" <?= $currentProvider === 'deepseek' ? 'selected' : '' ?>>DeepSeek (api.deepseek.com - sk-...)</option>
                             <option value="gemini" <?= $currentProvider === 'gemini' ? 'selected' : '' ?>>Google Gemini (generativelanguage.googleapis.com - AIza...)</option>
                             <option value="openai" <?= $currentProvider === 'openai' ? 'selected' : '' ?>>OpenAI (api.openai.com - sk-...)</option>
                         </select>
@@ -150,6 +151,7 @@ if (!empty($backup3)) $filledBackups++;
                         <label class="form-label small fw-semibold">Model AI Default:</label>
                         <select name="model" id="modelSelect" class="form-select rounded-3 font-monospace">
                             <option value="qwen/qwen3.8-27b" <?= $currentModel === 'qwen/qwen3.8-27b' ? 'selected' : '' ?>>qwen/qwen3.8-27b (Groq Default Stabil APSkincek)</option>
+                            <option value="deepseek-chat" <?= $currentModel === 'deepseek-chat' ? 'selected' : '' ?>>deepseek-chat (DeepSeek V3 Cerdas)</option>
                             <option value="llama-3.3-70b-versatile" <?= $currentModel === 'llama-3.3-70b-versatile' ? 'selected' : '' ?>>llama-3.3-70b-versatile (Groq Model Besar Pintar)</option>
                             <option value="llama-3.1-8b-instant" <?= $currentModel === 'llama-3.1-8b-instant' ? 'selected' : '' ?>>llama-3.1-8b-instant (Groq Sangat Ringan & Cepat)</option>
                             <option value="gemini-1.5-flash" <?= $currentModel === 'gemini-1.5-flash' ? 'selected' : '' ?>>gemini-1.5-flash (Google Gemini Cepat)</option>
@@ -340,13 +342,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Auto-detect provider if key has clear signature
         if (key.startsWith('gsk_')) {
             provider = 'groq';
+        } else if (/^sk-[0-9a-f]{32}$/i.test(key)) {
+            provider = 'deepseek';
         } else if (key.startsWith('sk-')) {
             provider = 'openai';
         } else if (key.startsWith('AIza') || key.startsWith('AQ.')) {
             provider = 'gemini';
         }
 
-        const providerDisplayName = provider === 'groq' ? 'Groq Cloud' : (provider === 'openai' ? 'OpenAI' : 'Google Gemini');
+        const providerDisplayName = provider === 'groq' ? 'Groq Cloud' : (provider === 'deepseek' ? 'DeepSeek' : (provider === 'openai' ? 'OpenAI' : 'Google Gemini'));
 
         statusEl.className = 'small mt-2 text-primary';
         statusEl.innerHTML = '<div class="spinner-border spinner-border-sm me-1" role="status"></div> Menguji koneksi ' + label + ' ke server ' + providerDisplayName + '...';

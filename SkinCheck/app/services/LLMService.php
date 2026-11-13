@@ -47,6 +47,8 @@ class LLMService {
             $keyProvider = 'gemini';
             if (str_starts_with($apiKey, 'gsk_')) {
                 $keyProvider = 'groq';
+            } elseif (preg_match('/^sk-[0-9a-f]{32}$/i', $apiKey)) {
+                $keyProvider = 'deepseek';
             } elseif (str_starts_with($apiKey, 'sk-')) {
                 $keyProvider = 'openai';
             } elseif (str_starts_with($apiKey, 'AIza') || str_starts_with($apiKey, 'AQ.')) {
@@ -71,6 +73,47 @@ class LLMService {
                 $ch = curl_init('https://api.groq.com/openai/v1/chat/completions');
                 $payload = [
                     'model' => $groqModel,
+                    'messages' => $messages,
+                    'max_tokens' => 800
+                ];
+
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                    'Authorization: Bearer ' . $apiKey
+                ]);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+
+                $response = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($httpCode === 200 && $response) {
+                    $resJson = json_decode($response, true);
+                    $text = $resJson['choices'][0]['message']['content'] ?? '';
+                    if (!empty($text)) {
+                        return self::cleanOutput($text);
+                    }
+                }
+                $lastError = "HTTP $httpCode";
+            } elseif ($keyProvider === 'deepseek') {
+                $dsModel = (!empty($model) && str_contains($model, 'deepseek')) ? $model : 'deepseek-chat';
+                $messages = [
+                    ['role' => 'system', 'content' => $systemPrompt]
+                ];
+                foreach ($chatHistory as $msg) {
+                    $messages[] = [
+                        'role' => ($msg['role'] === 'user' ? 'user' : 'assistant'),
+                        'content' => $msg['text'] ?? ''
+                    ];
+                }
+                $messages[] = ['role' => 'user', 'content' => $userMessage];
+
+                $ch = curl_init('https://api.deepseek.com/chat/completions');
+                $payload = [
+                    'model' => $dsModel,
                     'messages' => $messages,
                     'max_tokens' => 800
                 ];

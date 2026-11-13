@@ -402,6 +402,8 @@ class AdminController extends Controller {
         // Auto-detect provider if key has clear prefix
         if (str_starts_with($apiKey, 'gsk_')) {
             $provider = 'groq';
+        } elseif (preg_match('/^sk-[0-9a-f]{32}$/i', $apiKey)) {
+            $provider = 'deepseek';
         } elseif (str_starts_with($apiKey, 'sk-')) {
             $provider = 'openai';
         } elseif (str_starts_with($apiKey, 'AIza') || str_starts_with($apiKey, 'AQ.')) {
@@ -413,7 +415,7 @@ class AdminController extends Controller {
         if ($provider === 'groq') {
             $ch = curl_init('https://api.groq.com/openai/v1/chat/completions');
             $payload = [
-                'model' => (!empty($model) && !str_contains($model, 'gemini') && !str_contains($model, 'gpt')) ? $model : 'qwen/qwen3.8-27b',
+                'model' => (!empty($model) && !str_contains($model, 'gemini') && !str_contains($model, 'gpt') && !str_contains($model, 'deepseek')) ? $model : 'qwen/qwen3.8-27b',
                 'messages' => [
                     ['role' => 'user', 'content' => 'Test connection. Respond with OK.']
                 ],
@@ -452,6 +454,51 @@ class AdminController extends Controller {
                     'success' => false,
                     'http_code' => $httpCode,
                     'error' => "HTTP {$httpCode}: " . ($errDetail ?: $curlError ?: 'Gagal terhubung ke API Groq.')
+                ]);
+            }
+            exit;
+        } elseif ($provider === 'deepseek') {
+            $ch = curl_init('https://api.deepseek.com/chat/completions');
+            $payload = [
+                'model' => (!empty($model) && str_contains($model, 'deepseek')) ? $model : 'deepseek-chat',
+                'messages' => [
+                    ['role' => 'user', 'content' => 'Test connection. Respond with OK.']
+                ],
+                'max_tokens' => 5
+            ];
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $apiKey
+            ]);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $curlError = curl_error($ch);
+            curl_close($ch);
+
+            $latency = round((microtime(true) - $startTime) * 1000);
+
+            if ($httpCode === 200) {
+                echo json_encode([
+                    'success' => true,
+                    'latency_ms' => $latency,
+                    'message' => "DeepSeek API Key AKTIF & Valid! Waktu respons: {$latency}ms."
+                ]);
+            } else {
+                $errDetail = '';
+                if ($response) {
+                    $jsonRes = json_decode($response, true);
+                    $errDetail = $jsonRes['error']['message'] ?? $response;
+                }
+                echo json_encode([
+                    'success' => false,
+                    'http_code' => $httpCode,
+                    'error' => "HTTP {$httpCode}: " . ($errDetail ?: $curlError ?: 'Gagal terhubung ke API DeepSeek.')
                 ]);
             }
             exit;
