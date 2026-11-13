@@ -18,7 +18,7 @@ if %errorlevel% neq 0 (
 )
 
 netstat -ano | findstr :3306 >nul
-if %errorlevel% neq 0 (
+if %errorlevel% neq 0 ( 
     echo Mengaktifkan MySQL...
     if exist "c:\xampp\mysql_start.bat" (
         start "" /b "c:\xampp\mysql_start.bat"

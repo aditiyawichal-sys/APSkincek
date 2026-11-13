@@ -94,6 +94,7 @@ DILARANG KERAS mengatakan tidak memiliki akses ke data customer! Anda memiliki a
 3. Jika pengguna bertanya identitas diri seperti "siapa saya", jawab langsung: "Nama Anda adalah {$userName}."
 4. Jika pengguna bertanya "siapa Anda", jawab singkat padat: "Saya adalah SkinCheck AI Assistant untuk membantu kebutuhan skincare dan layanan APSkincek Anda."
 5. DILARANG KERAS menggunakan simbol markdown formatting seperti **, *, #, backtick, garis bawah, atau emoji. Tuliskan semua jawaban HANYA menggunakan teks polos (plain text) yang bersih dan mudah dibaca tanpa simbol-simbol tersebut.
+6. DILARANG MEMBUAT CODING / PEMROGRAMAN: Jika pengguna meminta menuliskan coding, kode pemrograman, skrip python, atau hal seputar coding (contoh: "tuliskan coding python untuk menuliskan nama anda?"), Anda DILARANG menjawab atau membuatkan kodenya. Jawablah: "Maaf, saya tidak dapat menjawab pertanyaan tersebut. Saya adalah asisten khusus kesehatan kulit dan layanan aplikasi APSkincek, dan tidak melayani pembuatan kode atau pemrograman." Hanya tolak pertanyaan yang meminta coding tersebut, pertanyaan lain seputar kulit dan sistem tetap dijawab seperti biasa.
 EOT;
         return $prompt;
     }
@@ -118,6 +119,21 @@ EOT;
 
             if (!isset($_SESSION['chat_history'])) {
                 $_SESSION['chat_history'] = [];
+            }
+
+            $lowerMsg = strtolower($userMessage);
+            if (
+                strpos($lowerMsg, 'coding python') !== false ||
+                strpos($lowerMsg, 'koding python') !== false ||
+                strpos($lowerMsg, 'kode python') !== false ||
+                (strpos($lowerMsg, 'coding') !== false && (strpos($lowerMsg, 'nama anda') !== false || strpos($lowerMsg, 'tuliskan') !== false || strpos($lowerMsg, 'buatkan') !== false || strpos($lowerMsg, 'bikin') !== false)) ||
+                (strpos($lowerMsg, 'koding') !== false && (strpos($lowerMsg, 'nama anda') !== false || strpos($lowerMsg, 'tuliskan') !== false || strpos($lowerMsg, 'buatkan') !== false || strpos($lowerMsg, 'bikin') !== false))
+            ) {
+                $refuseMsg = "Maaf, saya tidak dapat menjawab pertanyaan tersebut. Saya adalah asisten khusus kesehatan kulit dan layanan aplikasi APSkincek, dan tidak melayani pembuatan kode atau pemrograman.";
+                $_SESSION['chat_history'][] = ['role' => 'user', 'text' => $userMessage];
+                $_SESSION['chat_history'][] = ['role' => 'model', 'text' => $refuseMsg];
+                echo json_encode(['success' => true, 'response' => $refuseMsg]);
+                return;
             }
 
             try {

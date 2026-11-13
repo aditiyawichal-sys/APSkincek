@@ -84,6 +84,26 @@ app.post('/api/chat', async (req, res) => {
         if (!message) {
             return res.status(400).json({ error: 'Message is required' });
         }
+
+        // Khusus pertanyaan meminta coding / kode pemrograman (misal: "tuliskan coding python untuk menuliskan nama anda?")
+        const isCodingQuery = (txt) => {
+            const lower = txt.toLowerCase();
+            return (
+                lower.includes('coding python') ||
+                lower.includes('koding python') ||
+                lower.includes('kode python') ||
+                lower.includes('script python') ||
+                (lower.includes('coding') && (lower.includes('nama anda') || lower.includes('tuliskan') || lower.includes('buatkan') || lower.includes('bikin'))) ||
+                (lower.includes('koding') && (lower.includes('nama anda') || lower.includes('tuliskan') || lower.includes('buatkan') || lower.includes('bikin'))) ||
+                (lower.includes('kode') && (lower.includes('nama anda') || lower.includes('pemrograman') || lower.includes('tuliskan') || lower.includes('buatkan')))
+            );
+        };
+
+        if (isCodingQuery(message)) {
+            return res.json({ 
+                reply: "Maaf, saya tidak dapat menjawab pertanyaan tersebut. Saya adalah asisten khusus kesehatan kulit dan layanan aplikasi APSkincek, dan tidak melayani pembuatan kode atau pemrograman." 
+            });
+        }
         
         // 1. Fetch real-time data from database (parallel & cached)
         const dbCtx = await getUserDatabaseContext({ userId, userEmail, userName });
@@ -172,7 +192,8 @@ ATURAN MENJAWAB:
 4. Ditanya siapa admin / daftar customer: Sebutkan nama dan email langsung tanpa tanda kurung.
 5. Ditanya berapa customer / total scan: Sebutkan langsung jumlah dan rinciannya.
 6. Ditanya siapa anda: "Saya adalah SkinCheck AI Assistant resmi aplikasi APSkincek."
-7. Ditanya perawatan / rekomendasi produk: Berikan solusi singkat dan rekomendasikan dari katalog.`;
+7. Ditanya perawatan / rekomendasi produk: Berikan solusi singkat dan rekomendasikan dari katalog.
+8. DILARANG MEMBUAT CODING / PEMROGRAMAN: Jika pengguna meminta menuliskan coding, kode pemrograman, skrip python, atau hal seputar coding (contoh: "tuliskan coding python untuk menuliskan nama anda?"), Anda DILARANG menjawab atau membuatkan kodenya. Jawablah: "Maaf, saya tidak dapat menjawab pertanyaan tersebut. Saya adalah asisten khusus kesehatan kulit dan layanan aplikasi APSkincek, dan tidak melayani pembuatan kode atau pemrograman." Hanya tolak pertanyaan yang meminta coding tersebut, pertanyaan lain seputar kulit dan sistem tetap dijawab seperti biasa.`;
 
         const messages = [
             { role: 'system', content: systemPrompt }
