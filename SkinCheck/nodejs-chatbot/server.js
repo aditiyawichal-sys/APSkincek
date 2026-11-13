@@ -30,9 +30,114 @@ function getAiConfig() {
     };
 }
 
+function detectProvider(apiKey, defaultProvider = 'groq') {
+    if (!apiKey) return defaultProvider;
+    const key = apiKey.trim();
+    if (key.startsWith('gsk_')) return 'groq';
+    if (key.startsWith('sk-')) return 'openai';
+    if (key.startsWith('AIza') || key.startsWith('AQ.')) return 'gemini';
+    if (defaultProvider === 'gemini') return 'gemini';
+    if (defaultProvider === 'openai') return 'openai';
+    return key.length > 20 ? 'gemini' : defaultProvider;
+}
+
+async function callGroq(apiKey, messages, model = 'qwen/qwen3.8-27b') {
+    const client = new Groq({ 
+        apiKey: apiKey,
+        maxRetries: 0,
+        timeout: 4500
+    });
+
+    return await client.chat.completions.create({
+        messages: messages,
+        model: model,
+        max_tokens: 300,
+        temperature: 0.1
+    });
+}
+
+async function callGemini(apiKey, messages, model = 'gemini-1.5-flash') {
+    const systemMsg = messages.find(m => m.role === 'system');
+    const nonSystem = messages.filter(m => m.role !== 'system');
+    
+    const contents = nonSystem.map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }]
+    }));
+    
+    const payload = {
+        contents: contents,
+        generationConfig: {
+            maxOutputTokens: 300,
+            temperature: 0.1
+        }
+    };
+    
+    if (systemMsg && systemMsg.content) {
+        payload.system_instruction = {
+            parts: [{ text: systemMsg.content }]
+        };
+    }
+    
+    const geminiModel = (model && model.includes('gemini')) ? model : 'gemini-1.5-flash';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
+    
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(5000)
+    });
+    
+    if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Gemini HTTP ${res.status}: ${errText}`);
+    }
+    
+    const data = await res.json();
+    const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    if (!replyText) {
+        throw new Error('Gemini tidak mengembalikan teks respon.');
+    }
+    
+    return {
+        choices: [
+            {
+                message: {
+                    content: replyText
+                }
+            }
+        ]
+    };
+}
+
+async function callOpenAI(apiKey, messages, model = 'gpt-4o-mini') {
+    const oaiModel = (model && model.startsWith('gpt')) ? model : 'gpt-4o-mini';
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: oaiModel,
+            messages: messages,
+            max_tokens: 300,
+            temperature: 0.1
+        }),
+        signal: AbortSignal.timeout(5000)
+    });
+    
+    if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`OpenAI HTTP ${res.status}: ${errText}`);
+    }
+    
+    return await res.json();
+}
+
 async function callChatWithFailover(messages) {
     const config = getAiConfig();
-    const modelToUse = config.model || 'qwen/qwen3.8-27b';
 
     const candidateKeys = [
         { id: 'primary', label: 'Kunci Utama (Primary)', key: config.primary_api_key?.trim() },
@@ -50,23 +155,23 @@ async function callChatWithFailover(messages) {
     let lastError = null;
     for (let i = 0; i < activePool.length; i++) {
         const item = activePool[i];
+        const provider = detectProvider(item.key, config.provider || 'groq');
         try {
-            const client = new Groq({ 
-                apiKey: item.key,
-                maxRetries: 0,
-                timeout: 4500
-            });
-
-            const completion = await client.chat.completions.create({
-                messages: messages,
-                model: modelToUse,
-                max_tokens: 300,
-                temperature: 0.1
-            });
+            let completion;
+            if (provider === 'groq') {
+                const groqModel = (config.model && !config.model.includes('gemini') && !config.model.includes('gpt')) 
+                    ? config.model 
+                    : 'qwen/qwen3.8-27b';
+                completion = await callGroq(item.key, messages, groqModel);
+            } else if (provider === 'openai') {
+                completion = await callOpenAI(item.key, messages, config.model);
+            } else {
+                completion = await callGemini(item.key, messages, config.model);
+            }
 
             return completion;
         } catch (err) {
-            console.warn(`[Chatbot FAILOVER] ${item.label} (${err.status || err.message}). Mencoba kunci cadangan berikutnya...`);
+            console.warn(`[Chatbot FAILOVER] ${item.label} [${provider}] (${err.status || err.message}). Mencoba kunci berikutnya...`);
             lastError = err;
             if (!config.auto_failover && i === 0) {
                 break;

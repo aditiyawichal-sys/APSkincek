@@ -107,13 +107,13 @@ if (!empty($backup3)) $filledBackups++;
                     <span class="badge bg-primary px-3 py-2 rounded-pill">Prioritas 1</span>
                 </div>
                 <div class="card-body px-4 pb-4 pt-1">
-                    <p class="text-muted small">Kunci ini akan selalu digunakan pertama kali oleh Chatbot dan Sistem Analisis Kulit untuk menjawab percakapan.</p>
+                    <p class="text-muted small">Kunci ini akan selalu digunakan pertama kali oleh Chatbot dan Sistem Analisis Kulit untuk menjawab percakapan. Bebas menggunakan API Key dari <strong>Groq Cloud</strong>, <strong>Google Gemini</strong>, atau <strong>OpenAI</strong>.</p>
                     
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Groq / Gemini API Key Utama:</label>
+                        <label class="form-label small fw-semibold">API Key Utama (Groq / Gemini / OpenAI):</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>
-                            <input type="password" id="input_primary_key" name="primary_api_key" class="form-control font-monospace" placeholder="gsk_..." value="<?= htmlspecialchars($primaryKey) ?>" required>
+                            <input type="password" id="input_primary_key" name="primary_api_key" class="form-control font-monospace" placeholder="gsk_... / AIza... / sk-..." value="<?= htmlspecialchars($primaryKey) ?>" required>
                             <button type="button" class="btn btn-outline-secondary btn-toggle-pw" data-target="input_primary_key" title="Tampilkan/Sembunyikan">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -138,21 +138,23 @@ if (!empty($backup3)) $filledBackups++;
                 </div>
                 <div class="card-body px-4 pb-4 pt-1">
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Provider AI:</label>
+                        <label class="form-label small fw-semibold">Default Provider AI Utama:</label>
                         <select name="provider" id="providerSelect" class="form-select rounded-3">
-                            <option value="groq" <?= $currentProvider === 'groq' ? 'selected' : '' ?>>Groq Cloud (Rekomendasi - Respon Kilat 100-300ms)</option>
-                            <option value="gemini" <?= $currentProvider === 'gemini' ? 'selected' : '' ?>>Google Gemini (generativelanguage.googleapis.com)</option>
+                            <option value="groq" <?= $currentProvider === 'groq' ? 'selected' : '' ?>>Groq Cloud (Respon Kilat 100-300ms - gsk_...)</option>
+                            <option value="gemini" <?= $currentProvider === 'gemini' ? 'selected' : '' ?>>Google Gemini (generativelanguage.googleapis.com - AIza...)</option>
+                            <option value="openai" <?= $currentProvider === 'openai' ? 'selected' : '' ?>>OpenAI (api.openai.com - sk-...)</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label small fw-semibold">Model AI:</label>
+                        <label class="form-label small fw-semibold">Model AI Default:</label>
                         <select name="model" id="modelSelect" class="form-select rounded-3 font-monospace">
-                            <option value="qwen/qwen3.8-27b" <?= $currentModel === 'qwen/qwen3.8-27b' ? 'selected' : '' ?>>qwen/qwen3.8-27b (Default Stabil APSkincek)</option>
-                            <option value="llama-3.3-70b-versatile" <?= $currentModel === 'llama-3.3-70b-versatile' ? 'selected' : '' ?>>llama-3.3-70b-versatile (Model Besar Pintar)</option>
-                            <option value="llama-3.1-8b-instant" <?= $currentModel === 'llama-3.1-8b-instant' ? 'selected' : '' ?>>llama-3.1-8b-instant (Sangat Ringan & Cepat)</option>
-                            <option value="mixtral-8x7b-32768" <?= $currentModel === 'mixtral-8x7b-32768' ? 'selected' : '' ?>>mixtral-8x7b-32768 (Kontek Panjang)</option>
-                            <option value="gemini-1.5-flash" <?= $currentModel === 'gemini-1.5-flash' ? 'selected' : '' ?>>gemini-1.5-flash (Google Gemini)</option>
+                            <option value="qwen/qwen3.8-27b" <?= $currentModel === 'qwen/qwen3.8-27b' ? 'selected' : '' ?>>qwen/qwen3.8-27b (Groq Default Stabil APSkincek)</option>
+                            <option value="llama-3.3-70b-versatile" <?= $currentModel === 'llama-3.3-70b-versatile' ? 'selected' : '' ?>>llama-3.3-70b-versatile (Groq Model Besar Pintar)</option>
+                            <option value="llama-3.1-8b-instant" <?= $currentModel === 'llama-3.1-8b-instant' ? 'selected' : '' ?>>llama-3.1-8b-instant (Groq Sangat Ringan & Cepat)</option>
+                            <option value="gemini-1.5-flash" <?= $currentModel === 'gemini-1.5-flash' ? 'selected' : '' ?>>gemini-1.5-flash (Google Gemini Cepat)</option>
+                            <option value="gemini-1.5-pro" <?= $currentModel === 'gemini-1.5-pro' ? 'selected' : '' ?>>gemini-1.5-pro (Google Gemini Akurat)</option>
+                            <option value="gpt-4o-mini" <?= $currentModel === 'gpt-4o-mini' ? 'selected' : '' ?>>gpt-4o-mini (OpenAI Cepat & Ringkas)</option>
                         </select>
                     </div>
 
@@ -160,11 +162,11 @@ if (!empty($backup3)) $filledBackups++;
                         <div class="form-check form-switch mb-1">
                             <input class="form-check-input fs-5" type="checkbox" name="auto_failover" id="autoFailoverSwitch" <?= $autoFailover ? 'checked' : '' ?>>
                             <label class="form-check-label fw-bold text-dark pt-1" for="autoFailoverSwitch">
-                                Aktifkan Auto-Failover Otomatis
+                                Aktifkan Auto-Failover Otomatis (Multi-AI)
                             </label>
                         </div>
                         <div class="small text-muted ps-1">
-                            Jika Kunci Utama mengalami <strong>Rate Limit (429)</strong>, kuota harian habis, atau macet, server akan langsung secara otomatis berpindah mencoba Cadangan 1, 2, atau 3 dalam hitungan milidetik sehingga pengguna tidak mengalami error!
+                            Jika Kunci Utama mengalami <strong>Rate Limit (429)</strong>, kuota harian habis, atau macet, server otomatis berpindah ke Cadangan 1, 2, atau 3. Sistem otomatis mendeteksi apakah kunci tersebut berasal dari Groq, Gemini, atau OpenAI!
                         </div>
                     </div>
                 </div>
@@ -176,17 +178,17 @@ if (!empty($backup3)) $filledBackups++;
             <div class="card border-0 shadow-sm rounded-4 h-100">
                 <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
                     <h5 class="fw-bold mb-0 text-dark">
-                        <i class="bi bi-shield-plus text-success me-2"></i> 3 API Key Cadangan (Backup Keys)
+                        <i class="bi bi-shield-plus text-success me-2"></i> 3 API Key Cadangan (Multi-AI Failover)
                     </h5>
-                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill">Standby Failover</span>
+                    <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill">Standby Multi-AI</span>
                 </div>
                 <div class="card-body px-4 pb-4 pt-1">
-                    <p class="text-muted small">Masukkan hingga 3 API Key cadangan dari Groq / Google. Ketika kunci utama macet, sistem akan otomatis beralih ke kunci-kunci cadangan ini.</p>
+                    <p class="text-muted small">Bebas menggunakan API Key dari AI mana saja (<strong>Google Gemini</strong>, <strong>OpenAI</strong>, atau <strong>Groq</strong>). Sistem cerdas kami otomatis mendeteksi provider dan mengalihkan permintaan secara instan.</p>
 
                     <!-- CADANGAN 1 -->
                     <div class="p-3 mb-3 bg-light rounded-4 border">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark small"><i class="bi bi-1-circle-fill text-primary me-1"></i> API Key Cadangan 1</span>
+                            <span class="fw-bold text-dark small"><i class="bi bi-1-circle-fill text-primary me-1"></i> API Key Cadangan 1 (Gemini / OpenAI / Groq)</span>
                             <?php if (!empty($backup1)): ?>
                                 <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill btn-swap-primary" data-slot="backup_1">
                                     <i class="bi bi-arrow-down-up me-1"></i> Jadikan Kunci Utama
@@ -194,7 +196,7 @@ if (!empty($backup3)) $filledBackups++;
                             <?php endif; ?>
                         </div>
                         <div class="input-group">
-                            <input type="password" id="input_backup_1" name="backup_api_key_1" class="form-control font-monospace" placeholder="Kunci cadangan 1 (opsional)" value="<?= htmlspecialchars($backup1) ?>">
+                            <input type="password" id="input_backup_1" name="backup_api_key_1" class="form-control font-monospace" placeholder="Kunci cadangan 1 (AIza... / sk-... / gsk_...)" value="<?= htmlspecialchars($backup1) ?>">
                             <button type="button" class="btn btn-outline-secondary btn-toggle-pw" data-target="input_backup_1">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -211,7 +213,7 @@ if (!empty($backup3)) $filledBackups++;
                     <!-- CADANGAN 2 -->
                     <div class="p-3 mb-3 bg-light rounded-4 border">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark small"><i class="bi bi-2-circle-fill text-primary me-1"></i> API Key Cadangan 2</span>
+                            <span class="fw-bold text-dark small"><i class="bi bi-2-circle-fill text-primary me-1"></i> API Key Cadangan 2 (Gemini / OpenAI / Groq)</span>
                             <?php if (!empty($backup2)): ?>
                                 <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill btn-swap-primary" data-slot="backup_2">
                                     <i class="bi bi-arrow-down-up me-1"></i> Jadikan Kunci Utama
@@ -219,7 +221,7 @@ if (!empty($backup3)) $filledBackups++;
                             <?php endif; ?>
                         </div>
                         <div class="input-group">
-                            <input type="password" id="input_backup_2" name="backup_api_key_2" class="form-control font-monospace" placeholder="Kunci cadangan 2 (opsional)" value="<?= htmlspecialchars($backup2) ?>">
+                            <input type="password" id="input_backup_2" name="backup_api_key_2" class="form-control font-monospace" placeholder="Kunci cadangan 2 (AIza... / sk-... / gsk_...)" value="<?= htmlspecialchars($backup2) ?>">
                             <button type="button" class="btn btn-outline-secondary btn-toggle-pw" data-target="input_backup_2">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -236,7 +238,7 @@ if (!empty($backup3)) $filledBackups++;
                     <!-- CADANGAN 3 -->
                     <div class="p-3 mb-2 bg-light rounded-4 border">
                         <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold text-dark small"><i class="bi bi-3-circle-fill text-primary me-1"></i> API Key Cadangan 3</span>
+                            <span class="fw-bold text-dark small"><i class="bi bi-3-circle-fill text-primary me-1"></i> API Key Cadangan 3 (Gemini / OpenAI / Groq)</span>
                             <?php if (!empty($backup3)): ?>
                                 <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill btn-swap-primary" data-slot="backup_3">
                                     <i class="bi bi-arrow-down-up me-1"></i> Jadikan Kunci Utama
@@ -244,7 +246,7 @@ if (!empty($backup3)) $filledBackups++;
                             <?php endif; ?>
                         </div>
                         <div class="input-group">
-                            <input type="password" id="input_backup_3" name="backup_api_key_3" class="form-control font-monospace" placeholder="Kunci cadangan 3 (opsional)" value="<?= htmlspecialchars($backup3) ?>">
+                            <input type="password" id="input_backup_3" name="backup_api_key_3" class="form-control font-monospace" placeholder="Kunci cadangan 3 (AIza... / sk-... / gsk_...)" value="<?= htmlspecialchars($backup3) ?>">
                             <button type="button" class="btn btn-outline-secondary btn-toggle-pw" data-target="input_backup_3">
                                 <i class="bi bi-eye"></i>
                             </button>
@@ -324,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function testKey(inputId, label) {
         const input = document.getElementById(inputId);
         const statusEl = document.getElementById('test_status_' + inputId);
-        const provider = document.getElementById('providerSelect').value;
+        let provider = document.getElementById('providerSelect').value;
         const model = document.getElementById('modelSelect').value;
         const key = input.value.trim();
 
@@ -335,8 +337,19 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Auto-detect provider if key has clear signature
+        if (key.startsWith('gsk_')) {
+            provider = 'groq';
+        } else if (key.startsWith('sk-')) {
+            provider = 'openai';
+        } else if (key.startsWith('AIza') || key.startsWith('AQ.')) {
+            provider = 'gemini';
+        }
+
+        const providerDisplayName = provider === 'groq' ? 'Groq Cloud' : (provider === 'openai' ? 'OpenAI' : 'Google Gemini');
+
         statusEl.className = 'small mt-2 text-primary';
-        statusEl.innerHTML = '<div class="spinner-border spinner-border-sm me-1" role="status"></div> Menguji koneksi ' + label + ' ke server ' + provider + '...';
+        statusEl.innerHTML = '<div class="spinner-border spinner-border-sm me-1" role="status"></div> Menguji koneksi ' + label + ' ke server ' + providerDisplayName + '...';
         statusEl.classList.remove('d-none');
 
         try {
@@ -349,10 +362,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.success) {
                 statusEl.className = 'small mt-2 text-success fw-semibold';
-                statusEl.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> ' + data.message;
+                statusEl.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> [' + providerDisplayName + '] ' + data.message;
             } else {
                 statusEl.className = 'small mt-2 text-danger fw-semibold';
-                statusEl.innerHTML = '<i class="bi bi-x-circle-fill me-1"></i> Gagal: ' + (data.error || 'API Key tidak valid.');
+                statusEl.innerHTML = '<i class="bi bi-x-circle-fill me-1"></i> [' + providerDisplayName + '] Gagal: ' + (data.error || 'API Key tidak valid.');
             }
         } catch (err) {
             statusEl.className = 'small mt-2 text-danger';

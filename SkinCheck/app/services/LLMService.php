@@ -43,7 +43,20 @@ class LLMService {
         foreach ($keysToTry as $keyItem) {
             $apiKey = $keyItem['key'];
 
-            if ($provider === 'groq') {
+            // Auto-detect provider per key
+            $keyProvider = 'gemini';
+            if (str_starts_with($apiKey, 'gsk_')) {
+                $keyProvider = 'groq';
+            } elseif (str_starts_with($apiKey, 'sk-')) {
+                $keyProvider = 'openai';
+            } elseif (str_starts_with($apiKey, 'AIza') || str_starts_with($apiKey, 'AQ.')) {
+                $keyProvider = 'gemini';
+            } elseif ($provider === 'groq') {
+                $keyProvider = 'groq';
+            }
+
+            if ($keyProvider === 'groq') {
+                $groqModel = (!empty($model) && !str_contains($model, 'gemini') && !str_contains($model, 'gpt')) ? $model : 'qwen/qwen3.8-27b';
                 $messages = [
                     ['role' => 'system', 'content' => $systemPrompt]
                 ];
@@ -57,7 +70,48 @@ class LLMService {
 
                 $ch = curl_init('https://api.groq.com/openai/v1/chat/completions');
                 $payload = [
-                    'model' => $model,
+                    'model' => $groqModel,
+                    'messages' => $messages,
+                    'max_tokens' => 800
+                ];
+
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                    'Authorization: Bearer ' . $apiKey
+                ]);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+
+                $response = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($httpCode === 200 && $response) {
+                    $resJson = json_decode($response, true);
+                    $text = $resJson['choices'][0]['message']['content'] ?? '';
+                    if (!empty($text)) {
+                        return self::cleanOutput($text);
+                    }
+                }
+                $lastError = "HTTP $httpCode";
+            } elseif ($keyProvider === 'openai') {
+                $oaiModel = (!empty($model) && str_starts_with($model, 'gpt')) ? $model : 'gpt-4o-mini';
+                $messages = [
+                    ['role' => 'system', 'content' => $systemPrompt]
+                ];
+                foreach ($chatHistory as $msg) {
+                    $messages[] = [
+                        'role' => ($msg['role'] === 'user' ? 'user' : 'assistant'),
+                        'content' => $msg['text'] ?? ''
+                    ];
+                }
+                $messages[] = ['role' => 'user', 'content' => $userMessage];
+
+                $ch = curl_init('https://api.openai.com/v1/chat/completions');
+                $payload = [
+                    'model' => $oaiModel,
                     'messages' => $messages,
                     'max_tokens' => 800
                 ];
@@ -85,6 +139,7 @@ class LLMService {
                 $lastError = "HTTP $httpCode";
             } else {
                 // Gemini Provider
+                $geminiModel = (!empty($model) && str_contains($model, 'gemini')) ? $model : 'gemini-1.5-flash';
                 $contents = [];
                 foreach ($chatHistory as $msg) {
                     $contents[] = [
@@ -94,7 +149,7 @@ class LLMService {
                 }
                 $contents[] = ['role' => 'user', 'parts' => [['text' => $userMessage]]];
 
-                $url = 'https://generativelanguage.googleapis.com/v1beta/models/' . $model . ':generateContent?key=' . $apiKey;
+                $url = 'https://generativelanguage.googleapis.com/v1beta/models/' . $geminiModel . ':generateContent?key=' . $apiKey;
                 $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_POST, true);
