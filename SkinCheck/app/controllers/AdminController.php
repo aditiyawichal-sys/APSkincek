@@ -489,6 +489,12 @@ class AdminController extends Controller {
                     'latency_ms' => $latency,
                     'message' => "DeepSeek API Key AKTIF & Valid! Waktu respons: {$latency}ms."
                 ]);
+            } elseif ($httpCode === 402) {
+                echo json_encode([
+                    'success' => false,
+                    'http_code' => 402,
+                    'error' => "API Key VALID & Terhubung ke akun DeepSeek Anda, tetapi SALDO akun DeepSeek saat ini masih $0.00 (Insufficient Balance). DeepSeek mewajibkan isi saldo (top-up) di platform.deepseek.com sebelum API bisa digunakan. Sebagai alternatif cadangan 100% GRATIS tanpa isi saldo, Anda bisa membuat API Key Google Gemini di aistudio.google.com/apikey."
+                ]);
             } else {
                 $errDetail = '';
                 if ($response) {
