@@ -270,6 +270,29 @@ app.post('/api/chat', async (req, res) => {
 
         // 4. Compact stats
         const stats = dbCtx.systemStats || { totalCustomers: 0, totalAdmins: 0, totalUsers: 0, totalScans: 0, faceScans: 0, sunscreenScans: 0 };
+
+        const lowerMsg = message.trim().toLowerCase();
+
+        // Khusus pertanyaan JUMLAH CUSTOMER: jawab HANYA total angkanya saja, DILARANG menyebutkan nama-nama customer
+        const isCustomerCountOnlyQuery = (txt) => {
+            return (
+                (txt.includes('berapa customer') || 
+                 txt.includes('ada berapa customer') || 
+                 txt.includes('jumlah customer') || 
+                 txt.includes('total customer') || 
+                 txt.includes('banyak customer')) &&
+                !txt.includes('siapa') &&
+                !txt.includes('daftar') &&
+                !txt.includes('nama') &&
+                !txt.includes('rincian')
+            );
+        };
+
+        if (isCustomerCountOnlyQuery(lowerMsg)) {
+            return res.json({ 
+                reply: `Saat ini terdapat ${stats.totalCustomers} customer yang terdaftar di aplikasi APSkincek.` 
+            });
+        }
         
         const customerList = (stats.customers && stats.customers.length > 0)
             ? stats.customers.map((c, i) => `${i + 1}. ${c.name} - email: ${c.email} - Total Scan: ${c.total_scans || 0} kali`).join('\n')
@@ -322,15 +345,20 @@ ${recentScansList}
 [KATALOG PRODUK]
 ${catalogSummary}
 
-ATURAN MENJAWAB:
+ATURAN MENJAWAB SANGAT KETAT:
 1. SANGAT PENTING: DILARANG MENGGUNAKAN TANDA KURUNG () saat menyebutkan identitas seseorang. Langsung saja sebutkan namanya, perannya, atau datanya secara mengalir tanpa tanda kurung.
-2. Ditanya siapa saya: Jawab langsung tanpa tanda kurung: "Anda adalah ${effectiveName}, ${userRole} APSkincek dengan email ${effectiveEmail}."
-3. Ditanya siapa yang scan wajah / sunscreen: Sebutkan nama dan jumlah scan langsung tanpa tanda kurung. Contoh: "1. michael - 10 kali scan".
-4. Ditanya siapa admin / daftar customer: Sebutkan nama dan email langsung tanpa tanda kurung.
-5. Ditanya berapa customer / total scan: Sebutkan langsung jumlah dan rinciannya.
-6. Ditanya siapa anda: "Saya adalah SkinCheck AI Assistant resmi aplikasi APSkincek."
-7. Ditanya perawatan / rekomendasi produk: Berikan solusi singkat dan rekomendasikan dari katalog.
-8. DILARANG MEMBUAT CODING / PEMROGRAMAN: Jika pengguna meminta menuliskan coding, kode pemrograman, skrip python, atau hal seputar coding (contoh: "tuliskan coding python untuk menuliskan nama anda?"), Anda DILARANG menjawab atau membuatkan kodenya. Jawablah: "Maaf, saya tidak dapat menjawab pertanyaan tersebut. Saya adalah asisten khusus kesehatan kulit dan layanan aplikasi APSkincek, dan tidak melayani pembuatan kode atau pemrograman." Hanya tolak pertanyaan yang meminta coding tersebut, pertanyaan lain seputar kulit dan sistem tetap dijawab seperti biasa.`;
+2. ATURAN JUMLAH CUSTOMER: Jika ditanya "ada berapa customer", "berapa customer", "berapa jumlah customer", "total customer", atau pertanyaan sejenis yang menanyakan JUMLAH/TOTAL customer:
+   - JAWAB HANYA TOTALNYA SAJA: "Saat ini terdapat ${stats.totalCustomers} customer yang terdaftar di aplikasi APSkincek."
+   - DILARANG KERAS menyebutkan nama-nama atau email customer saat hanya ditanya "berapa". Cukup sebutkan total jumlahnya saja!
+3. ATURAN DAFTAR NAMA CUSTOMER: Hanya ketika pengguna bertanya secara spesifik: "siapa saja customer nya", "daftar customer", "siapa customer", atau meminta rincian nama customer, BARULAH sebutkan daftar nama customer tersebut secara berurutan tanpa tanda kurung:
+${customerList}
+4. Ditanya siapa saya: Jawab langsung tanpa tanda kurung: "Anda adalah ${effectiveName}, ${userRole} APSkincek dengan email ${effectiveEmail}."
+5. Ditanya siapa admin: Sebutkan nama dan email admin langsung tanpa tanda kurung.
+6. Ditanya siapa yang scan wajah / sunscreen: Sebutkan nama dan jumlah scan langsung tanpa tanda kurung. Contoh: "1. michael - 10 kali scan".
+7. Ditanya total scan: Sebutkan total scan di database: "Total scan di database adalah ${stats.totalScans} kali, rincian: ${stats.faceScans} scan wajah dan ${stats.sunscreenScans} cek sunscreen."
+8. Ditanya siapa anda: "Saya adalah SkinCheck AI Assistant resmi aplikasi APSkincek."
+9. Ditanya perawatan / rekomendasi produk: Berikan solusi singkat dan rekomendasikan dari katalog.
+10. DILARANG MEMBUAT CODING / PEMROGRAMAN: Jika pengguna meminta menuliskan coding, kode pemrograman, skrip python, atau hal seputar coding (contoh: "tuliskan coding python untuk menuliskan nama anda?"), Anda DILARANG menjawab atau membuatkan kodenya. Jawablah: "Maaf, saya tidak dapat menjawab pertanyaan tersebut. Saya adalah asisten khusus kesehatan kulit dan layanan aplikasi APSkincek, dan tidak melayani pembuatan kode atau pemrograman."`;
 
         const messages = [
             { role: 'system', content: systemPrompt }
