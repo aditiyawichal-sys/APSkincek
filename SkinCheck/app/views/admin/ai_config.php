@@ -151,11 +151,11 @@ if (!empty($backup3)) $filledBackups++;
                         <label class="form-label small fw-semibold">Model AI Default:</label>
                         <select name="model" id="modelSelect" class="form-select rounded-3 font-monospace">
                             <option value="qwen/qwen3.8-27b" <?= $currentModel === 'qwen/qwen3.8-27b' ? 'selected' : '' ?>>qwen/qwen3.8-27b (Groq Default Stabil APSkincek)</option>
+                            <option value="gemini-3.5-flash" <?= in_array($currentModel, ['gemini-3.5-flash', 'gemini-1.5-flash']) ? 'selected' : '' ?>>gemini-3.5-flash (Google Gemini Cepat & Akurat - Rekomendasi)</option>
+                            <option value="gemini-3.5-flash-lite" <?= in_array($currentModel, ['gemini-3.5-flash-lite', 'gemini-1.5-pro']) ? 'selected' : '' ?>>gemini-3.5-flash-lite (Google Gemini Ringan)</option>
                             <option value="deepseek-chat" <?= $currentModel === 'deepseek-chat' ? 'selected' : '' ?>>deepseek-chat (DeepSeek V3 Cerdas)</option>
                             <option value="llama-3.3-70b-versatile" <?= $currentModel === 'llama-3.3-70b-versatile' ? 'selected' : '' ?>>llama-3.3-70b-versatile (Groq Model Besar Pintar)</option>
                             <option value="llama-3.1-8b-instant" <?= $currentModel === 'llama-3.1-8b-instant' ? 'selected' : '' ?>>llama-3.1-8b-instant (Groq Sangat Ringan & Cepat)</option>
-                            <option value="gemini-1.5-flash" <?= $currentModel === 'gemini-1.5-flash' ? 'selected' : '' ?>>gemini-1.5-flash (Google Gemini Cepat)</option>
-                            <option value="gemini-1.5-pro" <?= $currentModel === 'gemini-1.5-pro' ? 'selected' : '' ?>>gemini-1.5-pro (Google Gemini Akurat)</option>
                             <option value="gpt-4o-mini" <?= $currentModel === 'gpt-4o-mini' ? 'selected' : '' ?>>gpt-4o-mini (OpenAI Cepat & Ringkas)</option>
                         </select>
                     </div>
@@ -352,6 +352,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const providerDisplayName = provider === 'groq' ? 'Groq Cloud' : (provider === 'deepseek' ? 'DeepSeek' : (provider === 'openai' ? 'OpenAI' : 'Google Gemini'));
 
+        let testModel = model;
+        if (provider === 'gemini') {
+            testModel = (model && model.includes('gemini') && !model.includes('1.5') && !model.includes('2.5')) ? model : 'gemini-3.5-flash';
+        } else if (provider === 'groq') {
+            testModel = (model && !model.includes('gemini') && !model.includes('gpt') && !model.includes('deepseek')) ? model : 'qwen/qwen3.8-27b';
+        } else if (provider === 'deepseek') {
+            testModel = (model && model.includes('deepseek')) ? model : 'deepseek-chat';
+        } else if (provider === 'openai') {
+            testModel = (model && model.startsWith('gpt')) ? model : 'gpt-4o-mini';
+        }
+
         statusEl.className = 'small mt-2 text-primary';
         statusEl.innerHTML = '<div class="spinner-border spinner-border-sm me-1" role="status"></div> Menguji koneksi ' + label + ' ke server ' + providerDisplayName + '...';
         statusEl.classList.remove('d-none');
@@ -360,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const res = await fetch('/APSkincek/SkinCheck/public/admin/ai-config/test', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ apiKey: key, provider: provider, model: model })
+                body: JSON.stringify({ apiKey: key, provider: provider, model: testModel })
             });
             const data = await res.json();
 

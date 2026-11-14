@@ -182,7 +182,7 @@ class LLMService {
                 $lastError = "HTTP $httpCode";
             } else {
                 // Gemini Provider
-                $geminiModel = (!empty($model) && str_contains($model, 'gemini')) ? $model : 'gemini-1.5-flash';
+                $geminiModel = (!empty($model) && str_contains($model, 'gemini') && !str_contains($model, '1.5') && !str_contains($model, '2.5')) ? $model : 'gemini-3.5-flash';
                 $contents = [];
                 foreach ($chatHistory as $msg) {
                     $contents[] = [
@@ -200,7 +200,10 @@ class LLMService {
                     'system_instruction' => ['parts' => [['text' => $systemPrompt]]],
                     'contents' => $contents
                 ]));
-                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                    'x-goog-api-key: ' . $apiKey
+                ]);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
                 $response = curl_exec($ch);

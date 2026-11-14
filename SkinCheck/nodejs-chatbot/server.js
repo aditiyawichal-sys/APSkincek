@@ -83,7 +83,7 @@ async function callDeepSeek(apiKey, messages, model = 'deepseek-chat') {
     return await res.json();
 }
 
-async function callGemini(apiKey, messages, model = 'gemini-1.5-flash') {
+async function callGemini(apiKey, messages, model = 'gemini-3.5-flash') {
     const systemMsg = messages.find(m => m.role === 'system');
     const nonSystem = messages.filter(m => m.role !== 'system');
     
@@ -95,7 +95,7 @@ async function callGemini(apiKey, messages, model = 'gemini-1.5-flash') {
     const payload = {
         contents: contents,
         generationConfig: {
-            maxOutputTokens: 300,
+            maxOutputTokens: 800,
             temperature: 0.1
         }
     };
@@ -106,14 +106,17 @@ async function callGemini(apiKey, messages, model = 'gemini-1.5-flash') {
         };
     }
     
-    const geminiModel = (model && model.includes('gemini')) ? model : 'gemini-1.5-flash';
+    const geminiModel = (model && model.includes('gemini') && !model.includes('1.5') && !model.includes('2.5')) ? model : 'gemini-3.5-flash';
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
     
     const res = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey
+        },
         body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(5000)
+        signal: AbortSignal.timeout(6000)
     });
     
     if (!res.ok) {

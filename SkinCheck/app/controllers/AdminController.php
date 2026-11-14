@@ -554,7 +554,7 @@ class AdminController extends Controller {
             }
             exit;
         } else {
-            $geminiModel = (!empty($model) && str_contains($model, 'gemini')) ? $model : 'gemini-1.5-flash';
+            $geminiModel = (!empty($model) && str_contains($model, 'gemini') && !str_contains($model, '1.5') && !str_contains($model, '2.5')) ? $model : 'gemini-3.5-flash';
             $url = 'https://generativelanguage.googleapis.com/v1beta/models/' . $geminiModel . ':generateContent?key=' . $apiKey;
             $ch = curl_init($url);
             $payload = [
@@ -565,8 +565,11 @@ class AdminController extends Controller {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'x-goog-api-key: ' . $apiKey
+            ]);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 12);
 
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -580,10 +583,15 @@ class AdminController extends Controller {
                     'message' => "Gemini API Key AKTIF & Valid! Waktu respons: {$latency}ms."
                 ]);
             } else {
+                $errDetail = '';
+                if ($response) {
+                    $jsonRes = json_decode($response, true);
+                    $errDetail = $jsonRes['error']['message'] ?? '';
+                }
                 echo json_encode([
                     'success' => false,
                     'http_code' => $httpCode,
-                    'error' => "HTTP {$httpCode}: API Key Gemini tidak valid atau kuota habis."
+                    'error' => "HTTP {$httpCode}: " . ($errDetail ?: 'API Key Gemini tidak valid atau kuota habis.')
                 ]);
             }
             exit;
