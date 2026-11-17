@@ -311,6 +311,8 @@ Berkas konfigurasi pipeline terpasang pada `.github/workflows/ci.yml`:
 
 * **Repositori Kode Sumber GitHub:**  
   👉 [https://github.com/aditiyawichal-sys/APSkincek](https://github.com/aditiyawichal-sys/APSkincek)
+* **Tautan Video Demonstrasi Sistem (YouTube):**  
+  👉 [https://youtu.be/IAnv29EBfus](https://youtu.be/IAnv29EBfus)
 * **Dokumen PRD Lengkap:**  
   👉 [PRD_SKINCHECK_LENGKAP.md](file:///c:/xampp/htdocs/APSkincek/dokumentasi_uml_dan_prototipe/PRD_SKINCHECK_LENGKAP.md)
 * **Naskah Sidang Presentasi UML:**  

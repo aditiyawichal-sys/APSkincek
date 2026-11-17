@@ -142,11 +142,12 @@ graph LR
 
 ## 🎥 6. TAUTAN VIDEO DEMONSTRASI YOUTUBE
 
-Dokumentasi video demonstrasi sistem, pengujian unit test lokal, dan implementasi CI/CD GitHub Actions dapat diakses pada tautan berikut:
+Dokumentasi video demonstrasi sistem, pengujian unit test lokal, dan implementasi CI/CD GitHub Actions dapat disaksikan secara daring melalui tautan YouTube berikut:
 
-* 🔗 **Link Video YouTube:**  
-  `[Link Video Demo YouTube - Akan Diperbarui: https://youtu.be/PLACEHOLDER_VIDEO_UAS]`  
-  *(Tautan akan diperbarui setelah proses perekaman dan pengunggahan video presentasi selesai).*
+* 🔗 **Tonton Video Demonstrasi (YouTube):**  
+  [![Tonton di YouTube](https://img.shields.io/badge/YouTube-Video_Demonstrasi_UAS-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/IAnv29EBfus)  
+  👉 **[https://youtu.be/IAnv29EBfus](https://youtu.be/IAnv29EBfus)**  
+  *(Tautan Alternatif: [https://www.youtube.com/watch?v=IAnv29EBfus](https://www.youtube.com/watch?v=IAnv29EBfus))*
 
 ---
 
