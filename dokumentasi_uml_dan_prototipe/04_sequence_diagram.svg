@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="seqBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Lifeline Head Gradients -->
+    <linearGradient id="lifeBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+    <linearGradient id="lifeGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="lifePurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+    <linearGradient id="lifeAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+
+    <filter id="seqDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Markers -->
+    <marker id="syncArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="replyArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#94a3b8" stroke-width="1.5" />
+    </marker>
+    <marker id="dbArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#f59e0b" />
+    </marker>
+    <marker id="aiArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#34d399" />
+    </marker>
+  </defs>
+
+  <rect width="2000" height="1480" fill="url(#seqBg)" />
+
+  <!-- HEADER -->
+  <g transform="translate(60, 30)">
+    <rect x="0" y="0" width="1880" height="85" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#seqDrop)" />
+    <rect x="25" y="16" width="52" height="52" rx="14" fill="#0284c7" />
+    <text x="51" y="50" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" fill="#ffffff">⏱️</text>
+    
+    <text x="95" y="44" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#ffffff">
+      SEQUENCE DIAGRAM — SCAN WAJAH AI &amp; MULTI-LLM AUTO-FAILOVER APSKINCEK
+    </text>
+    <text x="95" y="65" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">
+      Pertukaran Pesan: Pengguna, Web View, ScanController, OpenCV AI Engine, MySQL DB, dan Multi-AI Router
+    </text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- LIFELINE PARTICIPANTS (COLUMNS) -->
+  <!-- ======================================================== -->
+  <!-- 1. Customer (X: 180) -->
+  <g transform="translate(80, 145)">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="url(#lifeBlue)" filter="url(#seqDrop)" />
+    <text x="100" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">👤 Pengguna</text>
+    <text x="100" y="40" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#bae6fd">(Customer)</text>
+    <line x1="100" y1="50" x2="100" y2="1260" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 4" />
+  </g>
+
+  <!-- 2. Web Camera UI (X: 430) -->
+  <g transform="translate(330, 145)">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="url(#lifeBlue)" filter="url(#seqDrop)" />
+    <text x="100" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">📱 Camera &amp; UI</text>
+    <text x="100" y="40" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#bae6fd">(Frontend WebRTC)</text>
+    <line x1="100" y1="50" x2="100" y2="1260" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 4" />
+  </g>
+
+  <!-- 3. ScanController (X: 710) -->
+  <g transform="translate(610, 145)">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="url(#lifePurple)" filter="url(#seqDrop)" />
+    <text x="100" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">⚙️ ScanController</text>
+    <text x="100" y="40" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#e9d5ff">(MVC Backend PHP)</text>
+    <line x1="100" y1="50" x2="100" y2="1260" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="6 4" />
+  </g>
+
+  <!-- 4. PythonAIService (X: 1010) -->
+  <g transform="translate(910, 145)">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="url(#lifeGreen)" filter="url(#seqDrop)" />
+    <text x="100" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">👁️ analyze.py</text>
+    <text x="100" y="40" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#a7f3d0">(OpenCV Python Engine)</text>
+    <line x1="100" y1="50" x2="100" y2="1260" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6 4" />
+  </g>
+
+  <!-- 5. MySQL Database (X: 1310) -->
+  <g transform="translate(1210, 145)">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="url(#lifeAmber)" filter="url(#seqDrop)" />
+    <text x="100" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">🗄️ MySQL Database</text>
+    <text x="100" y="40" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#fde68a">(9 Tabel Ternormalisasi)</text>
+    <line x1="100" y1="50" x2="100" y2="1260" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6 4" />
+  </g>
+
+  <!-- 6. Multi-LLM Chatbot Engine (X: 1650) -->
+  <g transform="translate(1550, 145)">
+    <rect x="0" y="0" width="200" height="50" rx="12" fill="url(#lifePurple)" filter="url(#seqDrop)" />
+    <text x="100" y="25" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">🤖 Multi-LLM Engine</text>
+    <text x="100" y="40" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#e9d5ff">(Groq / Gemini / DeepSeek)</text>
+    <line x1="100" y1="50" x2="100" y2="1260" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="6 4" />
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- ACTIVATION BOXES & MESSAGE INTERACTIONS -->
+  <!-- ======================================================== -->
+
+  <!-- PART A: FACE SCAN & COMPUTER VISION DIAGNOSIS -->
+  <g transform="translate(0, 220)">
+    <!-- Activation on View -->
+    <rect x="422" y="10" width="16" height="580" fill="#0284c7" rx="4" />
+    <!-- Activation on ScanController -->
+    <rect x="702" y="40" width="16" height="520" fill="#7c3aed" rx="4" />
+    <!-- Activation on Python Engine -->
+    <rect x="1002" y="140" width="16" height="180" fill="#059669" rx="4" />
+    <!-- Activation on MySQL -->
+    <rect x="1302" y="80" width="16" height="50" fill="#d97706" rx="4" />
+    <rect x="1302" y="360" width="16" height="170" fill="#d97706" rx="4" />
+
+    <!-- 1. Customer takes photo -->
+    <line x1="180" y1="15" x2="422" y2="15" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="290" y="9" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">1. Ambil Foto Wajah via Kamera Web</text>
+
+    <!-- 2. Upload to Controller -->
+    <line x1="438" y1="45" x2="702" y2="45" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="570" y="38" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">2. POST /scan/upload (image_file, type: 'face')</text>
+
+    <!-- Self-call: Save to disk -->
+    <path d="M 718 60 C 760 60, 760 85, 718 85" stroke="#c084fc" stroke-width="1.5" marker-end="url(#syncArr)" fill="none" />
+    <text x="770" y="75" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#e9d5ff">Validasi &amp; Simpan ke uploads/scans/</text>
+
+    <!-- 3. Insert scan pending to DB -->
+    <line x1="718" y1="95" x2="1302" y2="95" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#dbArr)" />
+    <text x="960" y="88" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">3. INSERT INTO skin_scans (status='pending')</text>
+
+    <!-- DB return scan_id -->
+    <line x1="1302" y1="125" x2="718" y2="125" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#replyArr)" />
+    <text x="960" y="120" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#cbd5e1">Return scan_id = 101</text>
+
+    <!-- 4. Call Python AI -->
+    <line x1="718" y1="150" x2="1002" y2="150" stroke="#34d399" stroke-width="2" marker-end="url(#aiArr)" />
+    <text x="860" y="142" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="bold" fill="#34d399">4. exec python analyze.py --image "filepath"</text>
+
+    <!-- Self: OpenCV Operations -->
+    <path d="M 1018 175 C 1080 175, 1080 205, 1018 205" stroke="#34d399" stroke-width="1.5" marker-end="url(#aiArr)" fill="none" />
+    <text x="1090" y="193" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#a7f3d0">Haar Cascade: Isolasi ROI Wajah</text>
+
+    <path d="M 1018 220 C 1080 220, 1080 250, 1018 250" stroke="#34d399" stroke-width="1.5" marker-end="url(#aiArr)" fill="none" />
+    <text x="1090" y="238" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#a7f3d0">Ekstraksi Acne (HSV) &amp; Redness (CIELAB)</text>
+
+    <path d="M 1018 265 C 1080 265, 1080 295, 1018 295" stroke="#34d399" stroke-width="1.5" marker-end="url(#aiArr)" fill="none" />
+    <text x="1090" y="283" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#a7f3d0">Tekstur Laplacian Variance &amp; Score 81</text>
+
+    <!-- Return JSON to Controller -->
+    <line x1="1002" y1="315" x2="718" y2="315" stroke="#34d399" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#replyArr)" />
+    <text x="860" y="308" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#34d399">Return JSON {acne:85, redness:70, texture:78, score:81}</text>
+
+    <!-- 5. Save results to DB -->
+    <line x1="718" y1="365" x2="1302" y2="365" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#dbArr)" />
+    <text x="1010" y="358" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">5. INSERT INTO analysis_results (scan_id, scores, details)</text>
+
+    <!-- 6. Query matching products -->
+    <line x1="718" y1="410" x2="1302" y2="410" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#dbArr)" />
+    <text x="1010" y="403" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">6. SELECT * FROM products WHERE target_issues MATCH</text>
+
+    <!-- DB returns products -->
+    <line x1="1302" y1="440" x2="718" y2="440" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#replyArr)" />
+    <text x="1010" y="433" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#cbd5e1">Daftar Produk Sesuai (Centella Serum, UV Gel)</text>
+
+    <!-- 7. Save recommendations -->
+    <line x1="718" y1="475" x2="1302" y2="475" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#dbArr)" />
+    <text x="1010" y="468" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">7. INSERT INTO recommendations (scan_id, product_id, reason)</text>
+
+    <!-- 8. Update scan status completed -->
+    <line x1="718" y1="515" x2="1302" y2="515" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#dbArr)" />
+    <text x="1010" y="508" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">8. UPDATE skin_scans SET status='completed' WHERE id=101</text>
+
+    <!-- Controller returns to view -->
+    <line x1="702" y1="545" x2="438" y2="545" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="570" y="538" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">9. 200 OK (redirect: /scan/result/101)</text>
+
+    <!-- View renders to customer -->
+    <line x1="422" y1="580" x2="180" y2="580" stroke="#38bdf8" stroke-width="2" marker-end="url(#syncArr)" />
+    <text x="300" y="573" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="bold" fill="#38bdf8">10. Tampilkan Halaman Skor 81 &amp; Rekomendasi Produk</text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- PART B: CHATBOT AI CONSULTATION & MULTI-AI FAILOVER -->
+  <!-- ======================================================== -->
+  <g transform="translate(60, 850)">
+    <!-- Frame Box for Combined Scenario -->
+    <rect x="20" y="0" width="1840" height="390" rx="14" fill="#1e1b4b" fill-opacity="0.25" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="6 4" />
+    <rect x="20" y="0" width="480" height="26" rx="6" fill="#4338ca" />
+    <text x="35" y="18" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ffffff">
+      📦 SCENARIO CHATBOT AI: AKSES DATABASE &amp; MULTI-AI FAILOVER
+    </text>
+
+    <!-- Activation Boxes -->
+    <rect x="362" y="45" width="16" height="310" fill="#0284c7" rx="4" />
+    <rect x="642" y="70" width="16" height="260" fill="#7c3aed" rx="4" />
+    <rect x="1242" y="100" width="16" height="50" fill="#d97706" rx="4" />
+    <rect x="1582" y="170" width="16" height="130" fill="#9333ea" rx="4" />
+
+    <!-- 11. Customer asks question -->
+    <line x1="120" y1="50" x2="362" y2="50" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="240" y="42" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">11. Input Chat: "Berapa customer terdaftar?"</text>
+
+    <!-- 12. Send to Chatbot Server -->
+    <line x1="378" y1="75" x2="642" y2="75" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="510" y="68" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">12. POST /api/chat {message: "Berapa customer?"}</text>
+
+    <!-- 13. Query Database for Stats -->
+    <line x1="658" y1="105" x2="1242" y2="105" stroke="#f59e0b" stroke-width="1.8" marker-end="url(#dbArr)" />
+    <text x="950" y="98" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#fde68a">13. SELECT count(*) FROM users WHERE role='user'</text>
+
+    <line x1="1242" y1="140" x2="658" y2="140" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#replyArr)" />
+    <text x="950" y="133" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#cbd5e1">total_customer = 5 (Disisipkan ke System Context)</text>
+
+    <!-- 14. Send to Primary AI (Groq) -->
+    <line x1="658" y1="175" x2="1582" y2="175" stroke="#c084fc" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="1120" y="168" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#e9d5ff">14. Call Primary API Key (Groq Cloud)</text>
+
+    <!-- Simulated Failover condition -->
+    <rect x="1450" y="195" width="280" height="32" rx="6" fill="#4c0519" stroke="#f43f5e" stroke-width="1.2" />
+    <text x="1590" y="215" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" font-weight="bold" fill="#fca5a5">
+      ⚠️ Error 402: Kuota Habis -> Auto Failover ke Gemini 3.5
+    </text>
+
+    <!-- Return AI Reply -->
+    <line x1="1582" y1="260" x2="658" y2="260" stroke="#c084fc" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#replyArr)" />
+    <text x="1120" y="253" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#d8b4fe">
+      15. Return: "Terdapat 5 customer yang terdaftar di aplikasi APSkincek."
+    </text>
+
+    <!-- 16. Return JSON to Chat Widget -->
+    <line x1="642" y1="295" x2="378" y2="295" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#syncArr)" />
+    <text x="510" y="288" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#ffffff">
+      16. JSON {reply: "Terdapat 5 customer...", provider: "Gemini 3.5"}
+    </text>
+
+    <!-- 17. Display to user -->
+    <line x1="362" y1="330" x2="120" y2="330" stroke="#38bdf8" stroke-width="2" marker-end="url(#syncArr)" />
+    <text x="240" y="323" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="bold" fill="#38bdf8">
+      17. Bubble Chat Menampilkan Respon Akurat &amp; Cerdas
+    </text>
+  </g>
+
+</svg>

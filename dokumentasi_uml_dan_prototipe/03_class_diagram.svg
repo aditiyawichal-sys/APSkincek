@@ -1,0 +1,365 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="classBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Header Gradients for Class Boxes -->
+    <linearGradient id="ctrlHdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#312e81" />
+    </linearGradient>
+    <linearGradient id="srvHdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="mdlHdr" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4c0519" />
+      <stop offset="100%" stop-color="#881337" />
+    </linearGradient>
+
+    <filter id="clsDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="inheritArr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <polygon points="1,1 11,6 1,11" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
+    </marker>
+    <marker id="compDiamond" viewBox="0 0 16 16" refX="8" refY="8" markerWidth="10" markerHeight="10" orient="auto">
+      <polygon points="0,8 8,0 16,8 8,16" fill="#f43f5e" stroke="#ffffff" stroke-width="1" />
+    </marker>
+    <marker id="depArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+    </marker>
+  </defs>
+
+  <rect width="2200" height="1480" fill="url(#classBg)" />
+
+  <!-- HEADER -->
+  <g transform="translate(60, 30)">
+    <rect x="0" y="0" width="2080" height="85" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#clsDrop)" />
+    <rect x="25" y="16" width="52" height="52" rx="14" fill="#6366f1" />
+    <text x="51" y="50" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" fill="#ffffff">🏛️</text>
+    
+    <text x="95" y="44" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#ffffff">
+      CLASS DIAGRAM — ARSITEKTUR MVC, SERVICES &amp; MULTI-AI APSKINCEK
+    </text>
+    <text x="95" y="65" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">
+      Struktur Kelas: Lapisan Controllers, Services / AI Helpers, dan Models Data Relasional (MySQL 9 Tabel)
+    </text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 1. CONTROLLERS PACKAGE (TOP LEFT & MID) -->
+  <!-- ======================================================== -->
+  <g transform="translate(60, 140)">
+    <rect x="0" y="0" width="1380" height="480" rx="16" fill="#0f172a" stroke="#4338ca" stroke-width="1.5" />
+    <rect x="20" y="12" width="280" height="28" rx="6" fill="#312e81" />
+    <text x="35" y="31" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#c7d2fe">
+      🎮 Package: App\Controllers (MVC)
+    </text>
+
+    <!-- Base Controller -->
+    <g transform="translate(560, 50)">
+      <rect x="0" y="0" width="260" height="95" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="1.8" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="260" height="30" rx="10" fill="url(#ctrlHdr)" />
+      <text x="130" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">Controller &lt;&lt;Abstract&gt;&gt;</text>
+      <line x1="0" y1="30" x2="260" y2="30" stroke="#6366f1" stroke-width="1" />
+      <text x="12" y="52" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1"># view(viewPath, data): void</text>
+      <text x="12" y="70" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1"># json(data, statusCode): void</text>
+      <text x="12" y="88" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1"># redirect(url): void</text>
+    </g>
+
+    <!-- AuthController -->
+    <g transform="translate(30, 200)">
+      <rect x="0" y="0" width="290" height="230" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="290" height="32" rx="10" fill="url(#ctrlHdr)" />
+      <text x="145" y="22" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">AuthController</text>
+      <line x1="0" y1="32" x2="290" y2="32" stroke="#6366f1" stroke-width="1" />
+      <text x="12" y="52" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- fonnteHelper: FonnteHelper</text>
+      <text x="12" y="70" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- otpModel: OtpVerification</text>
+      <line x1="0" y1="80" x2="290" y2="80" stroke="#475569" stroke-width="1" />
+      <text x="12" y="102" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ showLogin(): void</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ showRegister(): void</text>
+      <text x="12" y="142" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ processRegister(req): Json</text>
+      <text x="12" y="162" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ verifyOtp(req): Json</text>
+      <text x="12" y="182" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ processLogin(req): Json</text>
+      <text x="12" y="202" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ logout(): void</text>
+    </g>
+
+    <!-- ScanController -->
+    <g transform="translate(370, 200)">
+      <rect x="0" y="0" width="310" height="230" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="32" rx="10" fill="url(#ctrlHdr)" />
+      <text x="155" y="22" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">ScanController</text>
+      <line x1="0" y1="32" x2="310" y2="32" stroke="#6366f1" stroke-width="1" />
+      <text x="12" y="52" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- pythonService: PythonAIService</text>
+      <text x="12" y="70" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- scanModel: Scan</text>
+      <line x1="0" y1="80" x2="310" y2="80" stroke="#475569" stroke-width="1" />
+      <text x="12" y="102" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ index(): void</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ uploadAndAnalyze(req): Json</text>
+      <text x="12" y="142" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ showResult(scanId): void</text>
+      <text x="12" y="162" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ history(): void</text>
+      <text x="12" y="182" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ deleteScan(scanId): Json</text>
+    </g>
+
+    <!-- AiAssistantController -->
+    <g transform="translate(730, 200)">
+      <rect x="0" y="0" width="300" height="230" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="300" height="32" rx="10" fill="url(#ctrlHdr)" />
+      <text x="150" y="22" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">AiAssistantController</text>
+      <line x1="0" y1="32" x2="300" y2="32" stroke="#6366f1" stroke-width="1" />
+      <text x="12" y="52" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- llmService: LLMService</text>
+      <text x="12" y="70" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- dbPool: DatabaseService</text>
+      <line x1="0" y1="80" x2="300" y2="80" stroke="#475569" stroke-width="1" />
+      <text x="12" y="102" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ chatEndpoint(req): Json</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ getSystemMetrics(): Json</text>
+      <text x="12" y="142" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ getSuggestions(): Json</text>
+      <text x="12" y="162" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ clearHistory(): Json</text>
+    </g>
+
+    <!-- AdminController -->
+    <g transform="translate(1070, 200)">
+      <rect x="0" y="0" width="280" height="230" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="280" height="32" rx="10" fill="url(#ctrlHdr)" />
+      <text x="140" y="22" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">AdminController</text>
+      <line x1="0" y1="32" x2="280" y2="32" stroke="#6366f1" stroke-width="1" />
+      <text x="12" y="52" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- llmService: LLMService</text>
+      <line x1="0" y1="62" x2="280" y2="62" stroke="#475569" stroke-width="1" />
+      <text x="12" y="82" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ dashboard(): void</text>
+      <text x="12" y="102" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ manageUsers(): void</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ manageProducts(): void</text>
+      <text x="12" y="142" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ aiConfig(): void</text>
+      <text x="12" y="162" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ testApiKey(req): Json</text>
+      <text x="12" y="182" font-family="'Consolas', monospace" font-size="11" fill="#38bdf8">+ activityLogs(): void</text>
+    </g>
+
+    <!-- Inheritance lines to Base Controller -->
+    <path d="M 175 200 L 175 160 L 690 160 L 690 145" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#inheritArr)" />
+    <path d="M 525 200 L 525 160" stroke="#94a3b8" stroke-width="1.5" />
+    <path d="M 880 200 L 880 160" stroke="#94a3b8" stroke-width="1.5" />
+    <path d="M 1210 200 L 1210 160" stroke="#94a3b8" stroke-width="1.5" />
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 2. SERVICES & AI HELPERS PACKAGE (RIGHT SIDE) -->
+  <!-- ======================================================== -->
+  <g transform="translate(1480, 140)">
+    <rect x="0" y="0" width="660" height="480" rx="16" fill="#0f172a" stroke="#059669" stroke-width="1.5" />
+    <rect x="20" y="12" width="280" height="28" rx="6" fill="#064e3b" />
+    <text x="35" y="31" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#6ee7b7">
+      ⚡ Package: App\Services (AI &amp; API)
+    </text>
+
+    <!-- PythonAIService -->
+    <g transform="translate(30, 60)">
+      <rect x="0" y="0" width="600" height="110" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="600" height="30" rx="10" fill="url(#srvHdr)" />
+      <text x="300" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">PythonAIService (Computer Vision)</text>
+      <line x1="0" y1="30" x2="600" y2="30" stroke="#10b981" stroke-width="1" />
+      <text x="12" y="48" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- pythonBin: String = "python"  |  - scriptFace: String = "analyze.py"</text>
+      <line x1="0" y1="56" x2="600" y2="56" stroke="#475569" stroke-width="1" />
+      <text x="12" y="76" font-family="'Consolas', monospace" font-size="11" fill="#34d399">+ analyzeFace(imagePath: String): Array [acne, redness, texture, score]</text>
+      <text x="12" y="96" font-family="'Consolas', monospace" font-size="11" fill="#34d399">+ analyzeSunscreen(imagePath: String): Array [coverage, missed_areas]</text>
+    </g>
+
+    <!-- LLMService -->
+    <g transform="translate(30, 190)">
+      <rect x="0" y="0" width="600" height="150" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="600" height="30" rx="10" fill="url(#srvHdr)" />
+      <text x="300" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">LLMService (Multi-AI Router &amp; Failover)</text>
+      <line x1="0" y1="30" x2="600" y2="30" stroke="#10b981" stroke-width="1" />
+      <text x="12" y="48" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- primaryKey: String  |  - backupKeys: Array[3]  |  - activeModel: String</text>
+      <line x1="0" y1="56" x2="600" y2="56" stroke="#475569" stroke-width="1" />
+      <text x="12" y="76" font-family="'Consolas', monospace" font-size="11" fill="#34d399">+ chatCompletion(messages: Array, contextData: Array): Object</text>
+      <text x="12" y="96" font-family="'Consolas', monospace" font-size="11" fill="#34d399">+ testKey(provider: String, apiKey: String): Boolean</text>
+      <text x="12" y="116" font-family="'Consolas', monospace" font-size="11" fill="#34d399">- routeToProvider(prov, payload)  |  - executeFailover(index, payload)</text>
+      <text x="12" y="136" font-family="'Consolas', monospace" font-size="11" fill="#94a3b8">  // Dukungan: Groq Cloud, Google Gemini 3.5, DeepSeek, OpenAI</text>
+    </g>
+
+    <!-- FonnteHelper -->
+    <g transform="translate(30, 360)">
+      <rect x="0" y="0" width="600" height="95" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="600" height="30" rx="10" fill="url(#srvHdr)" />
+      <text x="300" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">FonnteHelper (WhatsApp Gateway API)</text>
+      <line x1="0" y1="30" x2="600" y2="30" stroke="#10b981" stroke-width="1" />
+      <text x="12" y="48" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">- apiKey: String = "FONNTE_TOKEN"  |  - endpoint: String</text>
+      <line x1="0" y1="56" x2="600" y2="56" stroke="#475569" stroke-width="1" />
+      <text x="12" y="74" font-family="'Consolas', monospace" font-size="11" fill="#34d399">+ sendWhatsAppMessage(targetPhone: String, messageText: String): Boolean</text>
+      <text x="12" y="90" font-family="'Consolas', monospace" font-size="11" fill="#34d399">+ sendOtpVerification(phone: String, otpCode: String): Boolean</text>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 3. MODELS & DATA ENTITIES PACKAGE (BOTTOM FULL WIDTH) -->
+  <!-- ======================================================== -->
+  <g transform="translate(60, 660)">
+    <rect x="0" y="0" width="2080" height="770" rx="16" fill="#0f172a" stroke="#be123c" stroke-width="1.5" />
+    <rect x="20" y="14" width="360" height="28" rx="6" fill="#881337" />
+    <text x="35" y="33" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#fecdd3">
+      🗄️ Package: App\Models &amp; Database Entities (9 Tabel MySQL)
+    </text>
+
+    <!-- ROW 1 OF MODELS -->
+    <!-- Model: User -->
+    <g transform="translate(30, 60)">
+      <rect x="0" y="0" width="300" height="200" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="300" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="150" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">User (Tabel: users)</text>
+      <line x1="0" y1="30" x2="300" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: CHAR(36) [PK, UUID]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ name: VARCHAR(255)</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ email: VARCHAR(255) [UK]</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ phone: VARCHAR(25) [NULL]</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ password: VARCHAR(255)</text>
+      <text x="12" y="140" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ role: ENUM('user', 'admin')</text>
+      <text x="12" y="158" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ status: ENUM('active', 'inactive')</text>
+      <line x1="0" y1="168" x2="300" y2="168" stroke="#475569" stroke-width="1" />
+      <text x="12" y="188" font-family="'Consolas', monospace" font-size="11" fill="#f43f5e">+ getScans(): List&lt;Scan&gt;</text>
+    </g>
+
+    <!-- Model: Scan -->
+    <g transform="translate(420, 60)">
+      <rect x="0" y="0" width="310" height="200" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="155" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">Scan (Tabel: skin_scans)</text>
+      <line x1="0" y1="30" x2="310" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ user_id: CHAR(36) [FK]</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ scan_type: ENUM('face','sunscreen')</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ image_url: VARCHAR(255)</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ status: ENUM('pending','completed')</text>
+      <text x="12" y="140" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ created_at: TIMESTAMP</text>
+      <line x1="0" y1="150" x2="310" y2="150" stroke="#475569" stroke-width="1" />
+      <text x="12" y="170" font-family="'Consolas', monospace" font-size="11" fill="#f43f5e">+ getAnalysisResult(): AnalysisResult</text>
+      <text x="12" y="188" font-family="'Consolas', monospace" font-size="11" fill="#f43f5e">+ getSunscreenResult(): SunscreenResult</text>
+    </g>
+
+    <!-- Model: AnalysisResult -->
+    <g transform="translate(820, 60)">
+      <rect x="0" y="0" width="310" height="200" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="155" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">AnalysisResult (Tabel: analysis_results)</text>
+      <line x1="0" y1="30" x2="310" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ scan_id: INT [FK]</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ acne_score: INT</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ redness_score: INT</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ texture_score: INT</text>
+      <text x="12" y="140" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ hyperpigmentation_score: INT</text>
+      <text x="12" y="158" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ overall_score: INT</text>
+      <text x="12" y="176" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ details: JSON</text>
+    </g>
+
+    <!-- Model: SunscreenResult -->
+    <g transform="translate(1220, 60)">
+      <rect x="0" y="0" width="300" height="200" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="300" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="150" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">SunscreenResult (sunscreen_results)</text>
+      <line x1="0" y1="30" x2="300" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ scan_id: INT [FK]</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ coverage_score: INT</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ missed_areas: JSON</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ created_at: TIMESTAMP</text>
+    </g>
+
+    <!-- Model: Recommendation -->
+    <g transform="translate(1610, 60)">
+      <rect x="0" y="0" width="310" height="200" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="155" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">Recommendation (recommendations)</text>
+      <line x1="0" y1="30" x2="310" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ scan_id: INT [FK]</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ product_id: INT [FK]</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ reason: TEXT</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ created_at: TIMESTAMP</text>
+      <line x1="0" y1="135" x2="310" y2="135" stroke="#475569" stroke-width="1" />
+      <text x="12" y="155" font-family="'Consolas', monospace" font-size="11" fill="#f43f5e">+ getProduct(): Product</text>
+    </g>
+
+    <!-- ROW 2 OF MODELS -->
+    <!-- Model: Product -->
+    <g transform="translate(1610, 310)">
+      <rect x="0" y="0" width="310" height="190" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="155" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">Product (Tabel: products)</text>
+      <line x1="0" y1="30" x2="310" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ name: VARCHAR(255)</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ brand: VARCHAR(255)</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ category: VARCHAR(100)</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ description: TEXT</text>
+      <text x="12" y="140" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ status: ENUM('active','inactive')</text>
+    </g>
+
+    <!-- Model: EducationContent -->
+    <g transform="translate(1120, 310)">
+      <rect x="0" y="0" width="310" height="190" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="155" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">EducationContent (education_contents)</text>
+      <line x1="0" y1="30" x2="310" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ title: VARCHAR(255)</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ content: TEXT</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ category: VARCHAR(100)</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ author_id: CHAR(36) [FK]</text>
+      <text x="12" y="140" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ status: ENUM('published','draft')</text>
+    </g>
+
+    <!-- Model: ActivityLog -->
+    <g transform="translate(620, 310)">
+      <rect x="0" y="0" width="310" height="190" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="310" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="155" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">ActivityLog (activity_logs)</text>
+      <line x1="0" y1="30" x2="310" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ user_id: CHAR(36) [FK]</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ action: VARCHAR(255)</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ description: TEXT</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ created_at: TIMESTAMP</text>
+    </g>
+
+    <!-- Model: OtpVerification -->
+    <g transform="translate(30, 310)">
+      <rect x="0" y="0" width="300" height="190" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="1.5" filter="url(#clsDrop)" />
+      <rect x="0" y="0" width="300" height="30" rx="10" fill="url(#mdlHdr)" />
+      <text x="150" y="21" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">OtpVerification (otp_verifications)</text>
+      <line x1="0" y1="30" x2="300" y2="30" stroke="#f43f5e" stroke-width="1" />
+      <text x="12" y="50" font-family="'Consolas', monospace" font-size="11" fill="#fca5a5">+ id: INT [PK, AUTO_INC]</text>
+      <text x="12" y="68" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ phone: VARCHAR(25)</text>
+      <text x="12" y="86" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ otp: VARCHAR(10)</text>
+      <text x="12" y="104" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ type: ENUM('register','login')</text>
+      <text x="12" y="122" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ expires_at: DATETIME</text>
+      <text x="12" y="140" font-family="'Consolas', monospace" font-size="11" fill="#cbd5e1">+ is_used: TINYINT(1)</text>
+    </g>
+
+    <!-- MODEL RELATIONSHIP CONNECTORS -->
+    <!-- User to Scan (1 to 0..*) -->
+    <path d="M 330 160 L 420 160" stroke="#ffffff" stroke-width="1.8" marker-start="url(#compDiamond)" />
+    <text x="345" y="152" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">1</text>
+    <text x="395" y="152" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">0..*</text>
+
+    <!-- Scan to AnalysisResult (1 to 1) -->
+    <path d="M 730 160 L 820 160" stroke="#ffffff" stroke-width="1.8" marker-start="url(#compDiamond)" />
+    <text x="745" y="152" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">1</text>
+    <text x="800" y="152" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">1</text>
+
+    <!-- Scan to SunscreenResult (1 to 0..1) -->
+    <path d="M 730 200 L 775 200 L 775 290 L 1220 290 L 1220 260" stroke="#ffffff" stroke-width="1.5" />
+    <text x="1185" y="280" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">0..1</text>
+
+    <!-- Scan to Recommendation (1 to 0..*) -->
+    <path d="M 1130 160 L 1610 160" stroke="#ffffff" stroke-width="1.8" />
+    <text x="1575" y="152" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">0..*</text>
+
+    <!-- Product to Recommendation -->
+    <path d="M 1765 310 L 1765 260" stroke="#ffffff" stroke-width="1.8" />
+    <text x="1775" y="295" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">1</text>
+  </g>
+
+</svg>

@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="erdBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <linearGradient id="tableHdrGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#312e81" />
+    </linearGradient>
+
+    <filter id="erdDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Crow's foot markers -->
+    <marker id="oneMarker" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <line x1="8" y1="1" x2="8" y2="11" stroke="#f43f5e" stroke-width="2" />
+      <line x1="4" y1="1" x2="4" y2="11" stroke="#f43f5e" stroke-width="2" />
+    </marker>
+    <marker id="manyMarker" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 12 1 L 2 7 L 12 13" fill="none" stroke="#38bdf8" stroke-width="2" />
+      <line x1="8" y1="1" x2="8" y2="13" stroke="#38bdf8" stroke-width="2" />
+    </marker>
+  </defs>
+
+  <rect width="2200" height="1520" fill="url(#erdBg)" />
+
+  <!-- HEADER -->
+  <g transform="translate(60, 30)">
+    <rect x="0" y="0" width="2080" height="85" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#erdDrop)" />
+    <rect x="25" y="16" width="52" height="52" rx="14" fill="#f59e0b" />
+    <text x="51" y="50" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="24" fill="#ffffff">🗄️</text>
+    
+    <text x="95" y="44" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#ffffff">
+      ENTITY RELATIONSHIP DIAGRAM (ERD) — BASIS DATA SKINCHECK (9 TABEL)
+    </text>
+    <text x="95" y="65" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">
+      Struktur Fisik Tabel Basis Data Relasional, Kunci Utama (PK), Kunci Tamu (FK), Tipe Data &amp; Kardinalitas
+    </text>
+  </g>
+
+  <!-- TABLE 1: users -->
+  <g transform="translate(60, 150)">
+    <rect x="0" y="0" width="350" height="290" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="350" height="34" rx="12" fill="#0284c7" />
+    <text x="175" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">users (Pengguna &amp; Admin)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: CHAR(36) [PK, UUID]</text>
+      <text x="14" y="82" fill="#ffffff">  name: VARCHAR(255) NOT NULL</text>
+      <text x="14" y="106" fill="#a5b4fc">  email: VARCHAR(255) [UNIQUE]</text>
+      <text x="14" y="130" fill="#cbd5e1">  phone: VARCHAR(25) NULL</text>
+      <text x="14" y="154" fill="#cbd5e1">  password: VARCHAR(255) [HASH]</text>
+      <text x="14" y="178" fill="#fca5a5">  role: ENUM('user','admin')</text>
+      <text x="14" y="202" fill="#86efac">  status: ENUM('active','inactive')</text>
+      <text x="14" y="226" fill="#94a3b8">  created_at: TIMESTAMP</text>
+      <text x="14" y="250" fill="#94a3b8">  updated_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 2: skin_scans -->
+  <g transform="translate(480, 150)">
+    <rect x="0" y="0" width="370" height="270" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="370" height="34" rx="12" fill="#059669" />
+    <text x="185" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">skin_scans (Log Pemindaian)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#38bdf8" font-weight="bold">🔗 user_id: CHAR(36) [FK -> users.id]</text>
+      <text x="14" y="106" fill="#fca5a5">  scan_type: ENUM('face','sunscreen')</text>
+      <text x="14" y="130" fill="#ffffff">  image_url: VARCHAR(255) NOT NULL</text>
+      <text x="14" y="154" fill="#86efac">  status: ENUM('pending','completed')</text>
+      <text x="14" y="178" fill="#94a3b8">  created_at: TIMESTAMP</text>
+      <text x="14" y="202" fill="#94a3b8">  updated_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 3: analysis_results -->
+  <g transform="translate(930, 150)">
+    <rect x="0" y="0" width="390" height="310" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="390" height="34" rx="12" fill="#7c3aed" />
+    <text x="195" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">analysis_results (Hasil CV Wajah)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#10b981" font-weight="bold">🔗 scan_id: INT [FK -> skin_scans.id]</text>
+      <text x="14" y="106" fill="#ffffff">  acne_score: INT (0 - 100)</text>
+      <text x="14" y="130" fill="#ffffff">  redness_score: INT (0 - 100)</text>
+      <text x="14" y="154" fill="#ffffff">  texture_score: INT (0 - 100)</text>
+      <text x="14" y="178" fill="#ffffff">  hyperpigmentation_score: INT (0 - 100)</text>
+      <text x="14" y="202" fill="#38bdf8" font-weight="bold">  overall_score: INT (0 - 100)</text>
+      <text x="14" y="226" fill="#fbcfe8">  details: JSON (Blemish counts, ROI)</text>
+      <text x="14" y="250" fill="#94a3b8">  created_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 4: sunscreen_results -->
+  <g transform="translate(1390, 150)">
+    <rect x="0" y="0" width="370" height="230" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="370" height="34" rx="12" fill="#d97706" />
+    <text x="185" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">sunscreen_results (Cakupan UV)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#10b981" font-weight="bold">🔗 scan_id: INT [FK -> skin_scans.id]</text>
+      <text x="14" y="106" fill="#fde047" font-weight="bold">  coverage_score: INT (0 - 100 %)</text>
+      <text x="14" y="130" fill="#fbcfe8">  missed_areas: JSON (Heatmap ROI)</text>
+      <text x="14" y="154" fill="#94a3b8">  created_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 5: products -->
+  <g transform="translate(1810, 520)">
+    <rect x="0" y="0" width="350" height="290" rx="12" fill="#1e293b" stroke="#ec4899" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="350" height="34" rx="12" fill="#db2777" />
+    <text x="175" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">products (Katalog Skincare)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#ffffff">  name: VARCHAR(255) NOT NULL</text>
+      <text x="14" y="106" fill="#cbd5e1">  brand: VARCHAR(255) NOT NULL</text>
+      <text x="14" y="130" fill="#a5b4fc">  category: VARCHAR(100) NOT NULL</text>
+      <text x="14" y="154" fill="#cbd5e1">  description: TEXT</text>
+      <text x="14" y="178" fill="#86efac">  status: ENUM('active','inactive')</text>
+      <text x="14" y="202" fill="#94a3b8">  created_at: TIMESTAMP</text>
+      <text x="14" y="226" fill="#94a3b8">  updated_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 6: recommendations -->
+  <g transform="translate(1390, 520)">
+    <rect x="0" y="0" width="370" height="250" rx="12" fill="#1e293b" stroke="#ec4899" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="370" height="34" rx="12" fill="#db2777" />
+    <text x="185" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">recommendations (Junction Table)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#10b981" font-weight="bold">🔗 scan_id: INT [FK -> skin_scans.id]</text>
+      <text x="14" y="106" fill="#ec4899" font-weight="bold">🔗 product_id: INT [FK -> products.id]</text>
+      <text x="14" y="130" fill="#ffffff">  reason: TEXT (Alasan Cocok)</text>
+      <text x="14" y="154" fill="#94a3b8">  created_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 7: education_contents -->
+  <g transform="translate(60, 520)">
+    <rect x="0" y="0" width="350" height="270" rx="12" fill="#1e293b" stroke="#6366f1" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="350" height="34" rx="12" fill="#4f46e5" />
+    <text x="175" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">education_contents (Artikel)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#ffffff">  title: VARCHAR(255) NOT NULL</text>
+      <text x="14" y="106" fill="#cbd5e1">  content: TEXT NOT NULL</text>
+      <text x="14" y="130" fill="#a5b4fc">  category: VARCHAR(100)</text>
+      <text x="14" y="154" fill="#38bdf8">🔗 author_id: CHAR(36) [FK -> users.id]</text>
+      <text x="14" y="178" fill="#86efac">  status: ENUM('published','draft')</text>
+      <text x="14" y="202" fill="#94a3b8">  created_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 8: activity_logs -->
+  <g transform="translate(480, 520)">
+    <rect x="0" y="0" width="370" height="230" rx="12" fill="#1e293b" stroke="#64748b" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="370" height="34" rx="12" fill="#475569" />
+    <text x="185" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">activity_logs (Audit Trail)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#38bdf8" font-weight="bold">🔗 user_id: CHAR(36) [FK -> users.id]</text>
+      <text x="14" y="106" fill="#ffffff">  action: VARCHAR(255) NOT NULL</text>
+      <text x="14" y="130" fill="#cbd5e1">  description: TEXT</text>
+      <text x="14" y="154" fill="#94a3b8">  created_at: TIMESTAMP</text>
+    </g>
+  </g>
+
+  <!-- TABLE 9: otp_verifications -->
+  <g transform="translate(930, 520)">
+    <rect x="0" y="0" width="390" height="270" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="1.8" filter="url(#erdDrop)" />
+    <rect x="0" y="0" width="390" height="34" rx="12" fill="#047857" />
+    <text x="195" y="23" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="800" fill="#ffffff">otp_verifications (Token WA)</text>
+    
+    <g font-family="'Consolas', monospace" font-size="11.5">
+      <text x="14" y="58" fill="#fde047" font-weight="bold">🔑 id: INT [PK, AUTO_INCREMENT]</text>
+      <text x="14" y="82" fill="#34d399">  phone: VARCHAR(25) [INDEX]</text>
+      <text x="14" y="106" fill="#cbd5e1">  email: VARCHAR(255) NULL</text>
+      <text x="14" y="130" fill="#fde047">  otp: VARCHAR(10) [INDEX]</text>
+      <text x="14" y="154" fill="#a5b4fc">  type: ENUM('register','login')</text>
+      <text x="14" y="178" fill="#fca5a5">  expires_at: DATETIME NOT NULL</text>
+      <text x="14" y="202" fill="#86efac">  is_used: TINYINT(1) DEFAULT 0</text>
+    </g>
+  </g>
+
+  <!-- RELATIONSHIP LINES -->
+  <!-- 1. users -> skin_scans (1:N) -->
+  <path d="M 410 240 L 480 240" stroke="#38bdf8" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#manyMarker)" />
+  <text x="445" y="230" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#38bdf8" font-weight="bold">1:N</text>
+
+  <!-- 2. skin_scans -> analysis_results (1:1) -->
+  <path d="M 850 240 L 930 240" stroke="#10b981" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#oneMarker)" />
+  <text x="890" y="230" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#10b981" font-weight="bold">1:1</text>
+
+  <!-- 3. skin_scans -> sunscreen_results (1:1) -->
+  <path d="M 850 290 L 1390 290" stroke="#f59e0b" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#oneMarker)" />
+  <text x="1120" y="280" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#f59e0b" font-weight="bold">1:1 (Opsional Sunscreen)</text>
+
+  <!-- 4. skin_scans -> recommendations (1:N) -->
+  <path d="M 665 420 L 665 480 L 1390 480 L 1390 520" stroke="#ec4899" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#manyMarker)" />
+  <text x="1027" y="470" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#ec4899" font-weight="bold">1:N (Hasil Scan)</text>
+
+  <!-- 5. products -> recommendations (1:N) -->
+  <path d="M 1810 630 L 1760 630" stroke="#ec4899" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#manyMarker)" />
+  <text x="1785" y="620" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#ec4899" font-weight="bold">1:N</text>
+
+  <!-- 6. users -> activity_logs (1:N) -->
+  <path d="M 235 440 L 235 490 L 520 490 L 520 520" stroke="#64748b" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#manyMarker)" />
+  <text x="377" y="480" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#94a3b8" font-weight="bold">1:N (Audit)</text>
+
+  <!-- 7. users -> education_contents (1:N) -->
+  <path d="M 235 440 L 235 520" stroke="#6366f1" stroke-width="2" marker-start="url(#oneMarker)" marker-end="url(#manyMarker)" />
+  <text x="215" y="475" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" fill="#a5b4fc" font-weight="bold">1:N</text>
+
+  <!-- LEGEND / SUMMARY BAR -->
+  <g transform="translate(60, 840)">
+    <rect x="0" y="0" width="2080" height="70" rx="14" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+    <text x="30" y="40" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="bold" fill="#ffffff">
+      📌 KETERANGAN KARDINALITAS &amp; INTEGRITAS RELASIONAL:
+    </text>
+    <text x="420" y="40" font-family="'Segoe UI', sans-serif" font-size="12" fill="#cbd5e1">
+      • <tspan fill="#38bdf8" font-weight="bold">users → skin_scans (1:N)</tspan>: Satu user dapat memiliki banyak foto scan. ON DELETE CASCADE.
+    </text>
+    <text x="1040" y="40" font-family="'Segoe UI', sans-serif" font-size="12" fill="#cbd5e1">
+      • <tspan fill="#10b981" font-weight="bold">skin_scans → analysis_results (1:1)</tspan>: Setiap scan wajah tepat memiliki 1 baris skor CV.
+    </text>
+    <text x="1620" y="40" font-family="'Segoe UI', sans-serif" font-size="12" fill="#cbd5e1">
+      • <tspan fill="#ec4899" font-weight="bold">recommendations (Junction)</tspan>: Menghubungkan scan_id &amp; product_id.
+    </text>
+  </g>
+</svg>

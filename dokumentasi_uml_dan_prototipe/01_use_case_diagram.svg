@@ -1,0 +1,393 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1280" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <linearGradient id="systemGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.9" />
+    </linearGradient>
+
+    <linearGradient id="cardGradAuth" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#312e81" stop-opacity="0.5" />
+    </linearGradient>
+
+    <linearGradient id="cardGradScan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#064e3b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.4" />
+    </linearGradient>
+
+    <linearGradient id="cardGradAdmin" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4c0519" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#881337" stop-opacity="0.4" />
+    </linearGradient>
+
+    <linearGradient id="cardGradChat" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b0764" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#581c87" stop-opacity="0.4" />
+    </linearGradient>
+
+    <linearGradient id="usecaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <!-- Filters for Shadows & Glows -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+    <filter id="glowRose" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#f43f5e" flood-opacity="0.6" />
+    </filter>
+    <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#38bdf8" flood-opacity="0.6" />
+    </filter>
+
+    <!-- Arrow Markers -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#94a3b8" />
+    </marker>
+    <marker id="arrowRose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#f43f5e" />
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#34d399" />
+    </marker>
+    <marker id="arrowPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#c084fc" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1920" height="1280" fill="url(#bgGrad)" />
+
+  <!-- Grid Dots Background Pattern -->
+  <pattern id="dotPattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1" fill="#334155" opacity="0.3" />
+  </pattern>
+  <rect width="1920" height="1280" fill="url(#dotPattern)" />
+
+  <!-- HEADER -->
+  <g transform="translate(60, 40)">
+    <rect x="0" y="0" width="1800" height="90" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#dropShadow)" />
+    
+    <rect x="25" y="18" width="54" height="54" rx="14" fill="#e11d48" />
+    <path d="M 52 28 C 45 28 39 34 39 42 C 39 52 52 64 52 64 C 52 64 65 52 65 42 C 65 34 59 28 52 28 Z" fill="#ffffff" />
+    
+    <text x="95" y="45" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#ffffff">
+      USE CASE DIAGRAM — SISTEM APSKINCEK
+    </text>
+    <text x="95" y="66" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">
+      Smart AI Face Scanner, Deteksi Sunscreen, Konsultasi Chatbot Multi-AI &amp; Administrasi Sistem
+    </text>
+
+    <!-- Legend Tags -->
+    <rect x="1560" y="32" width="210" height="30" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1" />
+    <circle cx="1576" cy="47" r="4" fill="#38bdf8" />
+    <text x="1588" y="51" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">Customer</text>
+    <circle cx="1660" cy="47" r="4" fill="#f43f5e" />
+    <text x="1672" y="51" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">Admin</text>
+    <circle cx="1725" cy="47" r="4" fill="#34d399" />
+    <text x="1737" y="51" font-family="'Segoe UI', sans-serif" font-size="11" fill="#cbd5e1">AI Subsystem</text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- SYSTEM BOUNDARY BOX (APSKINCEK) -->
+  <!-- ======================================================== -->
+  <g transform="translate(320, 160)">
+    <rect x="0" y="0" width="1280" height="920" rx="24" fill="url(#systemGrad)" stroke="#38bdf8" stroke-width="2" stroke-dasharray="8 6" filter="url(#dropShadow)" />
+    
+    <!-- Title Badge -->
+    <rect x="40" y="-18" width="340" height="36" rx="10" fill="#0284c7" filter="url(#glowBlue)" />
+    <text x="210" y="6" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="15" font-weight="800" fill="#ffffff" letter-spacing="1">
+      BATAS SISTEM: APLIKASI APSKINCEK
+    </text>
+
+    <!-- PACKAGE 1: AUTENTIKASI & AKUN -->
+    <g transform="translate(40, 40)">
+      <rect x="0" y="0" width="570" height="380" rx="16" fill="url(#cardGradAuth)" stroke="#4338ca" stroke-width="1.5" />
+      <rect x="20" y="14" width="180" height="26" rx="6" fill="#312e81" />
+      <text x="30" y="32" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#a5b4fc">
+        📦 1. Autentikasi &amp; Profil
+      </text>
+
+      <!-- Use Case: Registrasi -->
+      <g id="uc-reg" transform="translate(40, 70)">
+        <ellipse cx="140" cy="30" rx="130" ry="26" fill="url(#usecaseGrad)" stroke="#6366f1" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Registrasi Akun Baru</text>
+      </g>
+
+      <!-- Use Case: Verifikasi OTP WA -->
+      <g id="uc-otp" transform="translate(320, 150)">
+        <ellipse cx="110" cy="30" rx="105" ry="26" fill="url(#usecaseGrad)" stroke="#22c55e" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="110" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#86efac">Verifikasi OTP WhatsApp</text>
+      </g>
+
+      <!-- Use Case: Login -->
+      <g id="uc-login" transform="translate(40, 200)">
+        <ellipse cx="140" cy="30" rx="130" ry="26" fill="url(#usecaseGrad)" stroke="#6366f1" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Login Akun (Email/Password)</text>
+      </g>
+
+      <!-- Use Case: Kelola Profil -->
+      <g id="uc-profile" transform="translate(40, 290)">
+        <ellipse cx="140" cy="30" rx="130" ry="26" fill="url(#usecaseGrad)" stroke="#6366f1" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Kelola Data Profil &amp; Riwayat</text>
+      </g>
+
+      <!-- Include line from Reg to OTP -->
+      <path d="M 300 100 L 360 150" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowGreen)" />
+      <text x="350" y="120" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#86efac">&lt;&lt;include&gt;&gt;</text>
+
+      <!-- Extend line from Login to OTP -->
+      <path d="M 300 230 L 370 205" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowGreen)" />
+      <text x="360" y="235" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#86efac">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+
+    <!-- PACKAGE 2: PEMERIKSAAN KULIT AI -->
+    <g transform="translate(670, 40)">
+      <rect x="0" y="0" width="570" height="380" rx="16" fill="url(#cardGradScan)" stroke="#059669" stroke-width="1.5" />
+      <rect x="20" y="14" width="220" height="26" rx="6" fill="#064e3b" />
+      <text x="30" y="32" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#6ee7b7">
+        🔬 2. Analisis Kulit (Computer Vision)
+      </text>
+
+      <!-- Use Case: Scan Wajah -->
+      <g id="uc-scanface" transform="translate(30, 60)">
+        <ellipse cx="130" cy="28" rx="125" ry="26" fill="url(#usecaseGrad)" stroke="#10b981" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="130" y="32" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Scan Kesehatan Kulit Wajah</text>
+      </g>
+
+      <!-- Use Case: Scan Sunscreen -->
+      <g id="uc-scansun" transform="translate(30, 135)">
+        <ellipse cx="130" cy="28" rx="125" ry="26" fill="url(#usecaseGrad)" stroke="#10b981" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="130" y="32" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Scan Proteksi Tabir Surya</text>
+      </g>
+
+      <!-- Use Case: Deteksi Detail AI (Include) -->
+      <g id="uc-detect" transform="translate(330, 95)">
+        <ellipse cx="105" cy="28" rx="100" ry="26" fill="url(#usecaseGrad)" stroke="#34d399" stroke-width="1.8" stroke-dasharray="4 2" />
+        <text x="105" y="27" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#a7f3d0">Deteksi Jerawat, Kemerahan</text>
+        <text x="105" y="41" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#a7f3d0">&amp; Tekstur (OpenCV)</text>
+      </g>
+
+      <!-- Include lines to detect -->
+      <path d="M 285 88 L 330 110" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowGreen)" />
+      <path d="M 285 160 L 330 135" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowGreen)" />
+      <text x="280" y="125" font-family="'Segoe UI', sans-serif" font-size="9.5" font-weight="bold" fill="#6ee7b7">&lt;&lt;include&gt;&gt;</text>
+
+      <!-- Use Case: Hasil Diagnostik -->
+      <g id="uc-result" transform="translate(30, 220)">
+        <ellipse cx="130" cy="28" rx="125" ry="26" fill="url(#usecaseGrad)" stroke="#10b981" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="130" y="32" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Lihat Hasil Skor Diagnostik</text>
+      </g>
+
+      <!-- Use Case: Rekomendasi Produk -->
+      <g id="uc-rec" transform="translate(310, 280)">
+        <ellipse cx="120" cy="28" rx="115" ry="26" fill="url(#usecaseGrad)" stroke="#10b981" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="120" y="32" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#fde047">Rekomendasi Produk Sesuai</text>
+      </g>
+
+      <!-- Extend line from Result to Rec -->
+      <path d="M 270 260 L 330 290" stroke="#fde047" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)" />
+      <text x="270" y="295" font-family="'Segoe UI', sans-serif" font-size="9.5" font-weight="bold" fill="#fde047">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+
+    <!-- PACKAGE 3: ASISTEN PINTAR & EDUKASI -->
+    <g transform="translate(40, 450)">
+      <rect x="0" y="0" width="570" height="430" rx="16" fill="url(#cardGradChat)" stroke="#7c3aed" stroke-width="1.5" />
+      <rect x="20" y="14" width="230" height="26" rx="6" fill="#4c1d95" />
+      <text x="30" y="32" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#d8b4fe">
+        💬 3. Asisten Chatbot &amp; Edukasi
+      </text>
+
+      <!-- Use Case: Chatbot -->
+      <g id="uc-chat" transform="translate(40, 70)">
+        <ellipse cx="140" cy="30" rx="135" ry="26" fill="url(#usecaseGrad)" stroke="#8b5cf6" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Konsultasi Chatbot AI Skincare</text>
+      </g>
+
+      <!-- Use Case: Chat DB Access -->
+      <g id="uc-chatdb" transform="translate(320, 140)">
+        <ellipse cx="110" cy="30" rx="105" ry="26" fill="url(#usecaseGrad)" stroke="#c084fc" stroke-width="1.8" stroke-dasharray="4 2" />
+        <text x="110" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#e9d5ff">Kueri Metrik Database</text>
+        <text x="110" y="43" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#e9d5ff">(Customer &amp; Scan Total)</text>
+      </g>
+
+      <path d="M 310 105 L 360 140" stroke="#c084fc" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowPurple)" />
+      <text x="340" y="120" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#e9d5ff">&lt;&lt;include&gt;&gt;</text>
+
+      <!-- Use Case: Edukasi -->
+      <g id="uc-edu" transform="translate(40, 210)">
+        <ellipse cx="140" cy="30" rx="135" ry="26" fill="url(#usecaseGrad)" stroke="#8b5cf6" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Membaca Konten Edukasi Kulit</text>
+      </g>
+
+      <!-- Use Case: Riwayat Scan -->
+      <g id="uc-history" transform="translate(40, 310)">
+        <ellipse cx="140" cy="30" rx="135" ry="26" fill="url(#usecaseGrad)" stroke="#8b5cf6" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="#ffffff">Melihat Histori Pemindaian</text>
+      </g>
+    </g>
+
+    <!-- PACKAGE 4: PANEL ADMINISTRATOR -->
+    <g transform="translate(670, 450)">
+      <rect x="0" y="0" width="570" height="430" rx="16" fill="url(#cardGradAdmin)" stroke="#be123c" stroke-width="1.5" />
+      <rect x="20" y="14" width="240" height="26" rx="6" fill="#881337" />
+      <text x="30" y="32" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#fda4af">
+        🛡️ 4. Panel Administrasi Sistem
+      </text>
+
+      <!-- UC: Admin Dashboard -->
+      <g id="uc-dash" transform="translate(30, 60)">
+        <ellipse cx="130" cy="26" rx="125" ry="24" fill="url(#usecaseGrad)" stroke="#f43f5e" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="130" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12.5" font-weight="600" fill="#ffffff">Monitoring Statistik &amp; Audit Log</text>
+      </g>
+
+      <!-- UC: Kelola Customer -->
+      <g id="uc-users" transform="translate(30, 130)">
+        <ellipse cx="130" cy="26" rx="125" ry="24" fill="url(#usecaseGrad)" stroke="#f43f5e" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="130" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12.5" font-weight="600" fill="#ffffff">Kelola Customer &amp; Admin</text>
+      </g>
+
+      <!-- UC: Kelola Produk & Edukasi -->
+      <g id="uc-prod" transform="translate(30, 200)">
+        <ellipse cx="130" cy="26" rx="125" ry="24" fill="url(#usecaseGrad)" stroke="#f43f5e" stroke-width="1.8" filter="url(#dropShadow)" />
+        <text x="130" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12.5" font-weight="600" fill="#ffffff">Kelola Produk Skincare &amp; Edukasi</text>
+      </g>
+
+      <!-- UC: Multi API Key Config -->
+      <g id="uc-aiconfig" transform="translate(30, 280)">
+        <ellipse cx="140" cy="30" rx="135" ry="26" fill="url(#usecaseGrad)" stroke="#fb7185" stroke-width="2" filter="url(#dropShadow)" />
+        <text x="140" y="34" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12.5" font-weight="700" fill="#fecdd3">Konfigurasi AI &amp; Multi-API Key</text>
+      </g>
+
+      <!-- UC: Test Key -->
+      <g id="uc-testkey" transform="translate(330, 340)">
+        <ellipse cx="105" cy="26" rx="100" ry="24" fill="url(#usecaseGrad)" stroke="#fb7185" stroke-width="1.8" stroke-dasharray="4 2" />
+        <text x="105" y="30" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffe4e6">Tes Latensi Semua API Key</text>
+      </g>
+
+      <path d="M 285 325 L 340 345" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowRose)" />
+      <text x="290" y="355" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#fda4af">&lt;&lt;extend&gt;&gt;</text>
+    </g>
+
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- ACTORS SECTION -->
+  <!-- ======================================================== -->
+
+  <!-- ACTOR 1: CUSTOMER (LEFT) -->
+  <g transform="translate(80, 480)">
+    <!-- Glow circle -->
+    <circle cx="90" cy="70" r="60" fill="#0284c7" opacity="0.15" filter="url(#glowBlue)" />
+    <!-- Stick Figure -->
+    <circle cx="90" cy="40" r="22" fill="#0284c7" stroke="#38bdf8" stroke-width="3" />
+    <path d="M 90 62 L 90 120 M 50 85 L 130 85 M 90 120 L 60 170 M 90 120 L 120 170" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" />
+    <!-- Label -->
+    <rect x="15" y="185" width="150" height="34" rx="8" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="90" y="206" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#ffffff">
+      Pengguna (Customer)
+    </text>
+  </g>
+
+  <!-- ACTOR 2: ADMINISTRATOR (RIGHT) -->
+  <g transform="translate(1660, 520)">
+    <!-- Glow circle -->
+    <circle cx="90" cy="70" r="60" fill="#be123c" opacity="0.15" filter="url(#glowRose)" />
+    <!-- Stick Figure -->
+    <circle cx="90" cy="40" r="22" fill="#be123c" stroke="#f43f5e" stroke-width="3" />
+    <path d="M 90 62 L 90 120 M 50 85 L 130 85 M 90 120 L 60 170 M 90 120 L 120 170" stroke="#f43f5e" stroke-width="4" stroke-linecap="round" />
+    <!-- Label -->
+    <rect x="15" y="185" width="150" height="34" rx="8" fill="#9f1239" stroke="#f43f5e" stroke-width="1.5" />
+    <text x="90" y="206" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#ffffff">
+      Administrator
+    </text>
+  </g>
+
+  <!-- EXTERNAL ACTORS (BOTTOM) -->
+  <!-- Ext Actor: WhatsApp Gateway -->
+  <g transform="translate(180, 1120)">
+    <rect x="0" y="0" width="260" height="60" rx="14" fill="#064e3b" stroke="#10b981" stroke-width="2" filter="url(#dropShadow)" />
+    <circle cx="35" cy="30" r="16" fill="#10b981" />
+    <text x="35" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" fill="#ffffff">📱</text>
+    <text x="65" y="28" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#ffffff">WhatsApp Gateway</text>
+    <text x="65" y="46" font-family="'Segoe UI', sans-serif" font-size="11" fill="#6ee7b7">Fonnte API Token Dispatch</text>
+  </g>
+
+  <!-- Ext Actor: AI OpenCV Python -->
+  <g transform="translate(830, 1120)">
+    <rect x="0" y="0" width="260" height="60" rx="14" fill="#0f172a" stroke="#38bdf8" stroke-width="2" filter="url(#dropShadow)" />
+    <circle cx="35" cy="30" r="16" fill="#0284c7" />
+    <text x="35" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" fill="#ffffff">👁️</text>
+    <text x="65" y="28" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#ffffff">OpenCV &amp; Python AI</text>
+    <text x="65" y="46" font-family="'Segoe UI', sans-serif" font-size="11" fill="#7dd3fc">Haar Cascade, HSV, LapVar</text>
+  </g>
+
+  <!-- Ext Actor: Multi-LLM Engine -->
+  <g transform="translate(1480, 1120)">
+    <rect x="0" y="0" width="280" height="60" rx="14" fill="#3b0764" stroke="#a855f7" stroke-width="2" filter="url(#dropShadow)" />
+    <circle cx="35" cy="30" r="16" fill="#7e22ce" />
+    <text x="35" y="36" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="16" fill="#ffffff">⚡</text>
+    <text x="65" y="28" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="700" fill="#ffffff">Multi-LLM Failover Engine</text>
+    <text x="65" y="46" font-family="'Segoe UI', sans-serif" font-size="11" fill="#d8b4fe">Groq, Gemini, DeepSeek, OpenAI</text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- CONNECTING RELATIONSHIP LINES -->
+  <!-- ======================================================== -->
+  <!-- Customer Connections -->
+  <g stroke="#38bdf8" stroke-width="1.8" opacity="0.85">
+    <!-- To Reg -->
+    <path d="M 180 540 C 240 500, 280 260, 480 260" />
+    <!-- To Login -->
+    <path d="M 180 550 C 240 520, 280 390, 480 390" />
+    <!-- To Scan Face -->
+    <path d="M 180 560 C 280 400, 600 230, 810 230" />
+    <!-- To Scan Sunscreen -->
+    <path d="M 180 570 C 300 460, 600 305, 810 305" />
+    <!-- To Result -->
+    <path d="M 180 580 C 350 560, 620 400, 810 400" />
+    <!-- To Chatbot -->
+    <path d="M 180 600 C 250 600, 320 550, 480 550" />
+    <!-- To Edu -->
+    <path d="M 180 620 C 250 630, 320 690, 480 690" />
+  </g>
+
+  <!-- Admin Connections -->
+  <g stroke="#f43f5e" stroke-width="1.8" opacity="0.85">
+    <!-- To Login -->
+    <path d="M 1740 550 C 1600 400, 750 390, 520 390" />
+    <!-- To Dashboard -->
+    <path d="M 1740 570 C 1600 550, 1400 540, 1140 540" />
+    <!-- To Users -->
+    <path d="M 1740 590 C 1600 600, 1400 610, 1140 610" />
+    <!-- To Products -->
+    <path d="M 1740 610 C 1600 660, 1400 680, 1140 680" />
+    <!-- To AI Config -->
+    <path d="M 1740 630 C 1620 720, 1450 760, 1150 760" />
+    <!-- To Chatbot -->
+    <path d="M 1740 650 C 1500 800, 750 650, 560 550" />
+  </g>
+
+  <!-- External Actor Connections -->
+  <g stroke-dasharray="6 4" stroke-width="2">
+    <!-- WA to OTP -->
+    <path d="M 310 1120 C 310 950, 560 380, 690 340" stroke="#10b981" marker-end="url(#arrowGreen)" />
+    <!-- OpenCV to Detect -->
+    <path d="M 960 1120 C 960 850, 1100 400, 1100 230" stroke="#38bdf8" marker-end="url(#arrowBlue)" />
+    <!-- LLM to Chatbot & AI Config -->
+    <path d="M 1520 1120 C 1450 900, 800 650, 560 550" stroke="#a855f7" marker-end="url(#arrowPurple)" />
+    <path d="M 1600 1120 C 1600 950, 1450 820, 1150 760" stroke="#a855f7" marker-end="url(#arrowPurple)" />
+  </g>
+
+</svg>

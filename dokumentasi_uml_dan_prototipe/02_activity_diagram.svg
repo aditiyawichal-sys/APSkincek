@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 1520" width="100%" height="100%">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="actBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <linearGradient id="swimlane1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.6" />
+    </linearGradient>
+
+    <!-- Activity Node Colors -->
+    <linearGradient id="actBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+    <linearGradient id="actGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="actPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed" />
+      <stop offset="100%" stop-color="#6d28d9" />
+    </linearGradient>
+    <linearGradient id="actRose" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="actDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+
+    <!-- Markers -->
+    <marker id="actArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="actArrGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#34d399" />
+    </marker>
+    <marker id="actArrPurple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#c084fc" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="2000" height="1520" fill="url(#actBgGrad)" />
+
+  <!-- HEADER -->
+  <g transform="translate(60, 30)">
+    <rect x="0" y="0" width="1880" height="85" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" filter="url(#actDrop)" />
+    
+    <rect x="25" y="16" width="52" height="52" rx="14" fill="#0284c7" />
+    <path d="M 45 32 L 62 42 L 45 52 Z M 57 32 L 57 52" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" />
+    
+    <text x="95" y="44" font-family="'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="800" fill="#ffffff">
+      ACTIVITY DIAGRAM — ALUR BISNIS APLIKASI &amp; PIPELINE AI APSKINCEK
+    </text>
+    <text x="95" y="65" font-family="'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="500" fill="#94a3b8">
+      Swimlanes: Pengguna, MVC Backend PHP, OpenCV Computer Vision, dan Multi-LLM Failover Router
+    </text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 4 SWIMLANES -->
+  <!-- ======================================================== -->
+  <g transform="translate(60, 140)">
+    <!-- Column 1: Customer -->
+    <rect x="0" y="0" width="450" height="1320" rx="12" fill="url(#swimlane1)" stroke="#334155" stroke-width="1" />
+    <rect x="0" y="0" width="450" height="46" rx="12" fill="#0284c7" />
+    <text x="225" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+      👤 1. Pengguna (Customer)
+    </text>
+
+    <!-- Column 2: Backend MVC & WA -->
+    <rect x="470" y="0" width="460" height="1320" rx="12" fill="url(#swimlane1)" stroke="#334155" stroke-width="1" />
+    <rect x="470" y="0" width="460" height="46" rx="12" fill="#4338ca" />
+    <text x="700" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+      ⚙️ 2. Sistem / Backend PHP &amp; WhatsApp
+    </text>
+
+    <!-- Column 3: OpenCV AI Subsystem -->
+    <rect x="950" y="0" width="470" height="1320" rx="12" fill="url(#swimlane1)" stroke="#334155" stroke-width="1" />
+    <rect x="950" y="0" width="470" height="46" rx="12" fill="#065f46" />
+    <text x="1185" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+      👁️ 3. Computer Vision AI (OpenCV Python)
+    </text>
+
+    <!-- Column 4: Multi-LLM Chatbot -->
+    <rect x="1440" y="0" width="440" height="1320" rx="12" fill="url(#swimlane1)" stroke="#334155" stroke-width="1" />
+    <rect x="1440" y="0" width="440" height="46" rx="12" fill="#581c87" />
+    <text x="1660" y="29" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+      ⚡ 4. Multi-LLM Engine &amp; DB Router
+    </text>
+
+    <!-- ======================================================== -->
+    <!-- ACTIVITIES & FLOW NODES -->
+    <!-- ======================================================== -->
+
+    <!-- START NODE (Customer) -->
+    <circle cx="225" cy="80" r="16" fill="#22c55e" stroke="#86efac" stroke-width="3" filter="url(#actDrop)" />
+    <text x="225" y="112" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#86efac">Mulai</text>
+
+    <!-- Act: Buka Aplikasi -->
+    <rect x="125" y="125" width="200" height="45" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="152" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="600" fill="#ffffff">Buka Web APSkincek</text>
+
+    <!-- Decision: Sudah ada akun? -->
+    <path d="M 225 195 L 285 225 L 225 255 L 165 225 Z" fill="#f59e0b" stroke="#fcd34d" stroke-width="2" />
+    <text x="225" y="229" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" font-weight="bold" fill="#000000">Punya Akun?</text>
+
+    <!-- Line Start to Open -->
+    <path d="M 225 96 L 225 125" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <path d="M 225 170 L 225 195" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+
+    <!-- REGISTRATION FLOW -->
+    <text x="310" y="220" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#f87171">[Belum]</text>
+    <path d="M 285 225 L 530 225" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+
+    <!-- Act: Form Register & OTP WA -->
+    <rect x="530" y="200" width="220" height="50" rx="12" fill="url(#actGreen)" filter="url(#actDrop)" />
+    <text x="640" y="222" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Input Nama, No HP WhatsApp</text>
+    <text x="640" y="238" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10.5" fill="#a7f3d0">&amp; Generate 6-Digit OTP</text>
+
+    <!-- Act: Kirim WA Fonnte -->
+    <path d="M 750 225 L 810 225 L 810 280 L 750 280" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="530" y="260" width="220" height="45" rx="12" fill="#065f46" stroke="#10b981" stroke-width="1.5" />
+    <text x="640" y="280" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#86efac">Kirim Pesan WhatsApp</text>
+    <text x="640" y="295" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9.5" fill="#6ee7b7">via Gateway (Fonnte API)</text>
+
+    <!-- Return to user: input OTP -->
+    <path d="M 530 280 L 330 280" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="125" y="260" width="200" height="45" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="287" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Input 6 Digit Kode OTP</text>
+
+    <!-- Validate OTP -->
+    <path d="M 225 305 L 225 330 L 530 330" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="530" y="315" width="220" height="45" rx="12" fill="url(#actGreen)" filter="url(#actDrop)" />
+    <text x="640" y="335" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#ffffff">Validasi OTP &amp; Buat Sesi</text>
+    <text x="640" y="349" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9.5" fill="#6ee7b7">Simpan User ke Tabel `users`</text>
+
+    <!-- LOGIN FLOW (If Already Has Account) -->
+    <text x="135" y="375" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="bold" fill="#38bdf8">[Sudah Punya]</text>
+    <path d="M 225 255 L 225 380" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <path d="M 640 360 L 640 380 L 330 380" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+
+    <!-- DASHBOARD & SCAN SELECTION -->
+    <rect x="125" y="380" width="200" height="45" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="407" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#ffffff">Masuk Dashboard Utama</text>
+
+    <path d="M 225 425 L 225 450" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="120" y="450" width="210" height="50" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="472" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Pilih Menu Scan Wajah /</text>
+    <text x="225" y="488" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Scan Sunscreen Tabir Surya</text>
+
+    <path d="M 225 500 L 225 525" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="120" y="525" width="210" height="45" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="552" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Ambil Foto via Kamera WebRTC</text>
+
+    <!-- Send to Backend -->
+    <path d="M 330 547 L 530 547" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="530" y="525" width="220" height="50" rx="12" fill="url(#actGreen)" filter="url(#actDrop)" />
+    <text x="640" y="546" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#ffffff">Validasi Gambar &amp; Simpan</text>
+    <text x="640" y="562" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#a7f3d0">`uploads/scans/` (Status: pending)</text>
+
+    <!-- Send to Python AI Engine -->
+    <path d="M 750 550 L 1000 550" stroke="#34d399" stroke-width="2.2" marker-end="url(#actArrGreen)" />
+    <text x="800" y="540" font-family="'Segoe UI', sans-serif" font-size="10.5" font-weight="bold" fill="#34d399">Subprocess CLI</text>
+
+    <!-- ======================================================== -->
+    <!-- PIPELINE OPENCV COMPUTER VISION -->
+    <!-- ======================================================== -->
+    <rect x="980" y="515" width="220" height="50" rx="12" fill="url(#actGreen)" filter="url(#actDrop)" />
+    <text x="1090" y="537" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="700" fill="#ffffff">Baca Citra &amp; Normalisasi</text>
+    <text x="1090" y="553" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#a7f3d0">`analyze.py` (OpenCV Python)</text>
+
+    <path d="M 1090 565 L 1090 590" stroke="#34d399" stroke-width="2" marker-end="url(#actArrGreen)" />
+    <path d="M 1090 590 L 1150 620 L 1090 650 L 1030 620 Z" fill="#f59e0b" stroke="#fcd34d" stroke-width="2" />
+    <text x="1090" y="624" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#000000">Wajah Jelas?</text>
+
+    <!-- Gagal deteksi wajah -->
+    <text x="1165" y="615" font-family="'Segoe UI', sans-serif" font-size="10.5" font-weight="bold" fill="#f87171">[Tidak]</text>
+    <path d="M 1150 620 L 1380 620 L 1380 475 L 330 475" stroke="#f43f5e" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#actArr)" />
+    <text x="1220" y="610" font-family="'Segoe UI', sans-serif" font-size="9.5" fill="#fca5a5">Notifikasi Atur Cahaya &amp; Ulang</text>
+
+    <!-- Sukses deteksi wajah -->
+    <text x="1105" y="670" font-family="'Segoe UI', sans-serif" font-size="10.5" font-weight="bold" fill="#34d399">[Ya]</text>
+    <path d="M 1090 650 L 1090 680" stroke="#34d399" stroke-width="2" marker-end="url(#actArrGreen)" />
+
+    <rect x="980" y="680" width="220" height="40" rx="10" fill="url(#actGreen)" />
+    <text x="1090" y="705" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Crop Region of Interest (ROI)</text>
+
+    <!-- FORK SYNCHRONIZATION BAR -->
+    <path d="M 1090 720 L 1090 740" stroke="#34d399" stroke-width="2" />
+    <rect x="970" y="740" width="430" height="8" rx="4" fill="#38bdf8" />
+
+    <!-- 4 Parallel Branches -->
+    <path d="M 990 748 L 990 770" stroke="#34d399" stroke-width="1.8" marker-end="url(#actArrGreen)" />
+    <rect x="965" y="770" width="100" height="60" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1" />
+    <text x="1015" y="792" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Deteksi Acne</text>
+    <text x="1015" y="808" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="8.5" fill="#99f6e4">HSV Thresh</text>
+
+    <path d="M 1090 748 L 1090 770" stroke="#34d399" stroke-width="1.8" marker-end="url(#actArrGreen)" />
+    <rect x="1070" y="770" width="100" height="60" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1" />
+    <text x="1120" y="792" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Redness</text>
+    <text x="1120" y="808" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="8.5" fill="#99f6e4">CIELAB a*</text>
+
+    <path d="M 1190 748 L 1190 770" stroke="#34d399" stroke-width="1.8" marker-end="url(#actArrGreen)" />
+    <rect x="1175" y="770" width="100" height="60" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1" />
+    <text x="1225" y="792" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Tekstur Pori</text>
+    <text x="1225" y="808" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="8.5" fill="#99f6e4">Laplacian Var</text>
+
+    <path d="M 1290 748 L 1290 770" stroke="#34d399" stroke-width="1.8" marker-end="url(#actArrGreen)" />
+    <rect x="1280" y="770" width="110" height="60" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="1" />
+    <text x="1335" y="792" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#ffffff">UV Sunscreen</text>
+    <text x="1335" y="808" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="8.5" fill="#99f6e4">Coverage Area</text>
+
+    <!-- JOIN SYNCHRONIZATION BAR -->
+    <path d="M 1015 830 L 1015 850" stroke="#34d399" stroke-width="1.8" />
+    <path d="M 1120 830 L 1120 850" stroke="#34d399" stroke-width="1.8" />
+    <path d="M 1225 830 L 1225 850" stroke="#34d399" stroke-width="1.8" />
+    <path d="M 1335 830 L 1335 850" stroke="#34d399" stroke-width="1.8" />
+    <rect x="970" y="850" width="430" height="8" rx="4" fill="#38bdf8" />
+
+    <!-- Calc Score & Output JSON -->
+    <path d="M 1185 858 L 1185 880" stroke="#34d399" stroke-width="2" marker-end="url(#actArrGreen)" />
+    <rect x="1070" y="880" width="230" height="45" rx="12" fill="url(#actGreen)" filter="url(#actDrop)" />
+    <text x="1185" y="901" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">Kalkulasi Overall Score (0-100)</text>
+    <text x="1185" y="916" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#a7f3d0">&amp; Format JSON Metrics</text>
+
+    <!-- Return to PHP Backend -->
+    <path d="M 1070 902 L 750 902" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="530" y="880" width="220" height="50" rx="12" fill="url(#actGreen)" filter="url(#actDrop)" />
+    <text x="640" y="902" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#ffffff">Simpan ke `analysis_results` &amp;</text>
+    <text x="640" y="918" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#a7f3d0">Cocokkan Produk Skincare</text>
+
+    <!-- Return to Customer Result View -->
+    <path d="M 530 905 L 330 905" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="120" y="880" width="210" height="50" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="902" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">Tampilkan Skor 81/100 &amp;</text>
+    <text x="225" y="918" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#e0f2fe">Rekomendasi Produk Sesuai</text>
+
+    <!-- ======================================================== -->
+    <!-- PIPELINE MULTI-LLM CHATBOT & FAILOVER -->
+    <!-- ======================================================== -->
+    <path d="M 225 930 L 225 970" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <rect x="120" y="970" width="210" height="50" rx="12" fill="url(#actPurple)" filter="url(#actDrop)" />
+    <text x="225" y="991" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="600" fill="#ffffff">Buka Chatbot AI &amp; Kirim Tanya:</text>
+    <text x="225" y="1007" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#e9d5ff">"Berapa customer terdaftar?"</text>
+
+    <!-- Chatbot Server Intent Check -->
+    <path d="M 330 995 L 1490 995" stroke="#c084fc" stroke-width="2" marker-end="url(#actArrPurple)" />
+    <rect x="1490" y="970" width="220" height="50" rx="12" fill="url(#actPurple)" filter="url(#actDrop)" />
+    <text x="1600" y="991" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11.5" font-weight="700" fill="#ffffff">Cek Intent Pertanyaan</text>
+    <text x="1600" y="1007" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" fill="#e9d5ff">(Dermatologi vs Data Sistem)</text>
+
+    <path d="M 1600 1020 L 1600 1050" stroke="#c084fc" stroke-width="2" marker-end="url(#actArrPurple)" />
+    <rect x="1490" y="1050" width="220" height="50" rx="12" fill="#4c1d95" stroke="#a855f7" stroke-width="1.5" />
+    <text x="1600" y="1070" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#e9d5ff">Kueri Agregat Database MySQL</text>
+    <text x="1600" y="1086" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9.5" fill="#d8b4fe">SELECT count(*) FROM users = 5</text>
+
+    <!-- Send to Primary API Key (Groq) -->
+    <path d="M 1600 1100 L 1600 1130" stroke="#c084fc" stroke-width="2" marker-end="url(#actArrPurple)" />
+    <rect x="1490" y="1130" width="220" height="40" rx="10" fill="url(#actPurple)" />
+    <text x="1600" y="1155" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="600" fill="#ffffff">Kirim Prompt ke Primary Key (Groq)</text>
+
+    <!-- Failover Decision -->
+    <path d="M 1600 1170 L 1600 1195" stroke="#c084fc" stroke-width="2" marker-end="url(#actArrPurple)" />
+    <path d="M 1600 1195 L 1660 1225 L 1600 1255 L 1540 1225 Z" fill="#f59e0b" stroke="#fcd34d" stroke-width="2" />
+    <text x="1600" y="1229" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#000000">Respon 200?</text>
+
+    <!-- Failover Path -->
+    <text x="1675" y="1220" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#f87171">[Error 402/429]</text>
+    <path d="M 1660 1225 L 1760 1225 L 1760 1270 L 1710 1270" stroke="#f43f5e" stroke-width="1.8" marker-end="url(#actArrPurple)" />
+    <rect x="1510" y="1260" width="200" height="36" rx="8" fill="#4c0519" stroke="#f43f5e" stroke-width="1.5" />
+    <text x="1610" y="1282" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#fca5a5">Auto-Failover ke Gemini/DeepSeek</text>
+
+    <!-- Success Output -->
+    <text x="1530" y="1245" font-family="'Segoe UI', sans-serif" font-size="10" font-weight="bold" fill="#86efac">[Ya 200 OK]</text>
+    <path d="M 1540 1225 L 330 1225" stroke="#38bdf8" stroke-width="2.2" marker-end="url(#actArr)" />
+
+    <!-- Customer Receives Smart Response -->
+    <rect x="120" y="1200" width="210" height="50" rx="12" fill="url(#actBlue)" filter="url(#actDrop)" />
+    <text x="225" y="1222" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="700" fill="#ffffff">Menerima Respon AI Cerdas:</text>
+    <text x="225" y="1238" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9.5" fill="#bae6fd">"Terdapat 5 customer yang terdaftar..."</text>
+
+    <!-- END NODE -->
+    <path d="M 225 1250 L 225 1280" stroke="#38bdf8" stroke-width="2" marker-end="url(#actArr)" />
+    <circle cx="225" cy="1295" r="16" fill="#0f172a" stroke="#f43f5e" stroke-width="3" />
+    <circle cx="225" cy="1295" r="8" fill="#f43f5e" />
+  </g>
+
+</svg>

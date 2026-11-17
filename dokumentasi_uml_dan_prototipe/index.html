@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkinCheck — Presentasi Resmi PRD, UML & Prototipe Interaktif</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes scanBeam {
+      0% { top: 0%; opacity: 0.8; }
+      50% { top: 88%; opacity: 1; }
+      100% { top: 0%; opacity: 0.8; }
+    }
+    .scanner-beam { animation: scanBeam 2.2s ease-in-out infinite; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0f19; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .slide-enter { animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col selection:bg-rose-500 selection:text-white overflow-x-hidden">
+
+  <!-- TOP HEADER / CONTROL BAR -->
+  <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 sticky top-0 z-50 px-4 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Project Title -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="goToSlide(1)">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-500/20">
+          <i class="fa-solid fa-shield-heart text-white text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-base text-white tracking-tight">Skin<span class="text-rose-500">Check</span></span>
+            <span class="px-2 py-0.5 text-[11px] bg-rose-500/20 text-rose-300 font-semibold rounded-full border border-rose-500/30">Presentasi Sidang &amp; Demo</span>
+          </div>
+          <p class="text-[11px] text-slate-400">AI-Powered Skin Health Monitoring &amp; Skincare Assistant</p>
+        </div>
+      </div>
+
+      <!-- Slide Navigation Buttons (Quick Jump) -->
+      <nav class="flex items-center gap-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800 text-xs overflow-x-auto max-w-full">
+        <button onclick="goToSlide(1)" id="nav-btn-1" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-semibold bg-rose-600 text-white transition">1. Overview</button>
+        <button onclick="goToSlide(2)" id="nav-btn-2" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition">2. PRD Produk</button>
+        <button onclick="goToSlide(3)" id="nav-btn-3" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition">3. Use Case</button>
+        <button onclick="goToSlide(4)" id="nav-btn-4" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition">4. Activity</button>
+        <button onclick="goToSlide(5)" id="nav-btn-5" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition">5. Arsitektur &amp; ERD</button>
+        <button onclick="goToSlide(6)" id="nav-btn-6" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-medium text-slate-400 hover:text-white transition">6. Prototipe Figma</button>
+        <button onclick="goToSlide(7)" id="nav-btn-7" class="slide-nav-btn px-2.5 py-1.5 rounded-lg font-medium text-amber-400 hover:text-amber-300 transition">7. Naskah Presenter</button>
+      </nav>
+
+      <!-- Slide Indicator & Controls -->
+      <div class="flex items-center gap-2 text-xs">
+        <span id="slide-indicator" class="font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">Slide 1 / 7</span>
+        
+        <button onclick="prevSlide()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700" title="Slide Sebelumnya (←)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="nextSlide()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700" title="Slide Berikutnya (→)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <button onclick="togglePresenterNotes()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700" title="Catatan Pembicara (P)">
+          <i class="fa-solid fa-note-sticky"></i>
+        </button>
+        <button onclick="toggleFullScreen()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700" title="Fullscreen (F / F11)">
+          <i class="fa-solid fa-expand"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN SLIDES VIEW CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 1: COVER & OVERVIEW -->
+    <!-- ======================================================== -->
+    <section id="slide-1" class="slide-pane slide-enter block space-y-6">
+      <div class="relative bg-gradient-to-br from-slate-900 via-slate-900 to-rose-950/40 border border-slate-800 p-8 sm:p-12 rounded-3xl shadow-2xl overflow-hidden">
+        <div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-rose-600/10 blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold mb-4">
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+            Presentasi Sidang &amp; Demonstrasi Sistem
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+            Skin<span class="text-rose-500">Check</span>
+          </h1>
+          <p class="text-lg sm:text-xl font-bold text-slate-200 mt-2">
+            AI-Powered Skin Health Monitoring &amp; Skincare Assistant
+          </p>
+          <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+            Platform pemantauan visual kesehatan kulit wajah harian dan evaluasi cakupan tabir surya (*sunscreen*) memadukan Computer Vision (MediaPipe &amp; OpenCV), sistem Multi-LLM auto-failover, verifikasi WhatsApp OTP, dan rekomendasi produk terikat katalog.
+          </p>
+
+          <!-- Highlights Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8 text-xs">
+            <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-2xl">
+              <span class="text-rose-400 font-bold block text-sm mb-0.5">4 Aktor</span>
+              <p class="text-[11px] text-slate-400">Customer, Super Admin, Layanan AI &amp; Layanan OTP</p>
+            </div>
+            <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-2xl">
+              <span class="text-emerald-400 font-bold block text-sm mb-0.5">5 Indikator CV</span>
+              <p class="text-[11px] text-slate-400">Acne, Redness, Texture, Pigment &amp; Overall Score</p>
+            </div>
+            <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-2xl">
+              <span class="text-blue-400 font-bold block text-sm mb-0.5">Multi-LLM</span>
+              <p class="text-[11px] text-slate-400">Auto-Failover Groq, Gemini 3.5, DeepSeek, OpenAI</p>
+            </div>
+            <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-2xl">
+              <span class="text-amber-400 font-bold block text-sm mb-0.5">9 Tabel MySQL</span>
+              <p class="text-[11px] text-slate-400">Arsitektur MVC &amp; Database Terintegrasi Cerdas</p>
+            </div>
+          </div>
+
+          <!-- Action Start -->
+          <div class="flex items-center gap-3 mt-8">
+            <button onclick="nextSlide()" class="px-6 py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-rose-600/30 flex items-center gap-2 transition">
+              <span>Mulai Presentasi</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button onclick="goToSlide(6)" class="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl border border-slate-700 flex items-center gap-2 transition">
+              <i class="fa-brands fa-figma text-rose-400"></i>
+              <span>Buka Prototipe Interaktif</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 2: PRD (PRODUCT REQUIREMENTS DOCUMENT) -->
+    <!-- ======================================================== -->
+    <section id="slide-2" class="slide-pane slide-enter hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-file-invoice text-rose-500"></i> Product Requirements Document (PRD Revisi MVP)
+            </h2>
+            <p class="text-xs text-slate-400">Spesifikasi produk, problem statement, persona, ruang lingkup, dan safety guardrails non-medis.</p>
+          </div>
+          <a href="PRD_SKINCHECK_LENGKAP.md" target="_blank" class="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 rounded-xl text-xs font-semibold flex items-center gap-1.5">
+            <i class="fa-regular fa-file-lines"></i> Buka PRD Markdown Lengkap
+          </a>
+        </div>
+
+        <!-- PRD Section Tabs -->
+        <div class="flex gap-2 overflow-x-auto border-b border-slate-800 pb-2 text-xs">
+          <button onclick="switchPrdTab('problem')" id="prd-btn-problem" class="prd-tab-btn px-3 py-1.5 rounded-lg bg-rose-600 text-white font-semibold">1. Problem &amp; Vision</button>
+          <button onclick="switchPrdTab('persona')" id="prd-btn-persona" class="prd-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium">2. Target Pengguna</button>
+          <button onclick="switchPrdTab('scope')" id="prd-btn-scope" class="prd-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium">3. MVP Prioritas (P0/P1/P2)</button>
+          <button onclick="switchPrdTab('modules')" id="prd-btn-modules" class="prd-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium">4. 10 Modul Fungsional</button>
+          <button onclick="switchPrdTab('safety')" id="prd-btn-safety" class="prd-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium">5. Safety &amp; Guardrails</button>
+        </div>
+
+        <!-- PRD Tab 1: Problem & Vision -->
+        <div id="prd-tab-problem" class="prd-content-pane pt-4 space-y-3 text-xs">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+              <span class="font-bold text-rose-400 flex items-center gap-1.5 text-sm">
+                <i class="fa-solid fa-triangle-exclamation"></i> Problem Statement (Masalah Pengguna)
+              </span>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                <li><strong>Sulit Evaluasi Efektivitas Skincare:</strong> Pengguna tidak memiliki alat ukur objektif untuk memantau apakah produk yang dipakai benar-benar memperbaiki kulit.</li>
+                <li><strong>Penggunaan Sunscreen Tidak Merata:</strong> Kerusakan kulit akibat UV sering timbul karena area rentan (seperti samping hidung dan pelipis) terlewat saat aplikasi tabir surya.</li>
+                <li><strong>Salah Pilih Produk (Breakout):</strong> Konsumen kerap tergiur tren medsos tanpa memahami profil biologis kulitnya.</li>
+                <li><strong>Chatbot AI Sering Berhalusinasi:</strong> AI konvensional kerap mengarang merk fiktif atau memberikan klaim medis berbahaya.</li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+              <span class="font-bold text-emerald-400 flex items-center gap-1.5 text-sm">
+                <i class="fa-solid fa-lightbulb"></i> Value Proposition (Solusi SkinCheck)
+              </span>
+              <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                <li><strong>Computer Vision Non-Invasif:</strong> Analisis visual via kamera browser standar menggunakan OpenCV &amp; MediaPipe.</li>
+                <li><strong>Estimasi Cakupan Tabir Surya:</strong> Deteksi persentase coverage dan penandaan area terlewat (*missed areas*).</li>
+                <li><strong>Rekomendasi Terikat Katalog Resmi:</strong> AI hanya merekomendasikan produk aktif di basis data (100% anti-halusinasi).</li>
+                <li><strong>Multi-LLM Auto-Failover:</strong> Uptime 99.9% dengan fallback instan Groq, Gemini 3.5, DeepSeek, dan OpenAI.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRD Tab 2: Persona -->
+        <div id="prd-tab-persona" class="prd-content-pane hidden pt-4 space-y-3 text-xs">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+              <span class="font-bold text-blue-400 flex items-center gap-1.5 text-sm mb-2">
+                <i class="fa-solid fa-user"></i> Persona 1: Customer / Pengguna Umum
+              </span>
+              <p class="text-slate-300 mb-2">Individu berusia 17–40 tahun yang aktif merawat kulit wajah sehari-hari.</p>
+              <div class="space-y-1 text-slate-400">
+                <p>• <strong>Goals:</strong> Ingin skor kesehatan kulit objektif, validasi pemakaian sunscreen, dan konsultasi interaktif.</p>
+                <p>• <strong>Pain Points:</strong> Biaya klinik kecantikan mahal, bingung urutan produk, takut salah beli produk.</p>
+              </div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+              <span class="font-bold text-rose-400 flex items-center gap-1.5 text-sm mb-2">
+                <i class="fa-solid fa-user-shield"></i> Persona 2: Super Admin
+              </span>
+              <p class="text-slate-300 mb-2">Tim pengelola operasional, kurator produk, dan administrator sistem SkinCheck.</p>
+              <div class="space-y-1 text-slate-400">
+                <p>• <strong>Goals:</strong> Mengontrol data pengguna, mengaudit log aktivitas, mengonfigurasi multi-API key AI tanpa restart server.</p>
+                <p>• <strong>Pain Points:</strong> Gangguan kuota limit API pihak ketiga, risiko kebocoran data pengguna.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRD Tab 3: Scope MVP -->
+        <div id="prd-tab-scope" class="prd-content-pane hidden pt-4 space-y-3 text-xs">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-4 rounded-2xl bg-slate-950 border border-rose-500/40">
+              <span class="font-bold text-rose-400 text-sm block mb-1">P0 — Must Have (MVP)</span>
+              <ul class="space-y-1 text-slate-300">
+                <li>• Auth OTP WhatsApp (Fonnte)</li>
+                <li>• Onboarding jenis kulit &amp; goals</li>
+                <li>• Face scan WebRTC</li>
+                <li>• OpenCV 5 indikator skin score</li>
+                <li>• Sunscreen coverage check</li>
+                <li>• Rekomendasi produk terkurasi</li>
+                <li>• Multi-LLM failover chatbot</li>
+                <li>• Admin panel &amp; AI config</li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-950 border border-blue-500/40">
+              <span class="font-bold text-blue-400 text-sm block mb-1">P1 — Should Have</span>
+              <ul class="space-y-1 text-slate-300">
+                <li>• Histori pemindaian &amp; grafik tren</li>
+                <li>• Routine builder (AM/PM)</li>
+                <li>• Activity audit logs lengkap</li>
+                <li>• Perbandingan foto baseline</li>
+              </ul>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-950 border border-slate-700">
+              <span class="font-bold text-slate-400 text-sm block mb-1">P2 — Future Scope</span>
+              <ul class="space-y-1 text-slate-400">
+                <li>• Integrasi kamera sensor fisik UV</li>
+                <li>• Telekonsultasi dokter Sp.KK</li>
+                <li>• E-commerce payment gateway</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRD Tab 4: Modules -->
+        <div id="prd-tab-modules" class="prd-content-pane hidden pt-4 space-y-2 text-xs">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">1. Auth &amp; OTP</strong>
+              <p class="text-[10px] text-slate-400">Registrasi, login bcrypt, verifikasi token WhatsApp Fonnte.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">2. Onboarding</strong>
+              <p class="text-[10px] text-slate-400">Profil jenis kulit, skin concerns, preferensi sunscreen.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">3. Dashboard</strong>
+              <p class="text-[10px] text-slate-400">Skor kesehatan terkini, tombol scan, empty state.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">4. Kamera WebRTC</strong>
+              <p class="text-[10px] text-slate-400">MediaDevices API, oval guide, validasi format &amp; resolusi.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">5. CV Skin Analysis</strong>
+              <p class="text-[10px] text-slate-400">Haar Cascade / MediaPipe, HSV, CIELAB a*, LapVar.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">6. Sunscreen Check</strong>
+              <p class="text-[10px] text-slate-400">Estimasi coverage %, penandaan area belum kena.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">7. Rekomendasi</strong>
+              <p class="text-[10px] text-slate-400">Pencocokan aturan skincare berbasis database aktif.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">8. Chatbot AI</strong>
+              <p class="text-[10px] text-slate-400">Kueri agregat DB, multi-failover Groq/Gemini/DeepSeek.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">9. Panel Admin</strong>
+              <p class="text-[10px] text-slate-400">Metrik dashboard, CRUD produk, konfigurasi kunci AI.</p>
+            </div>
+            <div class="p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+              <strong class="text-rose-400 block mb-0.5">10. Progress Trend</strong>
+              <p class="text-[10px] text-slate-400">Linimasa perubahan skor dan riwayat scan.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRD Tab 5: Safety -->
+        <div id="prd-tab-safety" class="prd-content-pane hidden pt-4 space-y-3 text-xs">
+          <div class="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/40 text-amber-200">
+            <h4 class="font-bold text-amber-400 text-sm mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-shield-halved"></i> Safety Guardrails &amp; Medical Disclaimer (Wajib Kepatuhan)
+            </h4>
+            <ul class="space-y-1 list-disc list-inside text-slate-300">
+              <li><strong>Hasil adalah Indikator Non-Medis:</strong> Seluruh output skor visual bukan merupakan diagnosis klinis penyakit kulit.</li>
+              <li><strong>Dilarang Meresepkan Obat Keras:</strong> AI tidak boleh menyarankan obat resep dokter seperti isotretinoin atau kortikosteroid potensi tinggi.</li>
+              <li><strong>Red Flag Routing:</strong> Jika terdeteksi tanda infeksi berat atau kecurigaan lesi ganas (melanoma), sistem wajib menampilkan peringatan merah dan menganjurkan konsultasi langsung ke Dokter Spesialis Kulit (Sp.KK / Sp.DVE).</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 3: USE CASE DIAGRAM RESMI -->
+    <!-- ======================================================== -->
+    <section id="slide-3" class="slide-pane slide-enter hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-users-gear text-rose-500"></i> Use Case Diagram — SkinCheck (Resmi)
+            </h2>
+            <p class="text-xs text-slate-400">Batas sistem SkinCheck, 2 Aktor Pengguna, 2 Aktor Layanan Eksternal, dan 9 Paket Fungsionalitas.</p>
+          </div>
+          <button onclick="openImageModal('01_use_case_diagram_official.jpg')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5">
+            <i class="fa-solid fa-magnifying-glass-plus"></i> Perbesar Gambar
+          </button>
+        </div>
+
+        <!-- Embedded Diagram Image Display -->
+        <div class="bg-white rounded-2xl p-2 border border-slate-700 overflow-hidden shadow-inner flex items-center justify-center">
+          <img src="01_use_case_diagram_official.jpg" alt="Use Case Diagram SkinCheck Resmi" class="max-h-[500px] w-auto object-contain rounded-xl cursor-pointer hover:scale-[1.01] transition" onclick="openImageModal('01_use_case_diagram_official.jpg')" />
+        </div>
+
+        <!-- Interactive Legend & Breakdown -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs mt-3">
+          <div class="p-3 bg-slate-950 border border-blue-500/30 rounded-xl">
+            <span class="font-bold text-blue-400 block mb-1">👤 Customer / User</span>
+            <p class="text-[11px] text-slate-400">Registrasi, Login, Face Scan, Sunscreen Check, Heatmap, Riwayat, Tanya AI, dan Skincare Routine.</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-rose-500/30 rounded-xl">
+            <span class="font-bold text-rose-400 block mb-1">🛡️ Super Admin</span>
+            <p class="text-[11px] text-slate-400">Login Admin, Kelola User &amp; Status, Kelola Produk &amp; Konten, Monitoring Scan &amp; Log, serta Dashboard Admin.</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-purple-500/30 rounded-xl">
+            <span class="font-bold text-purple-400 block mb-1">🤖 Layanan AI (LLM + RAG)</span>
+            <p class="text-[11px] text-slate-400">Analisis Kulit, Sunscreen Coverage, Jawab Pertanyaan, Rekomendasi Produk, dan Skincare Routine.</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-emerald-500/30 rounded-xl">
+            <span class="font-bold text-emerald-400 block mb-1">📱 Layanan OTP (Eksternal)</span>
+            <p class="text-[11px] text-slate-400">Verifikasi Registrasi, Verifikasi Login, dan Verifikasi Perubahan Data Sensitif via token.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 4: ACTIVITY DIAGRAM RESMI -->
+    <!-- ======================================================== -->
+    <section id="slide-4" class="slide-pane slide-enter hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-diagram-project text-emerald-400"></i> Activity Diagram — Face Scan &amp; Analisis Kulit (Resmi)
+            </h2>
+            <p class="text-xs text-slate-400">Alur kerja sistematis melintasi 4 Swimlane: Customer, Sistem SkinCheck, MediaPipe &amp; OpenCV, dan Database.</p>
+          </div>
+          <button onclick="openImageModal('02_activity_diagram_official.jpg')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl text-xs font-semibold flex items-center gap-1.5">
+            <i class="fa-solid fa-magnifying-glass-plus"></i> Perbesar Gambar
+          </button>
+        </div>
+
+        <!-- Embedded Diagram Image Display -->
+        <div class="bg-white rounded-2xl p-2 border border-slate-700 overflow-hidden shadow-inner flex items-center justify-center">
+          <img src="02_activity_diagram_official.jpg" alt="Activity Diagram Face Scan SkinCheck Resmi" class="max-h-[500px] w-auto object-contain rounded-xl cursor-pointer hover:scale-[1.01] transition" onclick="openImageModal('02_activity_diagram_official.jpg')" />
+        </div>
+
+        <!-- Step-by-Step Swimlane Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs mt-3">
+          <div class="p-3 bg-slate-950 border border-blue-500/30 rounded-xl">
+            <span class="font-bold text-blue-400 block mb-1">1. Customer / User</span>
+            <p class="text-[11px] text-slate-300">Buka menu Face Scan &rarr; Beri izin kamera &rarr; Ambil foto wajah &rarr; Melihat hasil analisis kulit.</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-indigo-500/30 rounded-xl">
+            <span class="font-bold text-indigo-400 block mb-1">2. Sistem SkinCheck</span>
+            <p class="text-[11px] text-slate-300">Minta izin kamera &rarr; Preview aktif &rarr; Validasi kualitas gambar &rarr; Simpan aman &rarr; Hitung Overall Score.</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-emerald-500/30 rounded-xl">
+            <span class="font-bold text-emerald-400 block mb-1">3. Asisten AI / CV</span>
+            <p class="text-[11px] text-slate-300">Deteksi wajah (MediaPipe) &rarr; Analisis kondisi kulit (OpenCV/ML) &rarr; 5 Indikator (Acne, Redness, Texture, Pigment, Score).</p>
+          </div>
+          <div class="p-3 bg-slate-950 border border-amber-500/30 rounded-xl">
+            <span class="font-bold text-amber-400 block mb-1">4. Database MySQL</span>
+            <p class="text-[11px] text-slate-300">Penyimpanan atomik: Gambar, Hasil Analisis, Timestamp, dan User ID secara terenkripsi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 5: ARSITEKTUR TEKNIS, CLASS DIAGRAM & ERD -->
+    <!-- ======================================================== -->
+    <section id="slide-5" class="slide-pane slide-enter hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-sitemap text-purple-400"></i> Arsitektur MVC, Sequence Diagram &amp; ERD 9 Tabel
+            </h2>
+            <p class="text-xs text-slate-400">Struktur kelas berorientasi objek, urutan interaksi pesan, serta relasi basis data relasional.</p>
+          </div>
+        </div>
+
+        <!-- Sub-tabs for Architecture -->
+        <div class="flex gap-2 border-b border-slate-800 pb-2 text-xs">
+          <button onclick="switchArchTab('erd')" id="arch-btn-erd" class="arch-tab-btn px-3 py-1.5 rounded-lg bg-rose-600 text-white font-semibold">1. ERD Basis Data (9 Tabel)</button>
+          <button onclick="switchArchTab('class')" id="arch-btn-class" class="arch-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium">2. Class Diagram (MVC)</button>
+          <button onclick="switchArchTab('sequence')" id="arch-btn-sequence" class="arch-tab-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-medium">3. Sequence Diagram (Failover)</button>
+        </div>
+
+        <!-- Arch Tab 1: ERD -->
+        <div id="arch-tab-erd" class="arch-content-pane pt-3">
+          <div class="bg-white rounded-2xl p-2 border border-slate-700 overflow-hidden flex items-center justify-center">
+            <img src="05_erd_basis_data.png" alt="ERD Basis Data 9 Tabel SkinCheck" class="max-h-[460px] w-auto object-contain rounded-xl cursor-pointer" onclick="openImageModal('05_erd_basis_data.png')" />
+          </div>
+          <div class="grid grid-cols-3 gap-2 mt-3 text-[11px] text-slate-400">
+            <div class="p-2 bg-slate-950 rounded-lg border border-slate-800">
+              <strong class="text-blue-400 block">users &bull; skin_scans</strong>
+              Relasi 1:N (Satu user memiliki banyak scan).
+            </div>
+            <div class="p-2 bg-slate-950 rounded-lg border border-slate-800">
+              <strong class="text-emerald-400 block">skin_scans &bull; analysis_results</strong>
+              Relasi 1:1 (Hasil diagnostik komposit).
+            </div>
+            <div class="p-2 bg-slate-950 rounded-lg border border-slate-800">
+              <strong class="text-pink-400 block">recommendations (Junction)</strong>
+              Menghubungkan scan_id dengan products.
+            </div>
+          </div>
+        </div>
+
+        <!-- Arch Tab 2: Class Diagram -->
+        <div id="arch-tab-class" class="arch-content-pane hidden pt-3">
+          <div class="bg-white rounded-2xl p-2 border border-slate-700 overflow-hidden flex items-center justify-center">
+            <img src="03_class_diagram.png" alt="Class Diagram MVC SkinCheck" class="max-h-[460px] w-auto object-contain rounded-xl cursor-pointer" onclick="openImageModal('03_class_diagram.png')" />
+          </div>
+        </div>
+
+        <!-- Arch Tab 3: Sequence Diagram -->
+        <div id="arch-tab-sequence" class="arch-content-pane hidden pt-3">
+          <div class="bg-white rounded-2xl p-2 border border-slate-700 overflow-hidden flex items-center justify-center">
+            <img src="04_sequence_diagram.png" alt="Sequence Diagram SkinCheck Failover" class="max-h-[460px] w-auto object-contain rounded-xl cursor-pointer" onclick="openImageModal('04_sequence_diagram.png')" />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 6: PROTOTIPE INTERAKTIF FIGMA AI/UX -->
+    <!-- ======================================================== -->
+    <section id="slide-6" class="slide-pane slide-enter hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-3">
+          <div>
+            <h2 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-brands fa-figma text-rose-500"></i> Prototipe Interaktif AI/UX Figma (Live Demo)
+            </h2>
+            <p class="text-xs text-slate-400">Uji interaktif alur Customer (Mobile) &amp; Super Admin (Desktop) langsung di browser.</p>
+          </div>
+          <a href="prototipe_figma_interaktif.html" target="_blank" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Layar Penuh di Tab Baru
+          </a>
+        </div>
+
+        <!-- Embedded Interactive Simulator iframe -->
+        <div class="w-full h-[620px] rounded-2xl border border-slate-800 overflow-hidden bg-slate-950">
+          <iframe src="prototipe_figma_interaktif.html" class="w-full h-full border-0"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- SLIDE 7: NASKAH PRESENTER & TELEPROMPTER -->
+    <!-- ======================================================== -->
+    <section id="slide-7" class="slide-pane slide-enter hidden space-y-4">
+      <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl">
+        <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+          <div>
+            <h2 class="text-xl font-bold text-amber-400 flex items-center gap-2">
+              <i class="fa-solid fa-clapperboard"></i> Naskah Pembicara &amp; Teleprompter Sidang
+            </h2>
+            <p class="text-xs text-slate-400">Naskah kata demi kata yang diselaraskan khusus untuk Use Case &amp; Activity Diagram resmi.</p>
+          </div>
+          <a href="SCRIPT_PRESENTASI_DIAGRAM_UML.md" target="_blank" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-xl text-xs font-semibold flex items-center gap-1.5">
+            <i class="fa-regular fa-file-lines"></i> Unduh File Naskah (.MD)
+          </a>
+        </div>
+
+        <div class="space-y-3 text-xs max-h-[580px] overflow-y-auto pr-2">
+          
+          <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-rose-400 text-sm">Bagian 1: Narasi Pembukaan &amp; PRD</span>
+              <span class="text-[10px] text-slate-500">Durasi: ~1 Menit</span>
+            </div>
+            <p class="text-slate-300 italic leading-relaxed border-l-2 border-rose-500 pl-3 py-1">
+              "Selamat pagi/siang kepada Bapak/Ibu dosen penguji. Pada hari ini saya mempresentasikan perancangan sistem SkinCheck, platform cerdas pemantauan kesehatan kulit dan evaluasi tabir surya berbasis Computer Vision dan Multi-LLM Chatbot. Melalui prioritas MVP (P0), sistem kami menghadirkan pemindaian visual non-medis yang terikat katalog produk resmi untuk mencegah halusinasi AI, serta menjamin ketersediaan layanan dengan arsitektur auto-failover."
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-blue-400 text-sm">Bagian 2: Narasi Use Case Diagram Resmi</span>
+              <span class="text-[10px] text-slate-500">Durasi: ~1.5 Menit</span>
+            </div>
+            <p class="text-slate-300 italic leading-relaxed border-l-2 border-blue-500 pl-3 py-1">
+              "Pada Use Case Diagram SkinCheck, terdapat 4 aktor utama. Di sisi kiri adalah Customer/User dan Super Admin. Di sisi kanan adalah Layanan AI (LLM + RAG) dan Layanan OTP eksternal. Perhatikan bahwa proses registrasi, login, dan perubahan data sensitif meng-include verifikasi OTP secara wajib. Begitu pula pada pemindaian wajah dan sunscreen check yang meng-include analisis AI. Sementara Super Admin memiliki ruang lingkup terpisah untuk memantau data scan, activity log, serta mengelola katalog produk."
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-bold text-emerald-400 text-sm">Bagian 3: Narasi Activity Diagram Resmi</span>
+              <span class="text-[10px] text-slate-500">Durasi: ~1.5 Menit</span>
+            </div>
+            <p class="text-slate-300 italic leading-relaxed border-l-2 border-emerald-500 pl-3 py-1">
+              "Pada Activity Diagram, alur Face Scan dibagi ke dalam 4 Swimlanes: Customer, Sistem SkinCheck, Asisten AI/Computer Vision, dan Database. Pengguna meminta akses kamera, jika diizinkan pratinjau WebRTC aktif, lalu foto diambil. Sistem memvalidasi kualitas gambar sebelum mengirimkannya ke MediaPipe untuk deteksi wajah, dan OpenCV untuk mengekstrak 5 indikator: Acne Score, Redness Score, Texture Score, Hyperpigmentation Score, dan Overall Score. Seluruh metrik disimpan ke basis data secara atomik sebelum dirender kembali ke layar pengguna."
+            </p>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-slate-950 border border-amber-500/30">
+            <h4 class="font-bold text-amber-400 text-sm mb-1">💡 Bocoran Pertanyaan Dosen Penguji</h4>
+            <div class="space-y-1 text-slate-300">
+              <p>• <strong>Kenapa relasi OTP dan AI menggunakan &lt;&lt;include&gt;&gt;?</strong> Karena kedua proses tersebut bersifat mandatory (wajib) agar pendaftaran dan hasil skor dapat terbit.</p>
+              <p>• <strong>Apakah hasil analisis ini diagnosis medis?</strong> Bukan. Sistem kami secara eksplisit membatasi hasil sebagai indikator visual perawatan kulit kosmetika.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- POPUP MODAL FOR IMAGE ZOOM -->
+  <div id="image-modal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+    <div class="relative max-w-6xl w-full max-h-[92vh] flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+      <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-rose-400">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <img id="modal-img" src="" alt="Zoomed Diagram" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl bg-white p-2" />
+      <span class="text-xs text-slate-400 mt-2">Klik di luar gambar atau tombol silang untuk menutup.</span>
+    </div>
+  </div>
+
+  <!-- FLOATING PRESENTER NOTES SIDEBAR -->
+  <aside id="presenter-notes-sidebar" class="hidden fixed right-4 bottom-16 top-16 w-80 bg-slate-900/95 backdrop-blur border border-slate-700 rounded-3xl p-4 shadow-2xl z-40 flex flex-col">
+    <div class="flex justify-between items-center border-b border-slate-800 pb-2 mb-2">
+      <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+        <i class="fa-solid fa-note-sticky"></i> Catatan Pembicara (Presenter Notes)
+      </span>
+      <button onclick="togglePresenterNotes()" class="text-slate-400 hover:text-white text-xs">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div id="notes-content" class="flex-1 overflow-y-auto text-xs text-slate-300 leading-relaxed space-y-2">
+      <!-- Injected dynamically per slide -->
+    </div>
+  </aside>
+
+  <!-- JAVASCRIPT CONTROLLER -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 7;
+
+    const presenterNotes = {
+      1: "Sapa dosen penguji dengan sopan. Jelaskan judul SkinCheck dan tujuan sistem memadukan Computer Vision dengan LLM.",
+      2: "Jelaskan Problem Statement: masyarakat kesulitan mengukur kulit secara objektif. Tegaskan bahwa hasil SkinCheck adalah indikator visual, BUKAN diagnosis medis.",
+      3: "Tunjuk aktor Customer (kiri atas) dan Super Admin (kiri bawah). Jelaskan mengapa relasi ke Layanan AI dan Layanan OTP menggunakan <<include>> (karena mandatory).",
+      4: "Jelaskan 4 swimlanes. Tekankan peran MediaPipe untuk deteksi landmark wajah dan OpenCV untuk 5 indikator (Acne, Redness, Texture, Hyperpigmentation, Overall Score).",
+      5: "Jelaskan bahwa sistem menggunakan arsitektur MVC terstruktur dengan 9 tabel basis data MySQL yang ternormalisasi dan fitur auto-failover jika kuota AI habis.",
+      6: "Buka prototipe interaktif. Tunjukkan alur login OTP WhatsApp, Onboarding, kamera scanner laser, hasil 81/100, dan konsultasi AI.",
+      7: "Gunakan halaman teleprompter ini jika Anda perlu membaca narasi lisan yang persis saat presentasi atau rekaman video."
+    };
+
+    function updateSlide() {
+      // Hide all slides
+      document.querySelectorAll('.slide-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.slide-nav-btn').forEach(btn => {
+        btn.classList.remove('bg-rose-600', 'text-white');
+        btn.classList.add('text-slate-400');
+      });
+
+      // Show current slide
+      const activeSlide = document.getElementById(`slide-${currentSlide}`);
+      const activeNav = document.getElementById(`nav-btn-${currentSlide}`);
+      if (activeSlide) activeSlide.classList.remove('hidden');
+      if (activeNav) {
+        activeNav.classList.add('bg-rose-600', 'text-white');
+        activeNav.classList.remove('text-slate-400');
+      }
+
+      // Update indicator
+      document.getElementById('slide-indicator').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+
+      // Update notes
+      const notesEl = document.getElementById('notes-content');
+      if (notesEl) notesEl.innerHTML = `<p>${presenterNotes[currentSlide] || ''}</p>`;
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updateSlide();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullScreen();
+      } else if (e.key.toLowerCase() === 'p') {
+        togglePresenterNotes();
+      } else if (!isNaN(e.key) && parseInt(e.key) >= 1 && parseInt(e.key) <= 7) {
+        goToSlide(parseInt(e.key));
+      }
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function togglePresenterNotes() {
+      const sidebar = document.getElementById('presenter-notes-sidebar');
+      sidebar.classList.toggle('hidden');
+    }
+
+    // Modal Image Zoom
+    function openImageModal(imgSrc) {
+      const modal = document.getElementById('image-modal');
+      const img = document.getElementById('modal-img');
+      img.src = imgSrc;
+      modal.classList.remove('hidden');
+    }
+
+    function closeImageModal() {
+      document.getElementById('image-modal').classList.add('hidden');
+    }
+
+    // Sub-tab switchers for PRD
+    function switchPrdTab(tabKey) {
+      document.querySelectorAll('.prd-content-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.prd-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-rose-600', 'text-white', 'font-semibold');
+        btn.classList.add('text-slate-400');
+      });
+      document.getElementById(`prd-tab-${tabKey}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`prd-btn-${tabKey}`);
+      activeBtn.classList.add('bg-rose-600', 'text-white', 'font-semibold');
+      activeBtn.classList.remove('text-slate-400');
+    }
+
+    // Sub-tab switchers for Architecture
+    function switchArchTab(tabKey) {
+      document.querySelectorAll('.arch-content-pane').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.arch-tab-btn').forEach(btn => {
+        btn.classList.remove('bg-rose-600', 'text-white', 'font-semibold');
+        btn.classList.add('text-slate-400');
+      });
+      document.getElementById(`arch-tab-${tabKey}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`arch-btn-${tabKey}`);
+      activeBtn.classList.add('bg-rose-600', 'text-white', 'font-semibold');
+      activeBtn.classList.remove('text-slate-400');
+    }
+
+    // Initial load
+    updateSlide();
+  </script>
+</body>
+</html>

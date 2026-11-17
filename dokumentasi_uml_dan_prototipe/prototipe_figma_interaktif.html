@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkinCheck - Prototipe Interaktif AI/UX (Figma Simulator)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes scanBeam {
+      0% { top: 0%; opacity: 0.8; }
+      50% { top: 88%; opacity: 1; }
+      100% { top: 0%; opacity: 0.8; }
+    }
+    .scanner-beam {
+      animation: scanBeam 2.2s ease-in-out infinite;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+    .pulse-glow {
+      animation: pulseGlow 2s infinite;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col selection:bg-rose-500 selection:text-white">
+
+  <!-- TOP BAR -->
+  <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 sticky top-0 z-50 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-500/20">
+          <i class="fa-solid fa-shield-heart text-white text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-lg text-white tracking-tight">Skin<span class="text-rose-500">Check</span></span>
+            <span class="px-2 py-0.5 text-xs bg-rose-500/20 text-rose-300 font-semibold rounded-full border border-rose-500/30">Figma AI/UX Prototype</span>
+          </div>
+          <p class="text-xs text-slate-400">Interactive Clickable Prototype for Video Demo &amp; UX Testing</p>
+        </div>
+      </div>
+
+      <!-- Mode Switcher -->
+      <div class="flex items-center gap-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <button onclick="switchDevice('mobile')" id="btn-mode-mobile" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-mobile-screen"></i> Mode Customer (Mobile App)
+        </button>
+        <button onclick="switchDevice('desktop')" id="btn-mode-desktop" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+          <i class="fa-solid fa-laptop"></i> Mode Admin (Desktop Panel)
+        </button>
+      </div>
+
+      <!-- Quick Utilities -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleFullScreen()" title="Mode Layar Penuh (F11)" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs flex items-center gap-1.5">
+          <i class="fa-solid fa-expand"></i>
+          <span class="hidden sm:inline">Fullscreen</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 flex flex-col items-center justify-center">
+
+    <!-- ======================================================== -->
+    <!-- VIEW A: CUSTOMER MOBILE SIMULATOR -->
+    <!-- ======================================================== -->
+    <div id="container-mobile" class="w-full flex flex-col lg:flex-row items-center justify-center gap-8 py-2">
+      
+      <!-- Screen Flow Selector Sidebar -->
+      <div class="w-full lg:w-72 bg-slate-900 border border-slate-800 p-4 rounded-2xl order-2 lg:order-1">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <i class="fa-solid fa-layer-group text-rose-500"></i> Alur Layar Prototipe
+        </h3>
+        <div class="space-y-2 text-xs">
+          <button onclick="setMobileScreen('login')" id="pill-login" class="w-full text-left p-2.5 rounded-xl border border-rose-500/50 bg-rose-500/10 text-white font-medium flex items-center justify-between transition">
+            <span>1. Login &amp; OTP WhatsApp</span>
+            <i class="fa-solid fa-chevron-right text-rose-400 text-xs"></i>
+          </button>
+          <button onclick="setMobileScreen('onboarding')" id="pill-onboarding" class="w-full text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-white font-medium flex items-center justify-between transition">
+            <span>2. Onboarding &amp; Goals</span>
+            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+          </button>
+          <button onclick="setMobileScreen('home')" id="pill-home" class="w-full text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-white font-medium flex items-center justify-between transition">
+            <span>3. Customer Dashboard</span>
+            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+          </button>
+          <button onclick="setMobileScreen('scan')" id="pill-scan" class="w-full text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-white font-medium flex items-center justify-between transition">
+            <span>4. AI Camera Scanner</span>
+            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+          </button>
+          <button onclick="setMobileScreen('result')" id="pill-result" class="w-full text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-white font-medium flex items-center justify-between transition">
+            <span>5. Diagnostik &amp; Produk</span>
+            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+          </button>
+          <button onclick="setMobileScreen('chat')" id="pill-chat" class="w-full text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-white font-medium flex items-center justify-between transition">
+            <span>6. AI Chatbot Assistant</span>
+            <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+          </button>
+        </div>
+
+        <div class="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400 leading-relaxed">
+          <span class="text-amber-400 font-bold block mb-1">
+            <i class="fa-solid fa-circle-info"></i> Petunjuk Figma Demo:
+          </span>
+          Klik langsung pada layar smartphone untuk navigasi interaktif atau gunakan menu tahapan di atas saat merekam video.
+        </div>
+      </div>
+
+      <!-- Smartphone Device Mockup Frame -->
+      <div class="relative w-[340px] sm:w-[380px] h-[720px] bg-slate-950 rounded-[48px] p-3 shadow-2xl border-4 border-slate-800 shadow-rose-950/20 order-1 lg:order-2">
+        <!-- Dynamic Island / Notch -->
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-full z-30 flex items-center justify-center">
+          <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-700 mr-2"></div>
+          <div class="w-2 h-2 rounded-full bg-emerald-500/70"></div>
+        </div>
+
+        <!-- Phone Inner Screen Container -->
+        <div class="w-full h-full bg-white rounded-[40px] overflow-hidden text-slate-800 relative flex flex-col font-sans select-none">
+          
+          <!-- Status Bar -->
+          <div class="pt-3 px-6 pb-2 flex justify-between items-center text-xs font-semibold text-slate-500 z-20">
+            <span id="live-clock">10:42</span>
+            <div class="flex items-center gap-1.5 text-[10px]">
+              <i class="fa-solid fa-signal"></i>
+              <i class="fa-solid fa-wifi"></i>
+              <i class="fa-solid fa-battery-full text-xs text-slate-700"></i>
+            </div>
+          </div>
+
+          <!-- SCREEN 1: LOGIN & OTP WA -->
+          <div id="mob-screen-login" class="flex-1 flex flex-col p-6 overflow-y-auto">
+            <div class="text-center mt-4 mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-rose-500 to-rose-400 mx-auto flex items-center justify-center text-white text-2xl shadow-lg shadow-rose-200">
+                <i class="fa-solid fa-shield-heart"></i>
+              </div>
+              <h4 class="text-xl font-extrabold text-slate-900 mt-3">SkinCheck</h4>
+              <p class="text-xs text-slate-500">AI Skin Health &amp; Sunscreen Monitor</p>
+            </div>
+
+            <div class="space-y-3 flex-1 flex flex-col justify-center">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
+                <input type="text" value="Alvin Pratama" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-rose-500 outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WhatsApp (+62)</label>
+                <input type="text" value="085712345678" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-rose-500 outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                <input type="password" value="••••••••" class="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:border-rose-500 outline-none" />
+              </div>
+              <button onclick="triggerSimulateOtp()" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-md shadow-rose-200 transition mt-2 flex items-center justify-center gap-1.5">
+                <i class="fa-brands fa-whatsapp text-sm"></i> Kirim Kode OTP WhatsApp
+              </button>
+              <div class="text-center pt-2">
+                <a href="javascript:void(0)" onclick="setMobileScreen('onboarding')" class="text-[11px] text-slate-500 hover:text-rose-600 font-medium">Lanjut ke Onboarding &rarr;</a>
+              </div>
+            </div>
+
+            <!-- WhatsApp Notification Banner Popup -->
+            <div id="popup-wa-otp" class="hidden absolute top-12 left-4 right-4 bg-slate-900 text-white p-3 rounded-2xl shadow-2xl z-30 border border-slate-800 animate-bounce">
+              <div class="flex items-start gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white shrink-0">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="flex-1 text-xs">
+                  <div class="flex justify-between items-center">
+                    <span class="font-bold text-emerald-400">WhatsApp (Fonnte API)</span>
+                    <span class="text-[10px] text-slate-400">Baru saja</span>
+                  </div>
+                  <p class="text-[11px] text-slate-200 mt-0.5">Kode OTP SkinCheck Anda: <strong class="text-amber-300 font-mono text-xs">849201</strong>.</p>
+                  <button onclick="autoFillOtpAndProceed()" class="mt-2 text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-md font-semibold">
+                    Verifikasi Otomatis
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN 2: ONBOARDING & SKIN GOALS -->
+          <div id="mob-screen-onboarding" class="hidden flex-1 flex flex-col p-5 overflow-y-auto bg-slate-50">
+            <h4 class="text-sm font-bold text-slate-900 mb-1">Personalisasi Profil Kulit</h4>
+            <p class="text-[11px] text-slate-500 mb-4">Bantu AI memahami kebutuhan biologis kulit Anda.</p>
+
+            <div class="space-y-3 flex-1 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Tipe Kulit Utama:</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <button class="p-2 rounded-xl border border-rose-500 bg-rose-50 text-rose-700 font-semibold text-center">Berminyak</button>
+                  <button class="p-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium text-center">Kering</button>
+                  <button class="p-2 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium text-center">Kombinasi</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Fokus Perhatian (Skin Concerns):</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="p-2 rounded-xl border border-rose-500 bg-rose-50 text-rose-700 font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-check-circle text-rose-600"></i> Jerawat (Acne)
+                  </div>
+                  <div class="p-2 rounded-xl border border-rose-500 bg-rose-50 text-rose-700 font-semibold flex items-center gap-1.5">
+                    <i class="fa-solid fa-check-circle text-rose-600"></i> Kemerahan (Redness)
+                  </div>
+                  <div class="p-2 rounded-xl border border-slate-200 bg-white text-slate-700 flex items-center gap-1.5">
+                    <i class="fa-regular fa-circle text-slate-400"></i> Noda Hitam
+                  </div>
+                  <div class="p-2 rounded-xl border border-slate-200 bg-white text-slate-700 flex items-center gap-1.5">
+                    <i class="fa-regular fa-circle text-slate-400"></i> Pori Besar
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Penggunaan Sunscreen Harian:</label>
+                <select class="w-full p-2 border border-slate-300 rounded-xl bg-white outline-none">
+                  <option>Setiap Hari (Reapply 2-3 jam)</option>
+                  <option>Hanya saat keluar rumah</option>
+                  <option>Jarang / Belum pernah</option>
+                </select>
+              </div>
+            </div>
+
+            <button onclick="setMobileScreen('home')" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow transition mt-3">
+              Simpan &amp; Buka Dashboard &rarr;
+            </button>
+          </div>
+
+          <!-- SCREEN 3: CUSTOMER HOME DASHBOARD -->
+          <div id="mob-screen-home" class="hidden flex-1 flex flex-col p-5 overflow-y-auto bg-slate-50">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Hai, Alvin 👋</h4>
+                <p class="text-[11px] text-slate-500">Skor Kesehatan Kulit Terakhir:</p>
+              </div>
+              <div class="w-9 h-9 rounded-full bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600 text-xs font-bold">
+                AP
+              </div>
+            </div>
+
+            <!-- Health Score Card -->
+            <div class="bg-gradient-to-br from-rose-500 to-rose-600 text-white p-4 rounded-2xl shadow-md shadow-rose-200 mb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-rose-200">Overall Health Score</span>
+                  <div class="text-3xl font-extrabold mt-1">82<span class="text-xs font-normal text-rose-200">/100</span></div>
+                  <p class="text-[11px] text-rose-100 mt-1">Status: Cukup Baik (Peradangan Ringan)</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur flex items-center justify-center text-lg">
+                  ✨
+                </div>
+              </div>
+              <div class="mt-3 pt-3 border-t border-white/20 flex justify-between text-[10px]">
+                <span>Scan Terakhir: 14 Nov 2026</span>
+                <span class="underline cursor-pointer" onclick="setMobileScreen('result')">Detail Diagnostik &rarr;</span>
+              </div>
+            </div>
+
+            <!-- Quick Action Cards -->
+            <h5 class="text-xs font-bold text-slate-700 mb-2">Pemindaian AI (Computer Vision)</h5>
+            <div class="grid grid-cols-2 gap-2.5 mb-4">
+              <button onclick="setMobileScreen('scan')" class="p-3 bg-white border border-slate-200 rounded-2xl text-left hover:border-rose-400 shadow-sm transition group">
+                <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition">
+                  <i class="fa-solid fa-camera"></i>
+                </div>
+                <div class="font-bold text-xs text-slate-900">Scan Wajah</div>
+                <div class="text-[10px] text-slate-500">Jerawat, Redness &amp; Pori</div>
+              </button>
+              <button onclick="setMobileScreen('scan')" class="p-3 bg-white border border-slate-200 rounded-2xl text-left hover:border-amber-400 shadow-sm transition group">
+                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm mb-2 group-hover:scale-110 transition">
+                  <i class="fa-solid fa-sun"></i>
+                </div>
+                <div class="font-bold text-xs text-slate-900">Cek Sunscreen</div>
+                <div class="text-[10px] text-slate-500">Estimasi Cakupan UV</div>
+              </button>
+            </div>
+
+            <!-- Routine Card -->
+            <h5 class="text-xs font-bold text-slate-700 mb-2">Rutinitas Skincare Hari Ini</h5>
+            <div class="p-3 bg-white border border-slate-200 rounded-xl space-y-2 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-medium text-slate-800">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Gentle Cleanser
+                </span>
+                <span class="text-[10px] text-slate-400">Pagi</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-medium text-slate-800">
+                  <i class="fa-solid fa-check text-emerald-500"></i> Niacinamide Serum
+                </span>
+                <span class="text-[10px] text-slate-400">Pagi</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-medium text-slate-800">
+                  <i class="fa-solid fa-circle text-amber-500 text-[8px]"></i> Sunscreen SPF 50
+                </span>
+                <span class="text-[10px] text-amber-600 font-bold">Waktunya Reapply</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN 4: CAMERA SCANNER -->
+          <div id="mob-screen-scan" class="hidden flex-1 flex flex-col bg-slate-950 relative overflow-hidden text-white">
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-transparent to-slate-950/80 z-10 pointer-events-none"></div>
+            
+            <div class="flex-1 flex flex-col items-center justify-center relative p-6">
+              <!-- Oval Guide Frame -->
+              <div class="relative w-56 h-72 rounded-[999px] border-2 border-dashed border-rose-400/80 flex items-center justify-center overflow-hidden shadow-2xl shadow-rose-500/20">
+                <!-- Laser Scanning Beam -->
+                <div class="scanner-beam absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-rose-500 to-transparent shadow-[0_0_15px_#f43f5e]"></div>
+                
+                <div class="opacity-25 text-8xl text-slate-400">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+
+                <!-- Live Landmark Dots -->
+                <div class="absolute top-20 left-16 w-2 h-2 rounded-full bg-cyan-400 animate-ping"></div>
+                <div class="absolute top-20 right-16 w-2 h-2 rounded-full bg-cyan-400 animate-ping"></div>
+                <div class="absolute top-36 left-24 w-2 h-2 rounded-full bg-rose-400 animate-ping"></div>
+              </div>
+
+              <p id="label-camera-status" class="text-xs text-rose-300 font-medium mt-4 z-20 text-center">
+                <i class="fa-solid fa-crosshairs animate-spin mr-1"></i> Arahkan wajah pas di dalam bingkai
+              </p>
+            </div>
+
+            <!-- Controls -->
+            <div class="p-6 bg-slate-900/90 backdrop-blur z-20 flex justify-between items-center">
+              <button onclick="setMobileScreen('home')" class="w-10 h-10 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center">
+                <i class="fa-solid fa-arrow-left"></i>
+              </button>
+              <button onclick="executeScanSimulation()" id="btn-snap-photo" class="w-16 h-16 rounded-full bg-rose-600 hover:bg-rose-500 border-4 border-white/20 flex items-center justify-center text-white text-xl shadow-lg shadow-rose-600/40 transition">
+                <i class="fa-solid fa-camera"></i>
+              </button>
+              <button onclick="alert('Flash mode aktif!')" class="w-10 h-10 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center">
+                <i class="fa-solid fa-bolt"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- SCREEN 5: DIAGNOSTIC RESULTS -->
+          <div id="mob-screen-result" class="hidden flex-1 flex flex-col p-5 overflow-y-auto bg-slate-50">
+            <div class="flex justify-between items-center mb-3">
+              <button onclick="setMobileScreen('home')" class="text-xs text-slate-600 hover:text-slate-900 flex items-center gap-1 font-semibold">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+              </button>
+              <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2.5 py-0.5 rounded-full font-bold">OpenCV Analisis Sukses</span>
+            </div>
+
+            <!-- Score Summary Card -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm text-center mb-4">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Hasil Analisis Visual</span>
+              <div class="flex items-center justify-center gap-3 my-2">
+                <div class="w-16 h-16 rounded-full bg-rose-50 border-4 border-rose-500 flex items-center justify-center text-xl font-extrabold text-rose-600">
+                  81
+                </div>
+                <div class="text-left">
+                  <div class="text-xs font-bold text-slate-900">Kondisi: Kombinasi Sehat</div>
+                  <div class="text-[10px] text-slate-500">Deteksi sedikit eritema di pipi kanan.</div>
+                </div>
+              </div>
+
+              <!-- Metrics Bars -->
+              <div class="space-y-2 mt-3 pt-3 border-t border-slate-100 text-left text-[11px]">
+                <div>
+                  <div class="flex justify-between font-semibold mb-0.5">
+                    <span>Jerawat (Acne Index)</span>
+                    <span class="text-rose-600 font-bold">85% (Bagus)</span>
+                  </div>
+                  <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-rose-500 h-full rounded-full" style="width: 85%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-semibold mb-0.5">
+                    <span>Kemerahan (Redness)</span>
+                    <span class="text-amber-600 font-bold">70% (Ringan)</span>
+                  </div>
+                  <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-amber-500 h-full rounded-full" style="width: 70%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between font-semibold mb-0.5">
+                    <span>Cakupan Sunscreen UV</span>
+                    <span class="text-emerald-600 font-bold">92% (Rata)</span>
+                  </div>
+                  <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                    <div class="bg-emerald-500 h-full rounded-full" style="width: 92%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Matched Skincare Recommendations -->
+            <h5 class="text-xs font-bold text-slate-800 mb-2 flex items-center gap-1.5">
+              <i class="fa-solid fa-wand-magic-sparkles text-rose-500"></i> Rekomendasi Produk Sesuai
+            </h5>
+            <div class="space-y-2 mb-4">
+              <div class="p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                    💧
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-900">Centella Soothing Serum</div>
+                    <div class="text-[10px] text-slate-500">Menenangkan kemerahan kulit</div>
+                  </div>
+                </div>
+                <span class="text-[10px] bg-rose-50 text-rose-600 font-bold px-2 py-1 rounded-md">Cocok 98%</span>
+              </div>
+              <div class="p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-sm">
+                    ☀️
+                  </div>
+                  <div>
+                    <div class="text-xs font-bold text-slate-900">UV Water Gel SPF 50+</div>
+                    <div class="text-[10px] text-slate-500">Proteksi spektrum luas non-komedogenik</div>
+                  </div>
+                </div>
+                <span class="text-[10px] bg-rose-50 text-rose-600 font-bold px-2 py-1 rounded-md">Cocok 94%</span>
+              </div>
+            </div>
+
+            <button onclick="setMobileScreen('chat')" class="w-full py-2.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center gap-1.5">
+              <i class="fa-solid fa-comment-dots text-rose-400"></i> Tanya Chatbot AI Mengenai Hasil Ini
+            </button>
+          </div>
+
+          <!-- SCREEN 6: AI CHATBOT -->
+          <div id="mob-screen-chat" class="hidden flex-1 flex flex-col bg-slate-50 overflow-hidden">
+            <div class="px-4 py-3 bg-white border-b border-slate-200 flex justify-between items-center shadow-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-rose-600 flex items-center justify-center text-white text-xs shadow-sm">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-slate-900 flex items-center gap-1">
+                    SkinCheck AI Assistant
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  </div>
+                  <div class="text-[9px] text-slate-400">Terhubung ke Database &amp; Multi-AI</div>
+                </div>
+              </div>
+              <button onclick="setMobileScreen('home')" class="text-xs text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div id="box-chat-bubbles" class="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs">
+              <div class="flex gap-2">
+                <div class="w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px] shrink-0 mt-0.5">
+                  AI
+                </div>
+                <div class="bg-white border border-slate-200 p-2.5 rounded-2xl rounded-tl-none shadow-sm text-slate-800 text-[11px] max-w-[85%]">
+                  Halo Alvin! Saya asisten pintar SkinCheck. Anda dapat menanyakan rekomendasi skincare atau data statistik sistem.
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Questions Pills -->
+            <div class="p-2 bg-white/70 border-t border-slate-100 flex gap-1.5 overflow-x-auto text-[10px]">
+              <button onclick="quickAsk('ada berapa customer?')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full whitespace-nowrap font-medium border border-slate-200">
+                👥 Berapa customer?
+              </button>
+              <button onclick="quickAsk('siapa saja customer nya?')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full whitespace-nowrap font-medium border border-slate-200">
+                📋 Siapa saja customer?
+              </button>
+              <button onclick="quickAsk('Rekomendasi sunscreen kulit jerawat')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full whitespace-nowrap font-medium border border-slate-200">
+                ☀️ Sunscreen jerawat
+              </button>
+            </div>
+
+            <div class="p-2.5 bg-white border-t border-slate-200 flex items-center gap-1.5">
+              <input id="input-chat" type="text" placeholder="Tanyakan seputar kulit..." class="flex-1 px-3 py-1.5 text-xs border border-slate-200 rounded-xl focus:border-rose-500 outline-none" onkeypress="if(event.key==='Enter') sendChatMsg()" />
+              <button onclick="sendChatMsg()" class="w-8 h-8 rounded-xl bg-rose-600 text-white flex items-center justify-center text-xs shadow-sm hover:bg-rose-500 transition">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Nav Bar -->
+          <div class="bg-white border-t border-slate-200 px-6 py-2 flex justify-between items-center text-slate-400 z-20">
+            <button onclick="setMobileScreen('home')" class="flex flex-col items-center gap-0.5 text-rose-600 font-semibold text-[10px]">
+              <i class="fa-solid fa-house text-sm"></i> Beranda
+            </button>
+            <button onclick="setMobileScreen('scan')" class="flex flex-col items-center gap-0.5 hover:text-slate-800 text-[10px]">
+              <i class="fa-solid fa-camera text-sm"></i> Scan
+            </button>
+            <button onclick="setMobileScreen('result')" class="flex flex-col items-center gap-0.5 hover:text-slate-800 text-[10px]">
+              <i class="fa-solid fa-chart-simple text-sm"></i> Riwayat
+            </button>
+            <button onclick="setMobileScreen('chat')" class="flex flex-col items-center gap-0.5 hover:text-slate-800 text-[10px]">
+              <i class="fa-solid fa-robot text-sm"></i> AI Chat
+            </button>
+          </div>
+          <div class="w-28 h-1 bg-slate-300 rounded-full mx-auto my-1.5 shrink-0"></div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- VIEW B: ADMIN DESKTOP SIMULATOR -->
+    <!-- ======================================================== -->
+    <div id="container-desktop" class="hidden w-full max-w-5xl bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl my-2">
+      <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+          <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+          <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+          <span class="text-xs text-slate-400 font-mono ml-2">localhost/SkinCheck/public/admin/ai-config</span>
+        </div>
+        <span class="text-[11px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">Role: Administrator</span>
+      </div>
+
+      <div class="flex flex-col md:flex-row min-h-[560px] bg-slate-950">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 bg-slate-900 border-r border-slate-800 p-4 flex flex-col justify-between shrink-0">
+          <div class="space-y-6">
+            <div class="flex items-center gap-2.5 px-2">
+              <div class="w-9 h-9 rounded-xl bg-rose-600 flex items-center justify-center text-white text-base">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div>
+                <div class="font-extrabold text-sm text-white">SkinCheck</div>
+                <span class="text-[10px] text-rose-400 font-bold uppercase tracking-wider">ADMINISTRATOR</span>
+              </div>
+            </div>
+
+            <div class="space-y-1 text-xs">
+              <button onclick="setAdminSubTab('metrics')" id="admin-sub-metrics" class="w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800 flex items-center gap-2.5 font-medium transition">
+                <i class="fa-solid fa-chart-pie text-slate-400"></i> Dashboard Overview
+              </button>
+              <button onclick="setAdminSubTab('users')" id="admin-sub-users" class="w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800 flex items-center gap-2.5 font-medium transition">
+                <i class="fa-solid fa-users text-slate-400"></i> Kelola Customer &amp; Admin
+              </button>
+              <button onclick="setAdminSubTab('aiconfig')" id="admin-sub-aiconfig" class="w-full text-left px-3 py-2 rounded-xl bg-blue-600 text-white flex items-center gap-2.5 font-semibold shadow-sm transition">
+                <i class="fa-solid fa-microchip text-blue-200"></i> Konfigurasi AI &amp; Multi-API
+              </button>
+            </div>
+          </div>
+
+          <button onclick="switchDevice('mobile')" class="w-full text-left px-3 py-2 rounded-xl text-slate-400 hover:text-white flex items-center gap-2 text-xs border-t border-slate-800 pt-3">
+            <i class="fa-solid fa-eye"></i> Kembali ke Mode Customer
+          </button>
+        </aside>
+
+        <!-- Admin Content -->
+        <main class="flex-1 p-6 overflow-y-auto bg-slate-900/50">
+          
+          <!-- SUBPANEL: AI CONFIG -->
+          <div id="subpanel-aiconfig" class="space-y-5">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                  <i class="fa-solid fa-microchip text-blue-400"></i> Konfigurasi AI &amp; Multi API Key Cadangan
+                </h3>
+                <p class="text-xs text-slate-400">Kelola API Key utama dan 3 cadangan otomatis agar AI Chatbot tidak pernah down saat kuota habis.</p>
+              </div>
+              <button onclick="alert('Menguji semua kunci: Groq OK (140ms), Gemini 3.5 OK (310ms), DeepSeek HTTP 402!')" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold shadow transition">
+                <i class="fa-solid fa-bolt"></i> Tes Semua Kunci
+              </button>
+            </div>
+
+            <!-- KPI Mini Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+              <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl">
+                <span class="text-[10px] text-slate-400">Kunci Utama</span>
+                <div class="font-bold text-emerald-400 mt-0.5">✓ Terpasang</div>
+              </div>
+              <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl">
+                <span class="text-[10px] text-slate-400">Cadangan Siaga</span>
+                <div class="font-bold text-blue-400 mt-0.5">3 Cadangan</div>
+              </div>
+              <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl">
+                <span class="text-[10px] text-slate-400">Auto-Failover</span>
+                <div class="font-bold text-emerald-400 mt-0.5">Aktif Otomatis</div>
+              </div>
+              <div class="bg-slate-900 border border-slate-800 p-3 rounded-2xl">
+                <span class="text-[10px] text-slate-400">Model Default</span>
+                <div class="font-bold text-cyan-400 mt-0.5 font-mono">gemini-3.5-flash</div>
+              </div>
+            </div>
+
+            <!-- Configuration Boxes -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
+                <span class="font-bold text-amber-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-star"></i> Kunci Utama (Google Gemini 3.5 Flash)
+                </span>
+                <div class="flex items-center gap-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2">
+                  <input type="text" value="AQ.Ab8RN6Lhp9G89BFxXAAYU0Ttk..." class="bg-transparent flex-1 font-mono text-slate-200 outline-none text-xs" />
+                  <span class="text-emerald-400 text-[10px] font-bold">Aktif</span>
+                </div>
+              </div>
+
+              <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-2">
+                <span class="font-bold text-blue-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-shield-virus"></i> Kunci Cadangan 1 (Groq Cloud)
+                </span>
+                <div class="flex items-center gap-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2">
+                  <input type="text" value="gsk_tkv7IpApYxbKsbFSFDDY..." class="bg-transparent flex-1 font-mono text-slate-400 outline-none text-xs" />
+                  <span class="text-emerald-400 text-[10px] font-bold">Standby</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUBPANEL: METRICS OVERVIEW -->
+          <div id="subpanel-metrics" class="hidden space-y-4">
+            <h3 class="text-base font-bold text-white">Ringkasan Sistem</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="p-4 rounded-2xl bg-blue-600 text-white">
+                <span class="text-xs uppercase font-bold text-blue-200">Customer Terdaftar</span>
+                <div class="text-3xl font-extrabold mt-1">5</div>
+                <p class="text-[11px] text-blue-100 mt-1">Pelanggan Aktif</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-rose-600 text-white">
+                <span class="text-xs uppercase font-bold text-rose-200">Total Administrator</span>
+                <div class="text-3xl font-extrabold mt-1">3</div>
+                <p class="text-[11px] text-rose-100 mt-1">Pengelola Sistem</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-600 text-white">
+                <span class="text-xs uppercase font-bold text-emerald-200">Total Scan Kulit</span>
+                <div class="text-3xl font-extrabold mt-1">13</div>
+                <p class="text-[11px] text-emerald-100 mt-1">11 Wajah &bull; 2 Sunscreen</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUBPANEL: USERS TABLE -->
+          <div id="subpanel-users" class="hidden space-y-4">
+            <h3 class="text-base font-bold text-white">Daftar Customer Terdaftar</h3>
+            <div class="border border-slate-800 rounded-2xl overflow-hidden text-xs">
+              <table class="w-full text-left">
+                <thead class="bg-slate-950 text-slate-400 uppercase text-[10px]">
+                  <tr>
+                    <th class="p-3">Nama</th>
+                    <th class="p-3">Email</th>
+                    <th class="p-3">Total Scan</th>
+                    <th class="p-3">Role</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800 text-slate-300">
+                  <tr>
+                    <td class="p-3 font-semibold text-white">rauzan</td>
+                    <td class="p-3 font-mono text-slate-400">rznmfkri@gmail.com</td>
+                    <td class="p-3">0 kali</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">customer</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-white">alvin</td>
+                    <td class="p-3 font-mono text-slate-400">putra@gmail.com</td>
+                    <td class="p-3">0 kali</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">customer</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-white">michael</td>
+                    <td class="p-3 font-mono text-slate-400">michael@gmail.com</td>
+                    <td class="p-3 text-rose-400 font-bold">11 kali</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">customer</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-white">haydar</td>
+                    <td class="p-3 font-mono text-slate-400">haydar@gmail.com</td>
+                    <td class="p-3">0 kali</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">customer</span></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-semibold text-white">John Doe</td>
+                    <td class="p-3 font-mono text-slate-400">user@skincheck.local</td>
+                    <td class="p-3">2 kali</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400">customer</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-slate-950 border-t border-slate-800 py-3 text-center text-xs text-slate-500">
+    SkinCheck Figma Interactive Prototype &bull; Tersimpan di <code class="text-slate-400 font-mono">/dokumentasi_uml_dan_prototipe/prototipe_figma_interaktif.html</code>
+  </footer>
+
+  <script>
+    function switchDevice(dev) {
+      const mob = document.getElementById('container-mobile');
+      const desk = document.getElementById('container-desktop');
+      const btnM = document.getElementById('btn-mode-mobile');
+      const btnD = document.getElementById('btn-mode-desktop');
+
+      if (dev === 'mobile') {
+        mob.classList.remove('hidden');
+        desk.classList.add('hidden');
+        btnM.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white flex items-center gap-1.5 transition';
+        btnD.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition';
+      } else {
+        mob.classList.add('hidden');
+        desk.classList.remove('hidden');
+        btnD.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white flex items-center gap-1.5 transition';
+        btnM.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white flex items-center gap-1.5 transition';
+      }
+    }
+
+    function setMobileScreen(screen) {
+      const screens = ['login', 'onboarding', 'home', 'scan', 'result', 'chat'];
+      screens.forEach(s => {
+        const el = document.getElementById(`mob-screen-${s}`);
+        const pill = document.getElementById(`pill-${s}`);
+        if (el) el.classList.add('hidden');
+        if (pill) {
+          pill.className = 'w-full text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 text-slate-300 hover:text-white font-medium flex items-center justify-between transition';
+        }
+      });
+
+      const target = document.getElementById(`mob-screen-${screen}`);
+      const targetPill = document.getElementById(`pill-${screen}`);
+      if (target) target.classList.remove('hidden');
+      if (targetPill) {
+        targetPill.className = 'w-full text-left p-2.5 rounded-xl border border-rose-500/50 bg-rose-500/10 text-white font-medium flex items-center justify-between transition';
+      }
+    }
+
+    function setAdminSubTab(tab) {
+      ['aiconfig', 'metrics', 'users'].forEach(t => {
+        const p = document.getElementById(`subpanel-${t}`);
+        const n = document.getElementById(`admin-sub-${t}`);
+        if (p) p.classList.add('hidden');
+        if (n) n.className = 'w-full text-left px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800 flex items-center gap-2.5 font-medium transition';
+      });
+      const targetP = document.getElementById(`subpanel-${tab}`);
+      const targetN = document.getElementById(`admin-sub-${tab}`);
+      if (targetP) targetP.classList.remove('hidden');
+      if (targetN) targetN.className = 'w-full text-left px-3 py-2 rounded-xl bg-blue-600 text-white flex items-center gap-2.5 font-semibold shadow-sm transition';
+    }
+
+    function triggerSimulateOtp() {
+      document.getElementById('popup-wa-otp').classList.remove('hidden');
+    }
+
+    function autoFillOtpAndProceed() {
+      document.getElementById('popup-wa-otp').classList.add('hidden');
+      setMobileScreen('onboarding');
+    }
+
+    function executeScanSimulation() {
+      const btn = document.getElementById('btn-snap-photo');
+      const label = document.getElementById('label-camera-status');
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i>';
+      label.innerHTML = '<span class="text-amber-400 font-bold animate-pulse">OpenCV Analisis: Jerawat, Redness & Tekstur...</span>';
+
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fa-solid fa-camera"></i>';
+        label.innerHTML = '<i class="fa-solid fa-crosshairs animate-spin mr-1"></i> Arahkan wajah pas di dalam bingkai';
+        setMobileScreen('result');
+      }, 1600);
+    }
+
+    function quickAsk(q) {
+      document.getElementById('input-chat').value = q;
+      sendChatMsg();
+    }
+
+    function sendChatMsg() {
+      const inp = document.getElementById('input-chat');
+      const box = document.getElementById('box-chat-bubbles');
+      const val = inp.value.trim();
+      if (!val) return;
+
+      const userB = document.createElement('div');
+      userB.className = 'flex justify-end';
+      userB.innerHTML = `<div class="bg-rose-600 text-white p-2.5 rounded-2xl rounded-tr-none shadow-sm text-[11px] max-w-[85%]">${val}</div>`;
+      box.appendChild(userB);
+      inp.value = '';
+      box.scrollTop = box.scrollHeight;
+
+      setTimeout(() => {
+        let reply = "";
+        const lower = val.toLowerCase();
+        if (lower.includes('berapa customer') || lower.includes('total customer') || lower.includes('jumlah customer')) {
+          reply = "Saat ini terdapat <strong>5 customer</strong> yang terdaftar di aplikasi APSkincek.";
+        } else if (lower.includes('siapa') && lower.includes('customer')) {
+          reply = "Berikut adalah daftar 5 customer yang terdaftar:<br>1. <strong>rauzan</strong> - rznmfkri@gmail.com<br>2. <strong>alvin</strong> - putra@gmail.com<br>3. <strong>haydar</strong> - haydar@gmail.com<br>4. <strong>michael</strong> - michael@gmail.com (11 kali scan)<br>5. <strong>John Doe</strong> - user@skincheck.local";
+        } else if (lower.includes('sunscreen') || lower.includes('jerawat')) {
+          reply = "Untuk kulit berjerawat dan rentan kemerahan, disarankan memilih sunscreen berbahan dasar gel atau water-based berlabel <em>Non-Comedogenic</em> dengan SPF 30-50 PA++++.";
+        } else {
+          reply = "Terima kasih atas pertanyaannya! Berdasarkan basis data klinis SkinCheck, kulit Anda direkomendasikan menggunakan pembersih lembut dan perlindungan tabir surya setiap hari.";
+        }
+
+        const aiB = document.createElement('div');
+        aiB.className = 'flex gap-2';
+        aiB.innerHTML = `
+          <div class="w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px] shrink-0 mt-0.5">AI</div>
+          <div class="bg-white border border-slate-200 p-2.5 rounded-2xl rounded-tl-none shadow-sm text-slate-800 text-[11px] max-w-[85%] leading-relaxed">${reply}</div>
+        `;
+        box.appendChild(aiB);
+        box.scrollTop = box.scrollHeight;
+      }, 600);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    setInterval(() => {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const clock = document.getElementById('live-clock');
+      if (clock) clock.innerText = `${h}:${m}`;
+    }, 1000);
+  </script>
+</body>
+</html>

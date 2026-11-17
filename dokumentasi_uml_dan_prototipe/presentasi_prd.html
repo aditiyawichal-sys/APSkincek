@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentasi PRD SkinCheck — AI Skin Health Platform</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            teal: {
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+            },
+            amber: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+            },
+            rose: {
+              500: '#f43f5e',
+              600: '#e11d48',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      background: #0b1120;
+      color: #f1f5f9;
+    }
+    
+    /* Slide transitions */
+    .slide-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: calc(100vh - 70px);
+    }
+    
+    .slide-item {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px) scale(0.99);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .slide-item.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.4);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.6);
+    }
+    
+    /* Glassmorphism */
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.25s ease;
+    }
+    .glass-card:hover {
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Print styling */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .slide-item {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        min-height: auto;
+        padding: 2rem 0;
+      }
+      .glass-panel, .glass-card {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 selection:bg-blue-600 selection:text-white">
+
+  <!-- Top Navigation & Presentation Toolbar -->
+  <header class="no-print sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-4 py-2.5 flex items-center justify-between shadow-lg">
+    <div class="flex items-center space-x-3">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-teal-400 flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-black text-lg">
+        <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-extrabold text-sm tracking-wide bg-gradient-to-r from-blue-400 via-teal-300 to-indigo-300 bg-clip-text text-transparent">SkinCheck</span>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-blue-900/60 text-blue-300 border border-blue-700/50 font-semibold font-mono">PRD v1.2 MVP</span>
+        </div>
+        <p class="text-[11px] text-slate-400 truncate max-w-xs md:max-w-md hidden sm:block">Product Requirements Document Presentation Deck</p>
+      </div>
+    </div>
+
+    <!-- Center Slide Counter & Progress -->
+    <div class="flex items-center space-x-2">
+      <button onclick="prevSlide()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition shadow border border-slate-700" title="Slide Sebelumnya (Panah Kiri)">
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+      </button>
+      
+      <div class="flex items-center space-x-2 px-3 py-1 rounded-lg bg-slate-900 border border-slate-800">
+        <span class="text-xs text-slate-400 font-medium">Slide</span>
+        <span id="currentSlideNum" class="text-sm font-bold text-blue-400 font-mono">1</span>
+        <span class="text-xs text-slate-500">/</span>
+        <span id="totalSlidesNum" class="text-xs text-slate-400 font-mono">11</span>
+      </div>
+
+      <button onclick="nextSlide()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition shadow border border-slate-700" title="Slide Berikutnya (Panah Kanan / Spasi)">
+        <i class="fa-solid fa-chevron-right text-xs"></i>
+      </button>
+
+      <!-- Slide Selector Dropdown -->
+      <select id="slideSelect" onchange="goToSlide(parseInt(this.value))" class="hidden md:block bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-blue-500 font-medium">
+        <option value="1">1. Cover & Ringkasan Dokumen</option>
+        <option value="2">2. Problem Statement (Latar Belakang)</option>
+        <option value="3">3. Value Proposition (4 Keunggulan)</option>
+        <option value="4">4. Target Pengguna & Persona</option>
+        <option value="5">5. Ruang Lingkup & Prioritas (P0, P1, P2)</option>
+        <option value="6">6. 10 Modul Fungsional (Core MVP)</option>
+        <option value="7">7. Safety Guardrails & Disclaimer</option>
+        <option value="8">8. Kebutuhan Non-Fungsional (NFR)</option>
+        <option value="9">9. Basis Data 9 Tabel Relasional</option>
+        <option value="10">10. 11 Kriteria Penerimaan (Testing)</option>
+        <option value="11">11. Roadmap Sprint & Kesimpulan</option>
+      </select>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center space-x-2">
+      <!-- Presenter Notes Toggle Button -->
+      <button onclick="togglePresenterNotes()" id="btnPresenter" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition" title="Buka Catatan Pembicara (Tekan 'P')">
+        <i class="fa-solid fa-comment-dots text-amber-400"></i>
+        <span class="hidden sm:inline">Naskah (P)</span>
+      </button>
+
+      <!-- Stopwatch Timer -->
+      <div class="hidden lg:flex items-center space-x-1 px-2.5 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-teal-400">
+        <i class="fa-regular fa-clock text-slate-400 text-[10px]"></i>
+        <span id="timerText">00:00</span>
+        <button onclick="toggleTimer()" id="timerToggleBtn" class="text-[10px] text-slate-400 hover:text-white ml-1">
+          <i class="fa-solid fa-play"></i>
+        </button>
+      </div>
+
+      <!-- Quick Link to Full UML & Prototype Presentation -->
+      <a href="presentasi_skincheck.html" class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg bg-indigo-600/30 hover:bg-indigo-600/50 border border-indigo-500/40 text-xs font-medium text-indigo-200 transition" title="Buka Presentasi UML & Prototipe">
+        <i class="fa-solid fa-diagram-project text-indigo-400"></i>
+        <span class="hidden xl:inline">UML & Demo</span>
+      </a>
+
+      <!-- Fullscreen Toggle -->
+      <button onclick="toggleFullscreen()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white text-xs transition" title="Layar Penuh (F)">
+        <i id="fullscreenIcon" class="fa-solid fa-expand"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Progress Bar Line -->
+  <div class="no-print w-full bg-slate-800 h-1">
+    <div id="progressBar" class="bg-gradient-to-r from-blue-500 via-teal-400 to-indigo-500 h-1 w-[9%] transition-all duration-300"></div>
+  </div>
+
+  <!-- Main Slide Layout with Optional Split Presenter Notes Drawer -->
+  <div class="flex w-full relative">
+    
+    <!-- Slides Viewport -->
+    <main id="slideContainer" class="flex-1 w-full min-h-[calc(100vh-74px)] p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto flex flex-col justify-center">
+
+      <!-- ========================================== -->
+      <!-- SLIDE 1: COVER & METADATA DOKUMEN -->
+      <!-- ========================================== -->
+      <div class="slide-item active" id="slide-1">
+        <div class="glass-panel rounded-2xl p-6 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-32 -right-32 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="relative z-10">
+            <div class="flex flex-wrap items-center gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                <i class="fa-solid fa-file-contract mr-1.5"></i> PRD Revisi MVP v1.2
+              </span>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                <i class="fa-solid fa-circle-check mr-1.5"></i> Disetujui / Siap Uji
+              </span>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                <i class="fa-solid fa-code-branch mr-1.5"></i> MVC + AI Microservice
+              </span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-4">
+              <span class="bg-gradient-to-r from-blue-400 via-teal-300 to-indigo-300 bg-clip-text text-transparent">SkinCheck</span>
+              <span class="block text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mt-2">
+                AI-Powered Skin Health Monitoring & Skincare Assistant
+              </span>
+            </h1>
+
+            <p class="text-slate-400 text-sm sm:text-base max-w-3xl mb-8 leading-relaxed">
+              Dokumen Spesifikasi Kebutuhan Produk (PRD) resmi untuk platform evaluasi kesehatan kulit non-invasif, deteksi ketepatan tabir surya via Computer Vision, rekomendasi produk skincare terikat katalog, dan asisten cerdas multi-LLM dengan auto-failover 99.9% uptime.
+            </p>
+
+            <!-- Metadata Table Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
+              <div class="glass-card p-3 rounded-xl">
+                <span class="text-[11px] text-slate-400 block font-medium">Nama Produk</span>
+                <span class="font-bold text-sm text-slate-200">SkinCheck</span>
+              </div>
+              <div class="glass-card p-3 rounded-xl">
+                <span class="text-[11px] text-slate-400 block font-medium">Versi PRD</span>
+                <span class="font-bold text-sm text-blue-400">v1.2 MVP</span>
+              </div>
+              <div class="glass-card p-3 rounded-xl">
+                <span class="text-[11px] text-slate-400 block font-medium">Klasifikasi</span>
+                <span class="font-bold text-sm text-teal-400">HealthTech Web</span>
+              </div>
+              <div class="glass-card p-3 rounded-xl">
+                <span class="text-[11px] text-slate-400 block font-medium">Arsitektur</span>
+                <span class="font-bold text-sm text-purple-400">MVC + Node.js</span>
+              </div>
+              <div class="glass-card p-3 rounded-xl">
+                <span class="text-[11px] text-slate-400 block font-medium">Basis Data</span>
+                <span class="font-bold text-sm text-amber-400">9 Tabel Relasional</span>
+              </div>
+              <div class="glass-card p-3 rounded-xl">
+                <span class="text-[11px] text-slate-400 block font-medium">Target Pengguna</span>
+                <span class="font-bold text-sm text-emerald-400">Customer & Admin</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-800">
+              <div class="flex items-center space-x-3 text-xs text-slate-400">
+                <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-keyboard text-slate-500"></i> Navigasi: [Panah Kanan] / [Spasi]</span>
+                <span class="hidden sm:inline">•</span>
+                <span class="hidden sm:inline"><i class="fa-solid fa-comment-dots text-slate-500"></i> Tekan [P] untuk Naskah Presenter</span>
+              </div>
+              <button onclick="nextSlide()" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition shadow-lg shadow-blue-600/30 flex items-center gap-2">
+                <span>Mulai Presentasi</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 2: RINGKASAN EKSEKUTIF & PROBLEM STATEMENT -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-2">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Bagian 1: Latar Belakang</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">4 Masalah Kritis Pengguna Skincare</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
+              <i class="fa-solid fa-triangle-exclamation mr-1"></i> Problem Statement
+            </span>
+          </div>
+
+          <!-- Problem 4 Grid Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+            <div class="glass-card p-5 rounded-xl border-l-4 border-l-rose-500">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 text-base font-bold">1</div>
+                <div>
+                  <h3 class="font-bold text-base text-slate-200 mb-1">Evaluasi Kulit Subjektif & Mahal</h3>
+                  <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Pengguna kesulitan mengetahui apakah kondisi jerawat, kemerahan, atau tekstur kulit membaik tanpa pergi ke klinik kecantikan berbiaya mahal.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-xl border-l-4 border-l-amber-500">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 text-base font-bold">2</div>
+                <div>
+                  <h3 class="font-bold text-base text-slate-200 mb-1">Aplikasi Sunscreen Tidak Merata</h3>
+                  <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Mayoritas kerusakan UV timbul akibat pengguna melewatkan area rentan (seperti cuping hidung dan bawah mata) saat memakai tabir surya tanpa menyadarinya.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-xl border-l-4 border-l-purple-500">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center shrink-0 text-base font-bold">3</div>
+                <div>
+                  <h3 class="font-bold text-base text-slate-200 mb-1">Ketergantungan Tren Medsos (Breakout)</h3>
+                  <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Masyarakat sering membeli produk karena tren viral TikTok/IG, bukan berdasarkan kebutuhan biologis kulit, memicu iritasi dan peradangan parah.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-xl border-l-4 border-l-blue-500">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 text-base font-bold">4</div>
+                <div>
+                  <h3 class="font-bold text-base text-slate-200 mb-1">Chatbot AI Sering Halusinasi Bahaya</h3>
+                  <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Chatbot konvensional kerap mengarang obat resep keras (misal: isotretinoin/antibiotik) atau merekomendasikan produk fiktif tanpa kendali kurasi medis.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Solution Vision Banner -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-blue-900/40 via-teal-900/30 to-indigo-900/40 border border-blue-500/30 flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-bullseye text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-xs uppercase tracking-wider text-blue-300">Visi Solusi SkinCheck</h4>
+              <p class="text-xs sm:text-sm text-slate-300">
+                Menyediakan platform pemantau harian non-invasif via kamera browser, memetakan indikator kulit secara objektif, dan memberikan asisten AI yang terikat katalog resmi secara ilmiah dan aman.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 3: VALUE PROPOSITION (4 KEUNGGULAN UTAMA) -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-3">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-teal-400 uppercase tracking-wider">Bagian 2: Nilai Keunggulan</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">4 Pilar Keunggulan Kompetitif SkinCheck</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm">
+              <i class="fa-solid fa-gem mr-1"></i> Value Proposition
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-6">
+            <!-- Pillar 1 -->
+            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+              <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-4 text-xl">
+                <i class="fa-solid fa-camera-viewfinder"></i>
+              </div>
+              <h3 class="text-base font-bold text-slate-100 mb-2">Non-Invasive Computer Vision</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                Evaluasi instan terhadap lesi jerawat, indeks eritema (kemerahan), kehalusan tekstur pori, dan cakupan tabir surya langsung dari kamera browser biasa tanpa sensor mahal.
+              </p>
+              <div class="flex gap-2 text-[11px] font-mono text-blue-300">
+                <span class="px-2 py-0.5 rounded bg-blue-900/40 border border-blue-700/50">OpenCV</span>
+                <span class="px-2 py-0.5 rounded bg-blue-900/40 border border-blue-700/50">MediaPipe</span>
+                <span class="px-2 py-0.5 rounded bg-blue-900/40 border border-blue-700/50">CIELAB a*</span>
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4 text-xl">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h3 class="text-base font-bold text-slate-100 mb-2">Rekomendasi Terikat Katalog (Anti-Halusinasi)</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                Algoritma dan asisten AI hanya boleh merekomendasikan produk berstatus <code class="text-emerald-300">active</code> yang terdaftar di basis data resmi. Menjamin nol risiko produk fiktif.
+              </p>
+              <div class="flex gap-2 text-[11px] font-mono text-emerald-300">
+                <span class="px-2 py-0.5 rounded bg-emerald-900/40 border border-emerald-700/50">Strict Catalog</span>
+                <span class="px-2 py-0.5 rounded bg-emerald-900/40 border border-emerald-700/50">No Hallucination</span>
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center mb-4 text-xl">
+                <i class="fa-solid fa-arrows-split-up-and-left"></i>
+              </div>
+              <h3 class="text-base font-bold text-slate-100 mb-2">Multi-LLM Auto-Failover (Uptime 99.9%)</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                Router cerdas Node.js menghubungkan Kunci Utama (Groq) dengan cadangan instan (Gemini 3.5, DeepSeek, OpenAI). Beralih dalam &lt; 300ms jika kuota habis (HTTP 402/429).
+              </p>
+              <div class="flex gap-2 text-[11px] font-mono text-purple-300">
+                <span class="px-2 py-0.5 rounded bg-purple-900/40 border border-purple-700/50">Groq 150ms</span>
+                <span class="px-2 py-0.5 rounded bg-purple-900/40 border border-purple-700/50">Gemini 3.5</span>
+                <span class="px-2 py-0.5 rounded bg-purple-900/40 border border-purple-700/50">Auto Routing</span>
+              </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="glass-card p-5 rounded-2xl relative overflow-hidden group">
+              <div class="w-12 h-12 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center mb-4 text-xl">
+                <i class="fa-brands fa-whatsapp"></i>
+              </div>
+              <h3 class="text-base font-bold text-slate-100 mb-2">Autentikasi WhatsApp OTP Fonnte</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                Verifikasi akun via token 6-digit WhatsApp gateway Fonnte. Mencegah akun bot/spam dan memastikan nomor pengguna tervalidasi aktif di Indonesia.
+              </p>
+              <div class="flex gap-2 text-[11px] font-mono text-teal-300">
+                <span class="px-2 py-0.5 rounded bg-teal-900/40 border border-teal-700/50">Fonnte API</span>
+                <span class="px-2 py-0.5 rounded bg-teal-900/40 border border-teal-700/50">Token 6 Digit</span>
+                <span class="px-2 py-0.5 rounded bg-teal-900/40 border border-teal-700/50">Expiry 5 Menit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 4: TARGET PENGGUNA & PERSONA -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-4">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Bagian 3: Persona Pengguna</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">Karakteristik & Ekspektasi Pengguna</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm">
+              <i class="fa-solid fa-users mr-1"></i> User Persona
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 my-6">
+            <!-- Persona 1: Customer -->
+            <div class="glass-card p-6 rounded-2xl border-t-4 border-t-blue-500">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-teal-400 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  <i class="fa-solid fa-user"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-slate-100">Customer (Pengguna Umum)</h3>
+                  <span class="text-xs text-blue-400 font-medium">Usia 17 – 40 Tahun • Pecinta Skincare & Pemula</span>
+                </div>
+              </div>
+
+              <div class="space-y-3 text-xs sm:text-sm text-slate-300">
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-emerald-400 mt-1 shrink-0"></i>
+                  <span><strong>Skor Kesehatan Kulit Berkala:</strong> Ingin mengukur progres jerawat, kemerahan, dan tekstur tanpa biaya klinik.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-emerald-400 mt-1 shrink-0"></i>
+                  <span><strong>Sunscreen Heatmap:</strong> Memastikan tabir surya sudah merata sebelum terpapar panas matahari.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-emerald-400 mt-1 shrink-0"></i>
+                  <span><strong>Kurasi AM/PM Routine:</strong> Mendapatkan saran rutinitas yang terbukti aman dan sesuai profil biologis.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-emerald-400 mt-1 shrink-0"></i>
+                  <span><strong>Konsultasi Cerdas:</strong> Chatbot responsif yang ramah, berbasis data, dan tidak berhalusinasi.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Persona 2: Super Admin -->
+            <div class="glass-card p-6 rounded-2xl border-t-4 border-t-purple-500">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-slate-100">Super Administrator</h3>
+                  <span class="text-xs text-purple-400 font-medium">Tim Teknis & Operasional SkinCheck</span>
+                </div>
+              </div>
+
+              <div class="space-y-3 text-xs sm:text-sm text-slate-300">
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-purple-400 mt-1 shrink-0"></i>
+                  <span><strong>Monitoring Metrik Real-Time:</strong> Pantau total customer, admin, dan volume scan wajah/sunscreen.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-purple-400 mt-1 shrink-0"></i>
+                  <span><strong>Manajemen Katalog & Konten:</strong> Kendali penuh produk aktif/nonaktif dan artikel edukasi kulit.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-purple-400 mt-1 shrink-0"></i>
+                  <span><strong>Live Multi-API Failover Config:</strong> Ubah kunci utama dan uji latensi LLM tanpa perlu restart server.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-check text-purple-400 mt-1 shrink-0"></i>
+                  <span><strong>Keamanan & Audit Trail:</strong> Inspeksi riwayat audit log aktivitas untuk pencegahan akses ilegal.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 5: RUANG LINGKUP & PRIORITAS (P0, P1, P2) -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-5">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Bagian 4: Scope & Prioritas</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">Matriks Fitur MVP (MoSCoW)</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm">
+              <i class="fa-solid fa-layer-group mr-1"></i> Prioritas Fitur
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+            <!-- P0: Must Have -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-emerald-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-extrabold uppercase px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">P0: Must Have</span>
+                <span class="text-[11px] font-mono text-slate-400">Rilis MVP</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-3">Fitur Wajib Produksi:</h3>
+              <ul class="space-y-2 text-xs text-slate-300">
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Autentikasi & WhatsApp OTP Fonnte</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Onboarding & Profil Kulit Pengguna</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Customer Dashboard Ringkas</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Face Scan WebRTC Kamera Browser</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> CV Analisis: Jerawat, Merah, Tekstur</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Sunscreen Coverage & Heatmap</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Skor 0-100 & Rekomendasi Katalog</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Chatbot AI + Multi-Key Failover</li>
+                <li class="flex items-center gap-2"><i class="fa-solid fa-check-circle text-emerald-400"></i> Admin Panel: User, Produk, API Key</li>
+              </ul>
+            </div>
+
+            <!-- P1: Should Have -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-blue-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-extrabold uppercase px-2.5 py-1 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">P1: Should Have</span>
+                <span class="text-[11px] font-mono text-slate-400">Peningkatan</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-3">Peningkatan Penting:</h3>
+              <ul class="space-y-2.5 text-xs text-slate-300">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-arrow-trend-up text-blue-400 mt-0.5"></i> <span><strong>Histori Pemindaian & Tren:</strong> Visualisasi grafik perubahan skor dari waktu ke waktu.</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-list-check text-blue-400 mt-0.5"></i> <span><strong>Skincare Routine Builder:</strong> Checklist interaktif pemakaian rutinitas pagi dan malam.</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-shield-virus text-blue-400 mt-0.5"></i> <span><strong>Audit Log Keamanan Lengkap:</strong> Jejak rekam login, pergantian status, dan manipulasi API key.</span></li>
+              </ul>
+            </div>
+
+            <!-- P2: Nice to Have -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-purple-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-extrabold uppercase px-2.5 py-1 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30">P2: Nice to Have</span>
+                <span class="text-[11px] font-mono text-slate-400">Masa Depan</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-3">Pengembangan Lanjutan:</h3>
+              <ul class="space-y-2.5 text-xs text-slate-300">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-microchip text-purple-400 mt-0.5"></i> <span><strong>Sensor Kamera UV Khusus:</strong> Integrasi hardware eksternal untuk deteksi UV klinis.</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-user-doctor text-purple-400 mt-0.5"></i> <span><strong>Telekonsultasi Dokter Kulit:</strong> Sesi chat/video live dengan Dokter Spesialis Kulit (Sp.KK / Sp.DVE).</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-cart-shopping text-purple-400 mt-0.5"></i> <span><strong>Direct E-Commerce Payment:</strong> Integrasi transaksi checkout dan kurir instan dalam aplikasi.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 6: 10 MODUL FUNGSIONAL LENGKAP -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-6">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">Bagian 5: Kebutuhan Fungsional</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">10 Modul Fungsional Arsitektur SkinCheck</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm">
+              <i class="fa-solid fa-cubes mr-1"></i> FR-1 s/d FR-10
+            </span>
+          </div>
+
+          <!-- Interactive Module Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-4">
+            <button onclick="showModuleTab(1)" id="modBtn-1" class="mod-tab-btn active p-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-id-card"></i>
+              <span>1. Autentikasi</span>
+            </button>
+            <button onclick="showModuleTab(2)" id="modBtn-2" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-user-check"></i>
+              <span>2. Onboarding</span>
+            </button>
+            <button onclick="showModuleTab(3)" id="modBtn-3" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-gauge"></i>
+              <span>3. Dashboard</span>
+            </button>
+            <button onclick="showModuleTab(4)" id="modBtn-4" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-camera"></i>
+              <span>4. WebRTC Scan</span>
+            </button>
+            <button onclick="showModuleTab(5)" id="modBtn-5" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-brain"></i>
+              <span>5. AI Vision CV</span>
+            </button>
+            <button onclick="showModuleTab(6)" id="modBtn-6" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-sun"></i>
+              <span>6. Sunscreen</span>
+            </button>
+            <button onclick="showModuleTab(7)" id="modBtn-7" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-pump-soap"></i>
+              <span>7. Rekomendasi</span>
+            </button>
+            <button onclick="showModuleTab(8)" id="modBtn-8" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-robot"></i>
+              <span>8. Chatbot DB</span>
+            </button>
+            <button onclick="showModuleTab(9)" id="modBtn-9" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-sliders"></i>
+              <span>9. Admin & Key</span>
+            </button>
+            <button onclick="showModuleTab(10)" id="modBtn-10" class="mod-tab-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold flex flex-col items-center gap-1 transition">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>10. Histori</span>
+            </button>
+          </div>
+
+          <!-- Dynamic Module Display Card -->
+          <div id="moduleContentArea" class="glass-card p-5 rounded-2xl min-h-[220px]">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 7: SAFETY GUARDRAILS & MEDICAL DISCLAIMER -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-7">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">Bagian 6: Kepatuhan & Regulasi</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">3 Batasan Keamanan & Safety Guardrails</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm">
+              <i class="fa-solid fa-shield-virus mr-1"></i> Medical Safety
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 my-6">
+            <!-- Guardrail 1 -->
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-l-amber-500">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-3">
+                <i class="fa-solid fa-file-waveform text-lg"></i>
+              </div>
+              <h3 class="font-bold text-slate-100 text-base mb-2">Bukan Diagnosis Medis</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Seluruh komputasi visual (jerawat, eritema, tekstur) diberi label wajib sebagai <em>estimasi visual kondisi kulit</em>, bukan keputusan diagnostik dermatologis klinis.
+              </p>
+            </div>
+
+            <!-- Guardrail 2 -->
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-l-rose-500">
+              <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center mb-3">
+                <i class="fa-solid fa-ban text-lg"></i>
+              </div>
+              <h3 class="font-bold text-slate-100 text-base mb-2">Larangan Obat Resep Keras</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Chatbot AI secara sistemik diblokir untuk merekomendasikan obat keras berdosis tinggi (seperti Isotretinoin oral, Tretinoin konsentrasi tinggi, atau antibiotik oral).
+              </p>
+            </div>
+
+            <!-- Guardrail 3 -->
+            <div class="glass-card p-5 rounded-2xl border-l-4 border-l-red-600">
+              <div class="w-10 h-10 rounded-xl bg-red-600/20 text-red-400 flex items-center justify-center mb-3">
+                <i class="fa-solid fa-hospital text-lg"></i>
+              </div>
+              <h3 class="font-bold text-slate-100 text-base mb-2">Red Flag Routing (Rujukan Cepat)</h3>
+              <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Jika terdeteksi indikasi berbahaya (luka terbuka bernanah, tahi lalat asimetris berdarah/melanoma), sistem memunculkan banner merah darurat merujuk ke dokter spesialis (Sp.KK / Sp.DVE).
+              </p>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-900 border border-slate-700/80 flex items-center gap-3 text-xs text-slate-300">
+            <i class="fa-solid fa-circle-info text-blue-400 text-base"></i>
+            <span><strong>Komitmen Regulasi:</strong> SkinCheck dibangun sesuai dengan etika perlindungan privasi data kesehatan digital (UU PDP) dan kaidah HealthTech Indonesia.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 8: KEBUTUHAN NON-FUNGSIONAL (NFR) -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-8">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-purple-400 uppercase tracking-wider">Bagian 7: Kualitas Sistem</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">Spesifikasi Kebutuhan Non-Fungsional (NFR)</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm">
+              <i class="fa-solid fa-microchip mr-1"></i> System NFR
+            </span>
+          </div>
+
+          <!-- NFR Table -->
+          <div class="overflow-x-auto my-5">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-slate-700 bg-slate-900/60 text-slate-300">
+                  <th class="p-3 font-bold">Kategori</th>
+                  <th class="p-3 font-bold">Parameter</th>
+                  <th class="p-3 font-bold">Target Spesifikasi & Batasan</th>
+                  <th class="p-3 font-bold text-center">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-300">
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-3 font-bold text-blue-400">Keamanan</td>
+                  <td class="p-3">Hashing Kata Sandi</td>
+                  <td class="p-3 font-mono text-xs">Algoritma bcrypt (cost factor 10+) pada PHP & Node.js</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold text-xs">Lolos</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-3 font-bold text-blue-400">Keamanan</td>
+                  <td class="p-3">Injeksi SQL & XSS</td>
+                  <td class="p-3 font-mono text-xs">PDO Prepared Statements & htmlspecialchars sanitasi view</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold text-xs">Lolos</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-3 font-bold text-emerald-400">Performa</td>
+                  <td class="p-3">Analisis Citra OpenCV</td>
+                  <td class="p-3 font-mono text-xs">Maksimal <strong>&le; 3,0 detik</strong> per pemindaian foto</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold text-xs">2.1s Avg</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-3 font-bold text-emerald-400">Performa</td>
+                  <td class="p-3">Chatbot Latency</td>
+                  <td class="p-3 font-mono text-xs">Respon pertama <strong>&le; 2,0 detik</strong> (Groq Cloud 150-300ms)</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold text-xs">280ms Avg</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-3 font-bold text-purple-400">Keandalan</td>
+                  <td class="p-3">Auto-Failover Switching</td>
+                  <td class="p-3 font-mono text-xs">Perpindahan kunci cadangan <strong>&lt; 300 ms</strong> tanpa interupsi</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold text-xs">Aktif</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-3 font-bold text-amber-400">Desain UI</td>
+                  <td class="p-3">Responsivitas Perangkat</td>
+                  <td class="p-3 font-mono text-xs">Responsif sempurna Mobile (360px+), Tablet, Desktop (1080p+)</td>
+                  <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold text-xs">Fluid UI</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 9: BASIS DATA 9 TABEL RELASIONAL -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-9">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-teal-400 uppercase tracking-wider">Bagian 8: Arsitektur Data</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">Skema 9 Tabel Relasional Basis Data</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm">
+              <i class="fa-solid fa-database mr-1"></i> ERD 9 Tabel
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 my-4">
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-blue-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-blue-300 font-mono">1. users</span>
+                <span class="text-[10px] bg-blue-900/50 px-1.5 py-0.5 rounded text-blue-200">Auth & Profile</span>
+              </div>
+              <p class="text-[11px] text-slate-400">UUID, Name, Email (UK), Phone, Password Hash, Role (User/Admin), Status.</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-blue-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-blue-300 font-mono">2. skin_scans</span>
+                <span class="text-[10px] bg-blue-900/50 px-1.5 py-0.5 rounded text-blue-200">Master Scan</span>
+              </div>
+              <p class="text-[11px] text-slate-400">id (PK), user_id (FK), scan_type (face/sunscreen), image_url, status.</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-emerald-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-emerald-300 font-mono">3. analysis_results</span>
+                <span class="text-[10px] bg-emerald-900/50 px-1.5 py-0.5 rounded text-emerald-200">Face CV</span>
+              </div>
+              <p class="text-[11px] text-slate-400">scan_id (FK), acne_score, redness_score, texture_score, overall_score, details JSON.</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-emerald-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-emerald-300 font-mono">4. sunscreen_results</span>
+                <span class="text-[10px] bg-emerald-900/50 px-1.5 py-0.5 rounded text-emerald-200">UV Coverage</span>
+              </div>
+              <p class="text-[11px] text-slate-400">scan_id (FK), coverage_score (0-100%), missed_areas (koordinat ROI JSON).</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-purple-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-purple-300 font-mono">5. products</span>
+                <span class="text-[10px] bg-purple-900/50 px-1.5 py-0.5 rounded text-purple-200">Katalog Skincare</span>
+              </div>
+              <p class="text-[11px] text-slate-400">id (PK), name, brand, category, description, status (active/inactive).</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-purple-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-purple-300 font-mono">6. recommendations</span>
+                <span class="text-[10px] bg-purple-900/50 px-1.5 py-0.5 rounded text-purple-200">Relasi Rekom</span>
+              </div>
+              <p class="text-[11px] text-slate-400">id, scan_id (FK), product_id (FK), reason (alasan klinis pencocokan).</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-amber-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-amber-300 font-mono">7. education_contents</span>
+                <span class="text-[10px] bg-amber-900/50 px-1.5 py-0.5 rounded text-amber-200">Artikel Edukasi</span>
+              </div>
+              <p class="text-[11px] text-slate-400">title, content, category, author_id (FK users/admin), status (published/draft).</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-amber-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-amber-300 font-mono">8. activity_logs</span>
+                <span class="text-[10px] bg-amber-900/50 px-1.5 py-0.5 rounded text-amber-200">Audit Trail</span>
+              </div>
+              <p class="text-[11px] text-slate-400">user_id (FK), action, description, IP address, created_at timestamp.</p>
+            </div>
+
+            <div class="glass-card p-3.5 rounded-xl border-l-2 border-l-teal-500">
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-xs text-teal-300 font-mono">9. otp_verifications</span>
+                <span class="text-[10px] bg-teal-900/50 px-1.5 py-0.5 rounded text-teal-200">WhatsApp OTP</span>
+              </div>
+              <p class="text-[11px] text-slate-400">phone, otp (6 digit), type (register/login), expires_at, is_used (0/1).</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
+            <span><i class="fa-solid fa-link text-blue-400 mr-2"></i> Diagram ERD Visual & Skema Fisik SQL tersedia lengkap di direktori proyek.</span>
+            <a href="05_erd_basis_data.png" target="_blank" class="text-blue-400 hover:text-blue-300 font-semibold underline">Buka Gambar ERD HD &rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 10: 11 KRITERIA PENERIMAAN (ACCEPTANCE CRITERIA) -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-10">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Bagian 9: Quality Assurance</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">11 Kriteria Penerimaan (Acceptance Criteria)</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm">
+              <i class="fa-solid fa-list-check mr-1"></i> UAT Test Matrix
+            </span>
+          </div>
+
+          <!-- Acceptance Criteria Scrollable Table -->
+          <div class="max-h-[380px] overflow-y-auto pr-1">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead class="sticky top-0 bg-slate-900 text-slate-300 border-b border-slate-700">
+                <tr>
+                  <th class="p-2.5 font-bold w-12 text-center">No</th>
+                  <th class="p-2.5 font-bold w-36">Modul</th>
+                  <th class="p-2.5 font-bold">Kondisi Pengujian</th>
+                  <th class="p-2.5 font-bold">Hasil yang Diharapkan (Acceptance Criteria)</th>
+                  <th class="p-2.5 font-bold text-center w-20">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-300">
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">1</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Registrasi</td>
+                  <td class="p-2.5">Input formulir valid & nomor WA</td>
+                  <td class="p-2.5">OTP 6 digit diterima di WhatsApp via Fonnte dalam &lt; 10 detik.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">2</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Validasi OTP</td>
+                  <td class="p-2.5">Input token benar sebelum 5 menit</td>
+                  <td class="p-2.5">Akun berstatus active terbuat di DB, sesi otomatis aktif ke dashboard.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">3</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Validasi OTP</td>
+                  <td class="p-2.5">Input kode salah / expired</td>
+                  <td class="p-2.5">Notifikasi error spesifik tampil, akun tidak diaktifkan.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">4</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Face Scan</td>
+                  <td class="p-2.5">Izin akses kamera diberikan</td>
+                  <td class="p-2.5">Pratinjau WebRTC aktif, siluet oval dan laser scan berfungsi.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">5</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Face Scan</td>
+                  <td class="p-2.5">Wajah tidak terdeteksi jelas</td>
+                  <td class="p-2.5">Python kembalikan status failed dan UI menganjurkan foto ulang.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">6</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Skin Analysis</td>
+                  <td class="p-2.5">Foto wajah valid dianalisis</td>
+                  <td class="p-2.5">4 Sub-skor + Overall Score (0-100) tersimpan di tabel analysis_results.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">7</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Rekomendasi</td>
+                  <td class="p-2.5">Analisis skor selesai</td>
+                  <td class="p-2.5">Menampilkan produk aktif dari katalog database yang sesuai concern kulit.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">8</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Chatbot DB</td>
+                  <td class="p-2.5">Tanya: <em>"ada berapa customer?"</em></td>
+                  <td class="p-2.5"><strong>Hanya menyebut total 5 customer</strong>, tanpa membocorkan nama.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">9</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Chatbot DB</td>
+                  <td class="p-2.5">Tanya: <em>"siapa saja customer nya?"</em></td>
+                  <td class="p-2.5">Menyebutkan rincian 5 nama customer dari DB tanpa tanda kurung.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">10</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Auto-Failover</td>
+                  <td class="p-2.5">Primary Key habis kuota (HTTP 402)</td>
+                  <td class="p-2.5">Sistem otomatis alihkan payload ke Backup Key 1 (Gemini) &lt; 1 detik.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+                <tr class="hover:bg-slate-900/50">
+                  <td class="p-2.5 text-center font-bold text-blue-400">11</td>
+                  <td class="p-2.5 font-semibold text-slate-200">Keamanan Role</td>
+                  <td class="p-2.5">Customer akses route /admin</td>
+                  <td class="p-2.5">Ditolak sistem (HTTP 403 / Redirect), akses admin aman.</td>
+                  <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px]">PASS</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 11: ROADMAP SPRINT & KESIMPULAN -->
+      <!-- ========================================== -->
+      <div class="slide-item" id="slide-11">
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Bagian 10: Eksekusi Proyek</span>
+              <h2 class="text-2xl sm:text-3xl font-black text-slate-100">Roadmap 4 Sprint & Kesiapan Produksi</h2>
+            </div>
+            <span class="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm">
+              <i class="fa-solid fa-rocket mr-1"></i> Release Plan
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
+            <!-- Sprint 1 -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-blue-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-blue-400">Sprint 1</span>
+                <span class="text-[10px] bg-blue-900/50 px-2 py-0.5 rounded text-blue-200">Fondasi</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-2">Auth & Database</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Setup MVC, 9 tabel basis data, registrasi, login, dan integrasi WhatsApp OTP Fonnte.
+              </p>
+            </div>
+
+            <!-- Sprint 2 -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-teal-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-teal-400">Sprint 2</span>
+                <span class="text-[10px] bg-teal-900/50 px-2 py-0.5 rounded text-teal-200">AI Vision</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-2">Kamera & OpenCV</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Implementasi WebRTC camera scanner, pipeline OpenCV analisa jerawat, kemerahan, & sunscreen coverage.
+              </p>
+            </div>
+
+            <!-- Sprint 3 -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-purple-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-purple-400">Sprint 3</span>
+                <span class="text-[10px] bg-purple-900/50 px-2 py-0.5 rounded text-purple-200">Asisten AI</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-2">Chatbot & Failover</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Microservice Node.js Express, integrasi kueri aman database MySQL, dan router multi-LLM failover.
+              </p>
+            </div>
+
+            <!-- Sprint 4 -->
+            <div class="glass-card p-5 rounded-2xl border-t-4 border-t-emerald-500">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-xs font-bold text-emerald-400">Sprint 4</span>
+                <span class="text-[10px] bg-emerald-900/50 px-2 py-0.5 rounded text-emerald-200">Deployment</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-200 mb-2">Admin Panel & UAT</h3>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Dashboard metrik administrator, katalog manajemen produk, pengujian UAT 11 kriteria penerimaan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Final Pitch Callout -->
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-blue-900/50 via-indigo-900/40 to-teal-900/40 border border-blue-500/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h4 class="text-base font-bold text-white mb-1">Status Produk: Siap Presentasi & Demonstrasi MVP</h4>
+              <p class="text-xs text-slate-300">
+                Dokumentasi PRD v1.2 telah selaras 100% dengan diagram Use Case, Activity, Class, Sequence, dan Prototipe aplikasi SkinCheck.
+              </p>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <a href="presentasi_skincheck.html" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-lg shadow-blue-500/30 transition flex items-center gap-2">
+                <i class="fa-solid fa-play"></i>
+                <span>Buka Slide UML & Demo</span>
+              </a>
+              <button onclick="window.print()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition flex items-center gap-2">
+                <i class="fa-solid fa-print"></i>
+                <span>Cetak PDF</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- PRESENTER NOTES (TELEPROMPTER DRAWER) -->
+    <!-- ========================================== -->
+    <aside id="presenterDrawer" class="no-print hidden lg:block w-80 xl:w-96 glass-panel border-l border-slate-800 p-5 overflow-y-auto max-h-[calc(100vh-74px)] sticky top-[74px] transition-all">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-comment-dots text-amber-400"></i>
+          <h3 class="font-bold text-sm text-slate-200">Naskah Pembicara (Presenter Notes)</h3>
+        </div>
+        <button onclick="togglePresenterNotes()" class="text-slate-400 hover:text-white text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="text-xs text-slate-400 mb-3 flex items-center justify-between">
+        <span id="speakerNoteTitle" class="font-bold text-blue-400">Slide 1: Cover</span>
+        <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-mono">Cue Card</span>
+      </div>
+
+      <div id="speakerNoteContent" class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-3">
+        <!-- Injected dynamically via JS based on current slide -->
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 11;
+    let timerInterval = null;
+    let timerSeconds = 0;
+    let isTimerRunning = false;
+    let presenterNotesOpen = true;
+
+    // 10 Functional Modules Data for Slide 6
+    const modulesData = {
+      1: {
+        title: "Modul 1: Autentikasi & Otorisasi Pengguna (P0)",
+        icon: "fa-id-card",
+        color: "text-blue-400",
+        items: [
+          "FR-1.1: Pendaftaran akun dengan Nama, Email, WhatsApp (+62), dan Password.",
+          "FR-1.2: Pengamanan kata sandi wajib menggunakan hashing aman (bcrypt / Argon2).",
+          "FR-1.3: Token 6 digit OTP unik via Fonnte Gateway dengan masa kedaluwarsa 5 menit.",
+          "FR-1.4: Role-Based Access Control (RBAC): Role 'user' (Customer) vs Role 'admin' (Super Admin).",
+          "FR-1.5: Akun status 'inactive' otomatis diblokir dari seluruh proses login."
+        ]
+      },
+      2: {
+        title: "Modul 2: Onboarding & Personalisasi Profil (P0)",
+        icon: "fa-user-check",
+        color: "text-teal-400",
+        items: [
+          "FR-2.1: Onboarding awal untuk mengisi jenis kulit (Berminyak, Kering, Kombinasi, Normal, Sensitif).",
+          "FR-2.2: Input keluhan utama (Jerawat, Kemerahan, Pori Besar, Hiperpigmentasi, Garis Halus).",
+          "FR-2.3: Data preferensi tersimpan rapi dan dapat disunting kembali di menu Profil Pengguna."
+        ]
+      },
+      3: {
+        title: "Modul 3: Customer Dashboard (P0)",
+        icon: "fa-gauge",
+        color: "text-indigo-400",
+        items: [
+          "FR-3.1: Kartu metrik skor Overall Health Score (0-100) dari hasil scan wajah terakhir.",
+          "FR-3.2: Tombol Aksi Cepat: 'Scan Wajah', 'Scan Sunscreen', dan 'Tanya Chatbot AI'.",
+          "FR-3.3: Widget rutinitas perawatan kulit harian (AM/PM) yang adaptif.",
+          "FR-3.4: Tampilan edukatif Empty State bagi pengguna baru yang belum melakukan scan."
+        ]
+      },
+      4: {
+        title: "Modul 4: Kamera & Pengambilan Citra WebRTC (P0)",
+        icon: "fa-camera",
+        color: "text-rose-400",
+        items: [
+          "FR-4.1: Akses kamera instan via HTML5 MediaDevices API (navigator.mediaDevices.getUserMedia).",
+          "FR-4.2: Panduan bingkai oval wajah interaktif dan animasi scanning beam laser.",
+          "FR-4.3: Validasi Canvas API: format JPG/PNG, maksimal 5 MB.",
+          "FR-4.4: Berkas foto disimpan aman di server dengan nama file hash UUID acak."
+        ]
+      },
+      5: {
+        title: "Modul 5: AI Computer Vision Pipeline (Skin Analysis) (P0)",
+        icon: "fa-brain",
+        color: "text-purple-400",
+        items: [
+          "FR-5.1: Eksekusi subprocess skrip Python OpenCV analyze.py secara asynchronous.",
+          "FR-5.2: Deteksi wajah Haar Feature-based Cascade Classifier / MediaPipe.",
+          "FR-5.3: Deteksi jerawat via ruang warna HSV dan YCrCb adaptive thresholding.",
+          "FR-5.4: Deteksi eritema (kemerahan) via kanal a* pada ruang warna CIELAB (L*a*b*).",
+          "FR-5.5: Analisis tekstur dan pori via operator varians Laplace.",
+          "FR-5.6: Output kalkulasi 4 sub-skor dan Overall Health Score (0-100) dalam format JSON."
+        ]
+      },
+      6: {
+        title: "Modul 6: Deteksi Sunscreen Coverage (P0)",
+        icon: "fa-sun",
+        color: "text-amber-400",
+        items: [
+          "FR-6.1: Eksekusi skrip Python sunscreen_analyze.py untuk estimasi cakupan tabir surya.",
+          "FR-6.2: Kalkulasi persentase cakupan (Coverage Score 0-100%).",
+          "FR-6.3: Heatmap koordinat area yang belum terlindungi (missed areas) pada wajah.",
+          "FR-6.4: Transparansi & Disclaimer: kamera RGB biasa menghasilkan estimasi, bukan pengukuran UV klinis."
+        ]
+      },
+      7: {
+        title: "Modul 7: Rekomendasi Skincare Terikat Katalog (P0)",
+        icon: "fa-pump-soap",
+        color: "text-emerald-400",
+        items: [
+          "FR-7.1: Algoritma pencocokan skor diagnostik dengan kategori produk di tabel products.",
+          "FR-7.2: Hanya produk berstatus active di basis data yang boleh direkomendasikan.",
+          "FR-7.3: Dilarang merekomendasikan produk fiktif atau yang tidak terdaftar.",
+          "FR-7.4: Penyimpanan riwayat rekomendasi dan alasan pencocokan ke tabel recommendations."
+        ]
+      },
+      8: {
+        title: "Modul 8: Asisten Chatbot AI & Multi-AI Failover (P0)",
+        icon: "fa-robot",
+        color: "text-blue-400",
+        items: [
+          "FR-8.1: Server microservice Node.js Express (port 3000) terhubung langsung ke MySQL.",
+          "FR-8.2: Integrasi DB Cerdas: mengekstrak data agregat aman sebagai konteks percakapan.",
+          "FR-8.3: Aturan Privasi: Jika ditanya 'ada berapa customer?', hanya menjawab jumlah total. Jika ditanya 'siapa saja customer nya?', baru merinci daftar nama tanpa tanda kurung.",
+          "FR-8.4: Multi-AI Auto Failover: Kunci Utama (Groq) beralih ke Standby (Gemini/DeepSeek) dalam < 300ms jika HTTP 402/429."
+        ]
+      },
+      9: {
+        title: "Modul 9: Panel Administrator (Admin Dashboard) (P0)",
+        icon: "fa-sliders",
+        color: "text-purple-400",
+        items: [
+          "FR-9.1: Ringkasan metrik: Total Customer, Total Admin, Total Scan Wajah, dan Total Scan Sunscreen.",
+          "FR-9.2: Manajemen Pengguna: tabel customer, status aktif/nonaktif, dan histori pemindaian.",
+          "FR-9.3: Manajemen Produk: CRUD (Tambah, Edit, Hapus/Nonaktifkan) produk skincare.",
+          "FR-9.4: Pengaturan Kunci AI: Konfigurasi Primary Key, Model AI, Standby Keys, dan Live Test Latensi."
+        ]
+      },
+      10: {
+        title: "Modul 10: Scan History & Progress Tracking (P1)",
+        icon: "fa-chart-line",
+        color: "text-teal-400",
+        items: [
+          "FR-10.1: Linimasa riwayat pemindaian terdahulu dengan perbandingan visual baseline vs kondisi terkini.",
+          "FR-10.2: Grafik tren peningkatan skor kesehatan kulit dari waktu ke waktu.",
+          "FR-10.3: Log audit riwayat untuk evaluasi efektivitas produk skincare yang dipakai."
+        ]
+      }
+    };
+
+    // Speaker Notes for Presenter / Pitch
+    const speakerNotes = {
+      1: `<strong>Slide 1: Pembukaan & Metadata Dokumen</strong><br>
+      • <em>"Selamat pagi/siang Bapak/Ibu Dewan Penguji. Hari ini saya mempresentasikan Product Requirements Document (PRD) versi 1.2 untuk SkinCheck."</em><br>
+      • Jelaskan bahwa SkinCheck dirancang dengan arsitektur modern Model-View-Controller dipadu AI microservice, didukung basis data 9 tabel ternormalisasi.<br>
+      • Tekankan status dokumen: sudah disetujui dan siap untuk tahap pengujian komprehensif.`,
+
+      2: `<strong>Slide 2: Latar Belakang Masalah (Problem Statement)</strong><br>
+      • Sorot 4 masalah nyata di masyarakat:<br>
+      1. Konsultasi klinik kulit mahal, sehingga evaluasi mandiri sangat sulit.<br>
+      2. Kerusakan sinar UV sering terjadi di bagian lipatan wajah yang terlewat saat memakai sunscreen.<br>
+      3. Masyarakat sering termakan tren media sosial yang justru memicu jerawat parah (breakout).<br>
+      4. Chatbot AI umum berbahaya karena sering mengarang obat resep keras (halusinasi).`,
+
+      3: `<strong>Slide 3: Nilai Keunggulan (Value Proposition)</strong><br>
+      • Tekankan 4 pilar kekuatan SkinCheck:<br>
+      • <strong>Computer Vision Non-Invasif:</strong> Cukup kamera HP/laptop biasa tanpa alat mahal.<br>
+      • <strong>Katalog Terikat (Zero Hallucination):</strong> Rekomendasi 100% terkunci ke database produk.<br>
+      • <strong>Multi-LLM Failover 99.9%:</strong> Jika kunci Groq habis saldo (402), otomatis dialihkan ke Gemini atau DeepSeek dalam < 300 milidetik.<br>
+      • <strong>WhatsApp OTP Fonnte:</strong> Verifikasi nomor riil masyarakat Indonesia.`,
+
+      4: `<strong>Slide 4: Persona Pengguna Sasaran</strong><br>
+      • Jelaskan dua kelompok aktor:<br>
+      • <strong>Customer:</strong> Pengguna usia 17–40 tahun yang menginginkan kepastian skor kulit, panduan sunscreen, dan konsultasi interaktif.<br>
+      • <strong>Super Admin:</strong> Tim pengelola yang membutuhkan pantauan metrik live, manajemen produk, dan konfigurasi API key langsung dari UI tanpa restart server.`,
+
+      5: `<strong>Slide 5: Ruang Lingkup & Prioritas (MoSCoW)</strong><br>
+      • Jelaskan klasifikasi fitur:<br>
+      • <strong>P0 (Must Have):</strong> 9 modul inti MVP (Registrasi OTP, Kamera WebRTC, Analisis OpenCV, Rekomendasi Katalog, Chatbot Multi-AI Failover, Admin Panel).<br>
+      • <strong>P1 & P2:</strong> Roadmap peningkatan seperti grafik linimasa tren dan telekonsultasi dokter di masa depan.`,
+
+      6: `<strong>Slide 6: 10 Modul Kebutuhan Fungsional</strong><br>
+      • Klik tombol modul 1 sampai 10 di layar untuk menunjukkan rincian spesifikasi FR.<br>
+      • Sorot keunggulan Modul 5 (analisis OpenCV 4 parameter) dan Modul 8 (chatbot Node.js terhubung database dengan kecerdasan privasi bertahap).`,
+
+      7: `<strong>Slide 7: Safety Guardrails & Kepatuhan Medis</strong><br>
+      • Bagian ini sangat penting untuk meyakinkan penguji bahwa aplikasi patuh etika HealthTech:<br>
+      • 1. Hasil diberi label tegas sebagai <em>estimasi visual</em>, bukan vonis medis.<br>
+      • 2. Larangan mutlak rekomendasi obat resep keras (Isotretinoin oral).<br>
+      • 3. Red Flag Routing: Otomatis mendeteksi tanda bahaya dan merujuk darurat ke dokter Spesialis Kulit (Sp.KK / Sp.DVE).`,
+
+      8: `<strong>Slide 8: Kebutuhan Non-Fungsional (NFR)</strong><br>
+      • Tunjukkan standar kualitas teknis:<br>
+      • Keamanan: Password hash bcrypt cost 10, sanitasi input PDO prepared statements.<br>
+      • Performa: Pemrosesan gambar OpenCV selesai &lt; 3 detik, respon chatbot Groq 150-300ms.<br>
+      • Uptime target 99.9% berkat auto-failover switching &lt; 300ms.`,
+
+      9: `<strong>Slide 9: Skema Basis Data 9 Tabel Relasional</strong><br>
+      • Jelaskan ke-9 tabel:<br>
+      • <code>users</code>, <code>skin_scans</code>, <code>analysis_results</code>, <code>sunscreen_results</code>, <code>products</code>, <code>recommendations</code>, <code>education_contents</code>, <code>activity_logs</code>, dan <code>otp_verifications</code>.<br>
+      • Seluruh relasi Foreign Key terindeks rapi untuk menjamin integritas referensial.`,
+
+      10: `<strong>Slide 10: 11 Kriteria Penerimaan (Acceptance Criteria)</strong><br>
+      • Jelaskan tabel pengujian UAT:<br>
+      • Sorot tes nomor 8 & 9: Aturan jawaban chatbot bertahap jika ditanya jumlah vs nama customer.<br>
+      • Sorot tes nomor 10: Auto-failover ketika terjadi HTTP 402 Insufficient Balance berhasil berpindah mulus ke Gemini.`,
+
+      11: `<strong>Slide 11: Roadmap 4 Sprint & Penutup</strong><br>
+      • Rangkum perjalanan 4 Sprint dari fondasi hingga panel admin.<br>
+      • <em>"Dengan ini platform SkinCheck telah memenuhi seluruh kriteria PRD dan siap diperagakan secara live. Terima kasih, saya siap menerima pertanyaan dari Dewan Penguji."</em>`
+    };
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlides) n = totalSlides;
+      currentSlide = n;
+
+      // Update slide visibility
+      document.querySelectorAll('.slide-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.getElementById(`slide-${currentSlide}`);
+      if (activeEl) activeEl.classList.add('active');
+
+      // Update counters & selector
+      document.getElementById('currentSlideNum').innerText = currentSlide;
+      document.getElementById('slideSelect').value = currentSlide;
+      
+      // Update progress bar
+      const progressPct = ((currentSlide) / totalSlides) * 100;
+      document.getElementById('progressBar').style.width = `${progressPct}%`;
+
+      // Update presenter notes
+      updatePresenterNotes();
+
+      // Scroll to top of viewport
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    function goToSlide(n) {
+      showSlide(n);
+    }
+
+    function showModuleTab(id) {
+      document.querySelectorAll('.mod-tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-blue-600', 'text-white');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      const activeBtn = document.getElementById(`modBtn-${id}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-blue-600', 'text-white');
+        activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+      }
+
+      const mod = modulesData[id];
+      if (!mod) return;
+
+      const area = document.getElementById('moduleContentArea');
+      let html = `
+        <div class="flex items-center gap-3 mb-3 pb-2 border-b border-slate-700">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 ${mod.color} flex items-center justify-center text-base">
+            <i class="fa-solid ${mod.icon}"></i>
+          </div>
+          <h4 class="font-bold text-sm text-slate-100">${mod.title}</h4>
+        </div>
+        <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+      `;
+      mod.items.forEach(item => {
+        html += `<li class="flex items-start gap-2.5">
+          <i class="fa-solid fa-angle-right text-blue-400 mt-1 shrink-0"></i>
+          <span>${item}</span>
+        </li>`;
+      });
+      html += `</ul>`;
+      area.innerHTML = html;
+    }
+
+    function updatePresenterNotes() {
+      const titleEl = document.getElementById('speakerNoteTitle');
+      const contentEl = document.getElementById('speakerNoteContent');
+      if (titleEl) titleEl.innerText = `Slide ${currentSlide}`;
+      if (contentEl) contentEl.innerHTML = speakerNotes[currentSlide] || "Tidak ada catatan untuk slide ini.";
+    }
+
+    function togglePresenterNotes() {
+      const drawer = document.getElementById('presenterDrawer');
+      if (drawer.classList.contains('hidden')) {
+        drawer.classList.remove('hidden');
+        presenterNotesOpen = true;
+      } else {
+        drawer.classList.add('hidden');
+        presenterNotesOpen = false;
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.error(err);
+        });
+        document.getElementById('fullscreenIcon').classList.replace('fa-expand', 'fa-compress');
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+          document.getElementById('fullscreenIcon').classList.replace('fa-compress', 'fa-expand');
+        }
+      }
+    }
+
+    // Stopwatch Timer Logic
+    function toggleTimer() {
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        document.getElementById('timerToggleBtn').innerHTML = '<i class="fa-solid fa-play"></i>';
+      } else {
+        isTimerRunning = true;
+        document.getElementById('timerToggleBtn').innerHTML = '<i class="fa-solid fa-pause"></i>';
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+          const secs = String(timerSeconds % 60).padStart(2, '0');
+          document.getElementById('timerText').innerText = `${mins}:${secs}`;
+        }, 1000);
+      }
+    }
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'Backspace' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        showSlide(1);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        showSlide(totalSlides);
+      } else if (e.key === 'f' || e.key === 'F') {
+        e.preventDefault();
+        toggleFullscreen();
+      } else if (e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        togglePresenterNotes();
+      } else if (e.key >= '1' && e.key <= '9') {
+        goToSlide(parseInt(e.key));
+      }
+    });
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      showSlide(1);
+      showModuleTab(1);
+    });
+  </script>
+</body>
+</html>
