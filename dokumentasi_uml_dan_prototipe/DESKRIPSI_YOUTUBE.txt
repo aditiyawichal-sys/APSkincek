@@ -1,0 +1,78 @@
+================================================================================
+REKOMENDASI JUDUL VIDEO YOUTUBE:
+================================================================================
+Demo Aplikasi SkinCheck (APSkincek) — AI Skin Health Platform | UAS Rekayasa Perangkat Lunak
+(Atau: Presentasi & Demo Sistem SkinCheck: Computer Vision & Multi-AI Chatbot — UAS RPL)
+
+================================================================================
+DESKRIPSI VIDEO YOUTUBE (TINGGAL COPY-PASTE KE YOUTUBE STUDIO):
+================================================================================
+
+📌 DEMONSTRASI SISTEM & PRESENTASI PROYEK AKHIR (UAS) REKAYASA PERANGKAT LUNAK
+
+Video ini dibuat untuk memenuhi persyaratan Ujian Akhir Semester (UAS) Mata Kuliah Rekayasa Perangkat Lunak (RPL). Memperagakan perancangan, implementasi fitur, pengujian unit test, dan penerapan CI/CD pipeline pada aplikasi SkinCheck (APSkincek).
+
+--------------------------------------------------------------------------------
+👥 IDENTITAS ANGGOTA KELOMPOK
+--------------------------------------------------------------------------------
+• Nama Mahasiswa   : Wichal Aditiya Purnama
+• NIM              : 41257167
+• Nama Kelompok    : Cangkol Perangkat Lunak
+• Peran            : Fullstack Developer, AI Engineer & DevOps
+• Anggota Lain     : [Diisi nama anggota lain jika ada / Mandiri]
+• Mata Kuliah      : Rekayasa Perangkat Lunak (RPL)
+• Program Studi    : [Contoh: Teknik Informatika / Ilmu Komputer]
+• Perguruan Tinggi : [Nama Universitas / Institut Anda]
+• Tahun Akademik   : 2026/2027
+
+--------------------------------------------------------------------------------
+🌸 TENTANG APLIKASI: SKINCHECK (APSKINCEK)
+--------------------------------------------------------------------------------
+SkinCheck (APSkincek) adalah platform berbasis web (HealthTech) untuk pemantauan kesehatan kulit wajah secara mandiri, pemeriksaan ketepatan aplikasi tabir surya (sunscreen coverage) berbasis Computer Vision, dan asisten konsultasi AI interaktif yang terhubung langsung dengan basis data sistem.
+
+🎯 TUJUAN & PERMASALAHAN YANG DISELESAIKAN:
+1. Membantu masyarakat mengukur skor kesehatan kulit (jerawat, kemerahan, tekstur) secara objektif tanpa biaya klinik mahal.
+2. Memvisualisasikan area wajah yang terlewat saat memakai sunscreen melalui heatmap deteksi AI.
+3. Memberikan rekomendasi produk perawatan kulit yang terkunci ketat pada katalog resmi basis data (Zero Hallucination).
+4. Menghadirkan asisten chatbot pintar berkecepatan tinggi dengan sistem Multi-LLM Auto-Failover (Uptime 99.9%).
+
+--------------------------------------------------------------------------------
+⏱️ TIMELINE / DAFTAR ISI VIDEO (CHAPTERS)
+--------------------------------------------------------------------------------
+00:00 - Pembukaan & Perkenalan Identitas (Kelompok Cangkol Perangkat Lunak)
+01:05 - Latar Belakang Masalah & Nilai Keunggulan Produk
+02:20 - Penjelasan Arsitektur Sistem (Pola MVC & AI Microservice)
+03:30 - Demo Fitur 1: Registrasi & Verifikasi OTP WhatsApp (Fonnte API)
+04:55 - Demo Fitur 2: Onboarding & Dashboard Customer Interaktif
+06:10 - Demo Fitur 3: Face Scan WebRTC & Analisis Citra (Python OpenCV)
+07:45 - Demo Fitur 4: Evaluasi Cakupan Sunscreen & Visualisasi Heatmap
+09:00 - Demo Fitur 5: Rekomendasi Skincare Terikat Katalog Resmi
+10:15 - Demo Fitur 6: Chatbot Asisten AI Real-Time & Multi-LLM Auto-Failover
+11:45 - Demo Fitur 7: Panel Super Administrator & Manajemen Produk/User
+12:50 - Software Quality Assurance: Pengujian Unit Test Lokal (49 Test - 100% PASS)
+14:10 - Bukti Implementasi CI/CD: Pipeline Otomatis GitHub Actions (Status Hijau)
+15:15 - Kesimpulan & Penutup
+
+--------------------------------------------------------------------------------
+💻 TEKNOLOGI & STACK PERANGKAT LUNAK (TECH STACK)
+--------------------------------------------------------------------------------
+• Backend Core      : PHP 8.2 (Model-View-Controller / MVC Architecture)
+• Database          : MySQL 10.4 / MariaDB (9 Tabel Relasional)
+• AI Microservice   : Node.js Express 5.x (Port 3000), MySQL2 Promise Pool
+• LLM Engine        : Groq Cloud (Qwen 2.5/3.8 27B), Google Gemini 3.5 Flash, DeepSeek
+• Computer Vision   : Python 3.10+, OpenCV (cv2), NumPy, Haar Cascade Classifier
+• Frontend          : HTML5 Canvas, WebRTC API, JavaScript ES6+, Bootstrap 5
+• DevOps & Testing  : GitHub Actions CI/CD Pipeline, Automated PHP/Node.js/Python Unit Tests
+• SMS/WA Gateway    : Fonnte WhatsApp API Gateway
+
+--------------------------------------------------------------------------------
+🔗 TAUTAN PENTING & REPOSITORI
+--------------------------------------------------------------------------------
+• Source Code GitHub : https://github.com/aditiyawichal-sys/APSkincek
+• Slide Presentasi PRD : http://localhost/APSkincek/dokumentasi_uml_dan_prototipe/presentasi_prd.html
+• Slide UML & Prototipe : http://localhost/APSkincek/dokumentasi_uml_dan_prototipe/presentasi_skincheck.html
+
+--------------------------------------------------------------------------------
+🏷️ TAGS / HASHTAGS
+--------------------------------------------------------------------------------
+#UASRPL #RekayasaPerangkatLunak #SkinCheck #APSkincek #ComputerVision #OpenCV #PHP #NodeJS #Python #ArtificialIntelligence #ChatbotAI #GitHubActions #CICD #HealthTech #SoftwareEngineering #MahasiswaIT
